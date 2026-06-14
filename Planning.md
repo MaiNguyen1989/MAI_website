@@ -2,8 +2,8 @@
 
 ## 1. Tổng Quan Tiến Độ
 
-* **Trạng thái hiện tại:** Khởi tạo dự án (Init/Planning). Đã hoàn thành PRD và thiết kế kiến trúc hệ thống sơ bộ.
-* **Thanh tiến độ triển khai:** `██░░░░░░░░ 20%`
+* **Trạng thái hiện tại:** Hoàn thành Phase 1 (Frontend Prototype SPA & CMS Dashboard chạy bằng Mock Data). Đã đẩy mã nguồn lên GitHub và sẵn sàng deploy lên Vercel. Chuẩn bị bước sang Phase 2 (Thiết lập Database Supabase & Tích hợp API thực tế).
+* **Thanh tiến độ triển khai:** `██████░░░░ 55%`
 
 ### Danh sách các hạng mục chi tiết
 
@@ -11,11 +11,11 @@
 | :--- | :--- | :--- | :--- |
 | ✅ Phân tích Yêu cầu sản phẩm (PRD.md) | Hoàn thành | **P0** | Đã định hình rõ các giai đoạn MVP, V1.1 và V2. |
 | ✅ Thiết kế Kiến trúc Hệ thống (System design.md) | Hoàn thành | **P0** | Chốt phương án sử dụng Next.js + Supabase + Vercel. |
-| ❌ Thiết kế UI/UX & Figma Mockup | Chưa bắt đầu | **P0** | Cần chốt layout Landing Page và luồng Quiz. |
-| ❌ Xây dựng Frontend Prototype (Mock data) | Chưa bắt đầu | **P0** | Xây dựng UI tĩnh và logic chuyển câu hỏi động. |
+| ✅ Thiết kế UI/UX & Giao diện | Hoàn thành | **P0** | Thiết kế Prototype trực quan, responsive sang trọng dựa trên Design System. |
+| ✅ Xây dựng Frontend Prototype (Mock data) | Hoàn thành | **P0** | Trình diễn luồng chẩn đoán và Radar SVG động thông qua localStorage. |
 | ❌ Thiết kế Database & Cài đặt Supabase | Chưa bắt đầu | **P1** | Khởi tạo bảng, thiết lập quan hệ và Row Level Security. |
 | ❌ Xây dựng API & Edge Functions (PDF) | Chưa bắt đầu | **P1** | Logic tính điểm và sinh file PDF kết quả tự động. |
-| ❌ Phát triển CMS Admin & Blog | Chưa bắt đầu | **P1** | Đăng bài viết, podcast và xem thông tin Leads. |
+| ✅ Phát triển CMS Admin & Blog | Hoàn thành | **P1** | Tách biệt trang admin.html độc lập, hỗ trợ đăng bài viết & quản lý Leads. |
 | ❌ Xây dựng Module E-learning (V1.1) | Chưa bắt đầu | **P2** | Trang học thử video, bài tập thực hành. |
 | ❌ Tích hợp Cổng thanh toán (V2) | Chưa bắt đầu | **P2** | Tích hợp cổng VietQR/PayOS thanh toán tự động. |
 
@@ -23,14 +23,14 @@
 
 ## 2. Kế Hoạch Triển Khai Chi Tiết (Front-end/Prototype First)
 
-### Phase 1: UI/UX & Front-end Prototype (Chạy bằng Mock Data)
+### Phase 1: UI/UX & Front-end Prototype (Chạy bằng Mock Data) - [ĐÃ HOÀN THÀNH]
 *Mục tiêu:* Hoàn thiện toàn bộ giao diện người dùng và luồng trải nghiệm chẩn đoán để nghiệm thu với khách hàng trước khi đụng vào cơ sở dữ liệu.
 
 | Sprint | Thời gian | Tasks | Output |
 | :--- | :--- | :--- | :--- |
-| **Sprint 1** | Tuần 1 | ① Thiết kế UI/UX trên Figma cho Landing page và Dashboard chẩn đoán.<br>② Định hình Design System (Serif Font cao cấp, bảng màu Gold/Deep Navy).<br>③ Dựng khung Layout tĩnh (Navbar, Hero, Footer, Blog list) bằng Next.js + Tailwind. | Layout Landing Page và Blog tĩnh hoàn tất, đảm bảo responsive. |
-| **Sprint 2** | Tuần 2 | ① Phát triển UI/UX động của Công cụ chẩn đoán (Quiz Flow). Mỗi trang 1 câu hỏi.<br>② Tích hợp các control tương tác (Slider kéo trượt từ 1-10, Card Selection).<br>③ Hiệu ứng Loading giả lập phân tích dữ liệu và Lead Form thu thập thông tin. | Luồng làm Quiz tương tác chạy mượt mà trên frontend. |
-| **Sprint 3** | Tuần 3 | ① Vẽ đồ thị Radar Chart bằng Recharts hiển thị kết quả chẩn đoán 3 trục.<br>② Thiết kế giao diện CMS Admin (quản lý bài viết, danh sách khách hàng).<br>③ Tạo mock data JSON cho các bộ câu hỏi và bài viết tạp chí. | Bản Frontend Prototype hoàn chỉnh chạy 100% Mock Data. |
+| **Sprint 1** | Tuần 1 | ① Thiết kế UI/UX trên Figma cho Landing page và Dashboard chẩn đoán.<br>② Định hình Design System (Serif Font cao cấp, bảng màu Gold/Deep Navy).<br>③ Dựng khung Layout tĩnh (Navbar, Hero, Footer, Blog list) bằng Next.js + Tailwind. | Layout Landing Page và Blog tĩnh hoàn tất, đảm bảo responsive. (Hoàn thành) |
+| **Sprint 2** | Tuần 2 | ① Phát triển UI/UX động của Công cụ chẩn đoán (Quiz Flow). Mỗi trang 1 câu hỏi.<br>② Tích hợp các control tương tác (Slider kéo trượt từ 1-10, Card Selection).<br>③ Hiệu ứng Loading giả lập phân tích dữ liệu và Lead Form thu thập thông tin. | Luồng làm Quiz tương tác chạy mượt mà trên frontend. (Hoàn thành) |
+| **Sprint 3** | Tuần 3 | ① Vẽ đồ thị Radar Chart bằng Recharts hiển thị kết quả chẩn đoán 3 trục.<br>② Thiết kế giao diện CMS Admin (quản lý bài viết, danh sách khách hàng).<br>③ Tạo mock data JSON cho các bộ câu hỏi và bài viết tạp chí. | Bản Frontend Prototype hoàn chỉnh chạy 100% Mock Data. (Hoàn thành) |
 
 ### Phase 2: Database & Core Backend Integration
 *Mục tiêu:* Cấu trúc cơ sở dữ liệu, xây dựng API xử lý nghiệp vụ và kết nối dữ liệu thật vào Frontend.
