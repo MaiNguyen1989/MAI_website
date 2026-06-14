@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>MAI Institute | CMS Management Portal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#a23c36",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#ffb4ac",
+                        "secondary": "#5f5e5e",
+                        "secondary-container": "#e2dfde",
+                        "surface": "#fbf9f8",
+                        "surface-bright": "#fbf9f8",
+                        "on-tertiary-container": "#999796",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "on-secondary-fixed-variant": "#474746",
+                        "tertiary": "#1b1b1a",
+                        "surface-variant": "#e4e2e2",
+                        "outline-variant": "#ddc0bd",
+                        "primary-container": "#630d0d",
+                        "on-surface-variant": "#564240",
+                        "on-surface": "#1b1c1c",
+                        "secondary-fixed": "#e5e2e1",
+                        "inverse-surface": "#303031",
+                        "primary": "#410002",
+                        "tertiary-container": "#30302f",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#410002",
+                        "surface-container-high": "#e9e8e7",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#dbdad9",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f5f3f3",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-secondary-container": "#636262",
+                        "primary-fixed": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#c8c6c4",
+                        "primary-fixed-dim": "#ffb4ac",
+                        "inverse-on-surface": "#f2f0f0",
+                        "tertiary-fixed": "#e5e2e0",
+                        "surface-container": "#efeded",
+                        "on-tertiary-fixed-variant": "#474745",
+                        "surface-container-highest": "#e4e2e2",
+                        "on-primary-fixed-variant": "#832521",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#ec746a",
+                        "error": "#ba1a1a",
+                        "on-background": "#1b1c1c",
+                        "outline": "#8a716f",
+                        "on-tertiary-fixed": "#1b1c1b",
+                        "background": "#fbf9f8",
+                        "heritage-maroon": "#630d0d",
+                        "zen-white": "#FFFFFF",
+                        "ink-black": "#121212",
+                        "paper-grey": "#F2F2F2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "container-max": "1280px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "md": "16px",
+                        "xxl": "64px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px",
+                        "xl": "40px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "display": ["EB Garamond", "serif"],
+                        "headline": ["EB Garamond", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f5f3f3; }
+        h1, h2, h3, h4, .font-serif { font-family: 'EB Garamond', serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .transition-soft { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    </style>
+</head>
+<body class="bg-surface-container-low text-on-surface">
+
+    <!-- ==============================================
+         MÀN HÌNH KHÓA (PIN CODE LOCK)
+         ============================================== -->
+    <div id="admin-lock" class="fixed inset-0 z-50 flex items-center justify-center bg-surface-container-low px-4">
+        <div class="max-w-[400px] w-full bg-zen-white border border-surface-container p-8 text-center space-y-6 rounded-lg shadow-sm">
+            <span class="material-symbols-outlined text-[64px] text-heritage-maroon">admin_panel_settings</span>
+            <div class="space-y-2">
+                <h2 class="font-display text-3xl text-primary font-bold">Bảng Điều Khiển CMS</h2>
+                <p class="font-body text-xs text-secondary leading-relaxed">
+                    Khu vực dành riêng cho nhân sự truyền thông MAI Institute. Vui lòng nhập mã PIN bảo mật để tiếp tục.
+                </p>
+            </div>
+            <div class="space-y-4">
+                <input type="password" id="admin-pin" maxlength="4" autofocus class="w-full border border-surface-container text-center tracking-[1em] text-lg font-bold py-3.5 focus:border-heritage-maroon focus:ring-heritage-maroon/20 rounded outline-none" placeholder="••••">
+                <div class="flex flex-col gap-2">
+                    <button onclick="unlockAdmin()" class="w-full bg-heritage-maroon text-zen-white py-3.5 font-label text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all rounded shadow active:scale-[0.98]">
+                        Xác thực truy cập
+                    </button>
+                    <button onclick="unlockAdmin(true)" class="w-full border border-heritage-maroon/30 text-heritage-maroon py-2.5 font-label text-xs font-bold uppercase tracking-wider hover:bg-heritage-maroon/5 transition-all rounded">
+                        Đăng nhập nhanh (Mã PIN: 1234)
+                    </button>
+                </div>
+            </div>
+            <div class="pt-4 border-t border-surface-container/60">
+                <a href="index.html" class="text-secondary hover:text-heritage-maroon font-label text-xs font-semibold uppercase tracking-wider transition-colors inline-flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">arrow_back</span> Quay lại Trang chủ
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================
+         CMS WORKSPACE LAYOUT (SIDEBAR + CONTENT)
+         ============================================== -->
+    <div id="admin-workspace" class="hidden min-h-screen flex">
+        
+        <!-- SIDEBAR -->
+        <aside class="w-64 bg-primary text-zen-white flex flex-col justify-between fixed h-full z-20">
+            <div class="space-y-8">
+                <!-- Brand Logo -->
+                <div class="p-6 border-b border-white/10 flex items-center gap-3">
+                    <img alt="MAI Logo" class="h-8 w-8 object-contain bg-zen-white rounded-full p-1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ9lDDOktfXYovL94tHBrnqXMCK4igx_lTHn325gf1yG1IWLZN-zPHOovHqKgwfiuNBr4HTm-L1O_WhP53ypmNZ37oqnn252tewc5gU2BSEzintj93qZmieuKUWOFwZvx4qynf3EblbM-9M8_87GAy0Ci85iHLaJSKanRB_RDlI5WNxMXmMyAmy2wyfZ_y7O5igVT6Vc0YndNSqJxQgsG64VNoLqcLIqWqjbxuCCy93KsJIEmFkjuau8vMaqw6bASVb__GmYmLbr0"/>
+                    <span class="font-headline text-xl font-bold tracking-tight">MAI CMS</span>
+                </div>
+
+                <!-- Navigation links -->
+                <nav class="px-4 space-y-1">
+                    <button onclick="switchTab('overview')" id="nav-btn-overview" class="w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all bg-white/10 text-zen-white">
+                        <span class="material-symbols-outlined text-[20px]">dashboard</span>
+                        Tổng quan
+                    </button>
+                    <button onclick="switchTab('leads')" id="nav-btn-leads" class="w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all text-white/60 hover:text-zen-white hover:bg-white/5">
+                        <span class="material-symbols-outlined text-[20px]">people</span>
+                        Quản lý Leads
+                    </button>
+                    <button onclick="switchTab('posts')" id="nav-btn-posts" class="w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all text-white/60 hover:text-zen-white hover:bg-white/5">
+                        <span class="material-symbols-outlined text-[20px]">post_add</span>
+                        Đăng bài &amp; Podcast
+                    </button>
+                    <button onclick="switchTab('quiz')" id="nav-btn-quiz" class="w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all text-white/60 hover:text-zen-white hover:bg-white/5">
+                        <span class="material-symbols-outlined text-[20px]">settings_accessibility</span>
+                        Cấu hình Quiz
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Footer Sidebar -->
+            <div class="p-6 border-t border-white/10 space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="h-8 w-8 rounded-full bg-heritage-maroon flex items-center justify-center text-xs font-bold text-zen-white border border-white/20">
+                        P
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold font-label">Phương Nguyễn</div>
+                        <div class="text-[10px] text-white/50">Media Specialist</div>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <a href="index.html" target="_blank" class="flex-1 text-center py-2 border border-white/20 hover:bg-white/10 rounded text-[10px] font-label font-bold uppercase tracking-wider transition-all">
+                        Trang chủ
+                    </a>
+                    <button onclick="logoutAdmin()" class="flex-1 text-center py-2 bg-red-700/80 hover:bg-red-800 rounded text-[10px] font-label font-bold uppercase tracking-wider transition-all">
+                        Đăng xuất
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT CONTAINER -->
+        <main class="flex-1 ml-64 min-h-screen flex flex-col">
+            
+            <!-- Header -->
+            <header class="bg-zen-white border-b border-surface-container py-4 px-8 flex justify-between items-center sticky top-0 z-10 shadow-sm">
+                <h1 id="page-title" class="font-headline text-2xl font-bold text-primary">Tổng quan hệ thống</h1>
+                <div class="flex items-center gap-4 text-xs font-label text-secondary">
+                    <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Hệ thống đang chạy</span>
+                    <span class="border-l border-surface-container pl-4" id="current-time">14/06/2026</span>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="p-8 flex-1">
+                
+                <!-- ==============================================
+                     TAB: OVERVIEW
+                     ============================================== -->
+                <div id="tab-content-overview" class="tab-pane space-y-8">
+                    <!-- Stat Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-zen-white border border-surface-container p-6 rounded-lg shadow-sm flex items-center justify-between">
+                            <div class="space-y-1">
+                                <span class="text-xs font-semibold text-secondary uppercase tracking-wider font-label">Tổng số Leads</span>
+                                <h3 class="text-3xl font-bold font-label text-primary" id="stat-total-leads">0</h3>
+                                <p class="text-[10px] text-green-700 font-semibold flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px]">trending_up</span> +2 lead mới tuần này</p>
+                            </div>
+                            <span class="material-symbols-outlined text-[48px] text-heritage-maroon/20">people</span>
+                        </div>
+                        <div class="bg-zen-white border border-surface-container p-6 rounded-lg shadow-sm flex items-center justify-between">
+                            <div class="space-y-1">
+                                <span class="text-xs font-semibold text-secondary uppercase tracking-wider font-label">Bài viết &amp; Podcast</span>
+                                <h3 class="text-3xl font-bold font-label text-primary" id="stat-total-posts">0</h3>
+                                <p class="text-[10px] text-secondary font-semibold">Tự động đồng bộ ra trang chủ</p>
+                            </div>
+                            <span class="material-symbols-outlined text-[48px] text-heritage-maroon/20">newspaper</span>
+                        </div>
+                        <div class="bg-zen-white border border-surface-container p-6 rounded-lg shadow-sm flex items-center justify-between">
+                            <div class="space-y-1">
+                                <span class="text-xs font-semibold text-secondary uppercase tracking-wider font-label">Phân luồng đối tượng</span>
+                                <h3 class="text-base font-bold font-label text-primary pt-1" id="stat-role-ratio">Đang tính toán...</h3>
+                                <p class="text-[10px] text-secondary font-semibold">Tỉ lệ Leader / Advisor</p>
+                            </div>
+                            <span class="material-symbols-outlined text-[48px] text-heritage-maroon/20">donut_large</span>
+                        </div>
+                    </div>
+
+                    <!-- Recent Leads Table -->
+                    <div class="bg-zen-white border border-surface-container rounded-lg shadow-sm p-6 space-y-4">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-headline text-lg font-bold text-primary">Khách hàng mới đăng ký gần đây</h3>
+                            <button onclick="switchTab('leads')" class="text-heritage-maroon font-label text-xs font-bold uppercase tracking-wider hover:text-primary transition-colors flex items-center gap-0.5">
+                                Xem tất cả <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs font-body border-collapse">
+                                <thead>
+                                    <tr class="bg-paper-grey/50 border-b border-surface-container font-label font-bold uppercase tracking-wider text-secondary">
+                                        <th class="p-3">Họ và tên</th>
+                                        <th class="p-3">Số điện thoại</th>
+                                        <th class="p-3">Email</th>
+                                        <th class="p-3">Công ty</th>
+                                        <th class="p-3">Vai trò / Chương trình</th>
+                                        <th class="p-3 text-center">Điểm (M/A/T)</th>
+                                        <th class="p-3">Thời gian</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="overview-leads-tbody">
+                                    <!-- Render via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==============================================
+                     TAB: LEADS MANAGEMENT
+                     ============================================== -->
+                <div id="tab-content-leads" class="tab-pane hidden space-y-6">
+                    <!-- Filters and actions -->
+                    <div class="flex flex-col md:flex-row justify-between items-stretch md:items-center bg-zen-white border border-surface-container p-4 rounded-lg shadow-sm gap-4">
+                        <div class="flex flex-1 flex-col md:flex-row gap-3">
+                            <div class="relative flex-1">
+                                <span class="material-symbols-outlined text-[20px] text-secondary absolute left-3 top-2.5">search</span>
+                                <input type="text" id="search-lead" oninput="filterLeadsTable()" class="w-full border border-surface-container rounded pl-10 pr-4 py-2 text-xs outline-none focus:border-heritage-maroon focus:ring-heritage-maroon/20" placeholder="Tìm kiếm theo Tên hoặc Số điện thoại...">
+                            </div>
+                            <select id="filter-lead-role" onchange="filterLeadsTable()" class="border border-surface-container rounded px-3 py-2 text-xs outline-none focus:border-heritage-maroon bg-zen-white text-secondary">
+                                <option value="all">Tất cả đối tượng</option>
+                                <option value="Nhà quản lý">Nhà quản lý</option>
+                                <option value="Tư vấn viên">Tư vấn viên</option>
+                                <option value="Đăng ký Chương trình">Đăng ký tư vấn trực tiếp</option>
+                            </select>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="exportLeads()" class="bg-heritage-maroon text-zen-white px-4 py-2.5 text-xs font-label font-bold uppercase tracking-wider hover:bg-primary-container transition-all flex items-center gap-1 rounded shadow">
+                                <span class="material-symbols-outlined text-[16px]">download</span> Xuất file Excel/CSV
+                            </button>
+                            <button onclick="clearAllLeads()" class="border border-red-700/30 text-red-700 hover:bg-red-500/5 px-4 py-2.5 text-xs font-label font-bold uppercase tracking-wider rounded transition-all">
+                                Xóa tất cả leads
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Leads Table -->
+                    <div class="bg-zen-white border border-surface-container rounded-lg shadow-sm overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs font-body border-collapse">
+                                <thead>
+                                    <tr class="bg-paper-grey/50 border-b border-surface-container font-label font-bold uppercase tracking-wider text-secondary">
+                                        <th class="p-4">Họ và tên</th>
+                                        <th class="p-4">Số điện thoại</th>
+                                        <th class="p-4">Email</th>
+                                        <th class="p-4">Công ty / Cơ quan</th>
+                                        <th class="p-4">Vai trò / Chương trình</th>
+                                        <th class="p-4 text-center">Điểm (Mindful / Action / Tech)</th>
+                                        <th class="p-4">Thời gian đăng ký</th>
+                                        <th class="p-4 text-center">Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leads-tbody">
+                                    <!-- Render via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==============================================
+                     TAB: BLOG & PODCAST CMS
+                     ============================================== -->
+                <div id="tab-content-posts" class="tab-pane hidden space-y-6">
+                    <div class="flex justify-between items-center bg-zen-white border border-surface-container p-4 rounded-lg shadow-sm">
+                        <div class="font-label text-xs text-secondary font-semibold uppercase tracking-wider">
+                            Danh mục bài viết &amp; podcasts hiện đang phát hành
+                        </div>
+                        <button onclick="openNewPostForm()" class="bg-heritage-maroon text-zen-white px-4 py-2 text-xs font-label font-bold uppercase tracking-wider hover:bg-primary-container transition-all flex items-center gap-1 rounded shadow" id="new-post-btn">
+                            <span class="material-symbols-outlined text-[16px]">add_circle</span> Đăng bài mới
+                        </button>
+                    </div>
+
+                    <!-- Danh sách bài viết -->
+                    <div id="posts-list-box" class="bg-zen-white border border-surface-container rounded-lg shadow-sm overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs font-body border-collapse">
+                                <thead>
+                                    <tr class="bg-paper-grey/50 border-b border-surface-container font-label font-bold uppercase tracking-wider text-secondary">
+                                        <th class="p-4">Ảnh bìa</th>
+                                        <th class="p-4">Tiêu đề bài viết</th>
+                                        <th class="p-4">Danh mục</th>
+                                        <th class="p-4">Loại hình</th>
+                                        <th class="p-4 text-center">Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="posts-tbody">
+                                    <!-- Render via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Biểu mẫu đăng/sửa bài viết -->
+                    <div id="post-form-box" class="hidden bg-zen-white border border-surface-container rounded-lg shadow-sm p-6 space-y-6">
+                        <div class="flex justify-between items-center border-b border-surface-container pb-3">
+                            <h4 class="font-headline text-xl font-bold text-primary" id="post-form-title">Tạo Bài Viết / Podcast Mới</h4>
+                            <button onclick="closePostForm()" class="text-secondary hover:text-primary font-label text-xs font-bold uppercase tracking-wider">
+                                Hủy bỏ
+                            </button>
+                        </div>
+
+                        <form id="post-form" onsubmit="savePost(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label class="font-label text-xs font-semibold text-secondary uppercase tracking-wider block">Tiêu đề bài viết</label>
+                                    <input type="text" required class="w-full border border-surface-container rounded px-3 py-2 text-sm outline-none focus:border-heritage-maroon" id="post-title" placeholder="Nhập tiêu đề...">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="font-label text-xs font-semibold text-secondary uppercase tracking-wider block">Danh mục</label>
+                                    <select class="w-full border border-surface-container rounded px-3 py-2 text-sm outline-none focus:border-heritage-maroon bg-zen-white" id="post-category">
+                                        <option value="Xu hướng Ngành">Xu hướng Ngành</option>
+                                        <option value="Công nghệ Quản trị">Công nghệ Quản trị</option>
+                                        <option value="Khai phóng Tâm trí">Khai phóng Tâm trí</option>
+                                        <option value="Báo cáo Độc quyền">Báo cáo Độc quyền</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label class="font-label text-xs font-semibold text-secondary uppercase tracking-wider block">Loại định dạng</label>
+                                    <select class="w-full border border-surface-container rounded px-3 py-2 text-sm outline-none focus:border-heritage-maroon bg-zen-white" id="post-type">
+                                        <option value="blog">Bài viết (Blog)</option>
+                                        <option value="podcast">Podcast âm thanh</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="font-label text-xs font-semibold text-secondary uppercase tracking-wider block">Hình ảnh bìa (Link URL)</label>
+                                    <input type="text" class="w-full border border-surface-container rounded px-3 py-2 text-sm outline-none focus:border-heritage-maroon" id="post-image" placeholder="Để trống để lấy ảnh ngẫu nhiên...">
+                                </div>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="font-label text-xs font-semibold text-secondary uppercase tracking-wider block">Mô tả tóm tắt (Hiển thị ở trang ngoài)</label>
+                                    <textarea required rows="2" class="w-full border border-surface-container rounded px-3 py-2 text-sm outline-none focus:border-heritage-maroon" id="post-summary" placeholder="Nhập tóm tắt bài viết..."></textarea>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="font-label text-xs font-semibold text-secondary uppercase tracking-wider block">Nội dung chi tiết (Có thể dùng HTML)</label>
+                                <textarea required rows="8" class="w-full border border-surface-container rounded px-3 py-2 text-sm outline-none focus:border-heritage-maroon font-body" id="post-content" placeholder="Nhập nội dung đầy đủ bài viết ở đây..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-heritage-maroon text-zen-white py-3.5 font-label text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all rounded shadow">
+                                Lưu &amp; Xuất bản lên Website
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ==============================================
+                     TAB: QUIZ CONFIGURATION
+                     ============================================== -->
+                <div id="tab-content-quiz" class="tab-pane hidden space-y-6">
+                    <div class="flex justify-between items-center bg-zen-white border border-surface-container p-4 rounded-lg shadow-sm">
+                        <div class="font-label text-xs text-secondary font-semibold uppercase tracking-wider">
+                            Quản lý câu hỏi khảo sát &amp; chẩn đoán
+                        </div>
+                        <button onclick="resetDefaultQuizQuestions()" class="border border-heritage-maroon/30 text-heritage-maroon hover:bg-heritage-maroon/5 px-4 py-2 text-xs font-label font-bold uppercase tracking-wider rounded transition-all">
+                            Khôi phục câu hỏi mặc định
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Leader Questions -->
+                        <div class="bg-zen-white border border-surface-container p-6 rounded-lg shadow-sm space-y-6">
+                            <div class="flex items-center gap-2 border-b border-surface-container pb-3">
+                                <span class="material-symbols-outlined text-heritage-maroon">leaderboard</span>
+                                <h3 class="font-headline text-lg font-bold text-primary">Bộ câu hỏi Nhà Quản Lý</h3>
+                            </div>
+                            <div id="quiz-leader-box" class="space-y-4">
+                                <!-- Render via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Agent Questions -->
+                        <div class="bg-zen-white border border-surface-container p-6 rounded-lg shadow-sm space-y-6">
+                            <div class="flex items-center gap-2 border-b border-surface-container pb-3">
+                                <span class="material-symbols-outlined text-heritage-maroon">person_celebrate</span>
+                                <h3 class="font-headline text-lg font-bold text-primary">Bộ câu hỏi Tư Vấn Viên</h3>
+                            </div>
+                            <div id="quiz-agent-box" class="space-y-4">
+                                <!-- Render via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 text-right">
+                        <button onclick="saveQuizQuestions()" class="bg-heritage-maroon text-zen-white px-8 py-3.5 font-label text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all rounded shadow active:scale-95 duration-150">
+                            Lưu cấu hình câu hỏi chẩn đoán
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer Core -->
+            <footer class="bg-zen-white border-t border-surface-container py-4 px-8 text-center text-xs text-secondary font-body">
+                © 2026 MAI Institute. CMS Portal for Media Team.
+            </footer>
+        </main>
+
+    </div>
+
+    <script>
+        // =========================================================================
+        // 1. DATA SYNCHRONIZATION
+        // =========================================================================
+        // Đảm bảo đồng bộ với key của code.html
+        function getLeads() { return JSON.parse(localStorage.getItem('mai_leads')) || []; }
+        function getPosts() { return JSON.parse(localStorage.getItem('mai_posts')) || []; }
+        function getQuestions() { return JSON.parse(localStorage.getItem('mai_questions')); }
+
+        // =========================================================================
+        // 2. PIN AUTHENTICATION
+        // =========================================================================
+        function unlockAdmin(isQuick = false) {
+            const pin = isQuick ? "1234" : document.getElementById('admin-pin').value;
+            if (pin === '1234') {
+                document.getElementById('admin-lock').classList.add('hidden');
+                document.getElementById('admin-workspace').classList.remove('hidden');
+                document.getElementById('admin-pin').value = '';
+                
+                // Khởi động load trang mặc định
+                switchTab('overview');
+                
+                // Hiển thị ngày giờ
+                const d = new Date();
+                document.getElementById('current-time').innerText = `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`;
+            } else {
+                alert("Mã PIN không chính xác. Mã PIN demo mặc định là 1234");
+            }
+        }
+
+        function logoutAdmin() {
+            document.getElementById('admin-workspace').classList.add('hidden');
+            document.getElementById('admin-lock').classList.remove('hidden');
+        }
+
+        // =========================================================================
+        // 3. TAB SWITCHING
+        // =========================================================================
+        function switchTab(tabId) {
+            // Cập nhật giao diện Sidebar
+            document.querySelectorAll('aside nav button').forEach(btn => {
+                btn.className = "w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all text-white/60 hover:text-zen-white hover:bg-white/5";
+            });
+            const activeBtn = document.getElementById('nav-btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.className = "w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all bg-white/10 text-zen-white";
+            }
+
+            // Cập nhật giao diện Tiêu đề trang
+            const titles = {
+                'overview': 'Tổng quan hệ thống',
+                'leads': 'Quản lý thông tin khách hàng (Leads)',
+                'posts': 'CMS Quản lý bài viết & podcasts',
+                'quiz': 'CMS Cấu hình trắc nghiệm chẩn đoán'
+            };
+            document.getElementById('page-title').innerText = titles[tabId] || 'MAI Management';
+
+            // Ẩn hiện nội dung các tab
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.classList.add('hidden');
+            });
+            document.getElementById('tab-content-' + tabId).classList.remove('hidden');
+
+            // Gọi các hàm tải dữ liệu cụ thể
+            if (tabId === 'overview') {
+                loadOverviewData();
+            } else if (tabId === 'leads') {
+                loadLeadsData();
+            } else if (tabId === 'posts') {
+                loadPostsData();
+            } else if (tabId === 'quiz') {
+                loadQuizData();
+            }
+        }
+
+        // =========================================================================
+        // 4. TAB CONTENT: OVERVIEW
+        // =========================================================================
+        function loadOverviewData() {
+            const leads = getLeads();
+            const posts = getPosts();
+            
+            // Cập nhật các thẻ số liệu
+            document.getElementById('stat-total-leads').innerText = leads.length;
+            document.getElementById('stat-total-posts').innerText = posts.length;
+
+            // Tính tỉ lệ vai trò
+            const managers = leads.filter(l => l.role.includes("Nhà quản lý") || l.role.includes("Giám đốc Vùng")).length;
+            const advisors = leads.filter(l => l.role.includes("Tư vấn viên") || l.role.includes("Đại lý")).length;
+            const other = leads.length - (managers + advisors);
+
+            if (leads.length === 0) {
+                document.getElementById('stat-role-ratio').innerText = "Chưa có dữ liệu";
+            } else {
+                const managerPercent = Math.round((managers / leads.length) * 100);
+                const advisorPercent = Math.round((advisors / leads.length) * 100);
+                document.getElementById('stat-role-ratio').innerText = `${managerPercent}% Quản lý / ${advisorPercent}% Đại lý`;
+            }
+
+            // Tải bảng danh sách leads rút gọn (5 lead mới nhất)
+            const recentLeads = leads.slice(0, 5);
+            const tbody = document.getElementById('overview-leads-tbody');
+            if (tbody) {
+                if (recentLeads.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="text-center p-4 text-secondary font-body">Chưa có thông tin leads đăng ký.</td></tr>`;
+                } else {
+                    tbody.innerHTML = recentLeads.map(l => {
+                        const scoreDisplay = l.scores.mindful === '-' ? '-' : `${l.scores.mindful}/${l.scores.action}/${l.scores.tech}`;
+                        return `
+                            <tr class="border-b border-surface-container hover:bg-background/40">
+                                <td class="p-3 font-semibold text-primary">${l.name}</td>
+                                <td class="p-3">${l.phone}</td>
+                                <td class="p-3 text-[10px] text-secondary">${l.email}</td>
+                                <td class="p-3">${l.company}</td>
+                                <td class="p-3 font-semibold">${l.role}</td>
+                                <td class="p-3 text-center text-heritage-maroon font-bold">${scoreDisplay}</td>
+                                <td class="p-3 text-[10px] text-secondary">${l.date}</td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+            }
+        }
+
+        // =========================================================================
+        // 5. TAB CONTENT: LEADS MANAGEMENT
+        // =========================================================================
+        function loadLeadsData() {
+            filterLeadsTable();
+        }
+
+        function filterLeadsTable() {
+            const leads = getLeads();
+            const searchQuery = document.getElementById('search-lead').value.toLowerCase();
+            const roleFilter = document.getElementById('filter-lead-role').value;
+            const tbody = document.getElementById('leads-tbody');
+
+            let filteredLeads = leads.filter(l => {
+                const matchesSearch = l.name.toLowerCase().includes(searchQuery) || l.phone.includes(searchQuery);
+                let matchesRole = true;
+
+                if (roleFilter === 'Nhà quản lý') {
+                    matchesRole = l.role.includes("Nhà quản lý") || l.role.includes("Giám đốc Vùng");
+                } else if (roleFilter === 'Tư vấn viên') {
+                    matchesRole = l.role.includes("Tư vấn viên") || l.role.includes("Đại lý");
+                } else if (roleFilter === 'Đăng ký Chương trình') {
+                    matchesRole = l.role.includes("Đăng ký");
+                }
+
+                return matchesSearch && matchesRole;
+            });
+
+            if (tbody) {
+                if (filteredLeads.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="8" class="text-center p-6 text-secondary">Không tìm thấy thông tin khách hàng nào phù hợp.</td></tr>`;
+                } else {
+                    tbody.innerHTML = filteredLeads.map(l => {
+                        const scoreDisplay = l.scores.mindful === '-' ? '-' : `${l.scores.mindful}/${l.scores.action}/${l.scores.tech}`;
+                        return `
+                            <tr class="border-b border-surface-container hover:bg-background/40">
+                                <td class="p-4 font-semibold text-primary">${l.name}</td>
+                                <td class="p-4 font-semibold">${l.phone}</td>
+                                <td class="p-4 text-xs">${l.email}</td>
+                                <td class="p-4">${l.company}</td>
+                                <td class="p-4 font-semibold">${l.role}</td>
+                                <td class="p-4 text-center text-heritage-maroon font-bold">${scoreDisplay}</td>
+                                <td class="p-4 text-xs text-secondary">${l.date}</td>
+                                <td class="p-4 text-center">
+                                    <button onclick="deleteLead('${l.id}')" class="text-red-700 hover:text-red-950 font-bold uppercase tracking-wider text-[10px]">Xóa</button>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+            }
+        }
+
+        function deleteLead(leadId) {
+            if (confirm("Bạn có chắc chắn muốn xóa thông tin lead này không?")) {
+                let leads = getLeads();
+                leads = leads.filter(l => l.id !== leadId);
+                localStorage.setItem('mai_leads', JSON.stringify(leads));
+                loadLeadsData();
+            }
+        }
+
+        function clearAllLeads() {
+            if (confirm("CẢNH BÁO: Hành động này sẽ xóa toàn bộ danh sách khách hàng khỏi bộ nhớ. Bạn có chắc chắn muốn thực hiện?")) {
+                localStorage.setItem('mai_leads', JSON.stringify([]));
+                loadLeadsData();
+            }
+        }
+
+        function exportLeads() {
+            const leads = getLeads();
+            if (leads.length === 0) {
+                alert("Không có thông tin leads để xuất dữ liệu!");
+                return;
+            }
+
+            let csvContent = "\uFEFF"; // Hỗ trợ hiển thị tiếng Việt UTF-8
+            csvContent += "Họ và tên,Số điện thoại,Email,Công ty,Vai trò/Nguồn đăng ký,Điểm Tỉnh thức,Điểm Hành động,Điểm Công nghệ,Thời gian đăng ký\n";
+
+            leads.forEach(l => {
+                csvContent += `"${l.name}","${l.phone}","${l.email}","${l.company}","${l.role}","${l.scores.mindful}","${l.scores.action}","${l.scores.tech}","${l.date}"\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", `MAI_Institute_Leads_${new Date().toISOString().slice(0, 10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // =========================================================================
+        // 6. TAB CONTENT: BLOG & PODCAST CMS
+        // =========================================================================
+        function loadPostsData() {
+            const posts = getPosts();
+            const tbody = document.getElementById('posts-tbody');
+            if (tbody) {
+                tbody.innerHTML = posts.map(p => `
+                    <tr class="border-b border-surface-container hover:bg-background/40">
+                        <td class="p-4">
+                            <img src="${p.image}" class="w-12 h-10 object-cover rounded border border-surface-container shadow-sm" alt="Cover">
+                        </td>
+                        <td class="p-4 font-semibold text-primary text-sm max-w-[400px] truncate">${p.title}</td>
+                        <td class="p-4 font-semibold text-xs text-secondary uppercase tracking-wider">${p.category}</td>
+                        <td class="p-4 text-xs font-bold uppercase text-heritage-maroon">${p.type}</td>
+                        <td class="p-4 text-center space-x-2">
+                            <button onclick="editPost('${p.id}')" class="text-heritage-maroon hover:text-primary font-bold uppercase tracking-wider text-[10px]">Sửa</button>
+                            <span class="text-surface-container-highest">|</span>
+                            <button onclick="deletePost('${p.id}')" class="text-red-700 hover:text-red-950 font-bold uppercase tracking-wider text-[10px]">Xóa</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        let editingPostId = null;
+
+        function openNewPostForm() {
+            editingPostId = null;
+            document.getElementById('post-form-title').innerText = "Tạo Bài Viết / Podcast Mới";
+            document.getElementById('post-form').reset();
+            document.getElementById('posts-list-box').classList.add('hidden');
+            document.getElementById('new-post-btn').classList.add('hidden');
+            document.getElementById('post-form-box').classList.remove('hidden');
+        }
+
+        function closePostForm() {
+            document.getElementById('post-form-box').classList.add('hidden');
+            document.getElementById('posts-list-box').classList.remove('hidden');
+            document.getElementById('new-post-btn').classList.remove('hidden');
+            editingPostId = null;
+        }
+
+        function editPost(postId) {
+            const posts = getPosts();
+            const post = posts.find(p => p.id === postId);
+            if (post) {
+                editingPostId = postId;
+                document.getElementById('post-form-title').innerText = "Chỉnh sửa bài viết: " + post.title;
+                
+                document.getElementById('post-title').value = post.title;
+                document.getElementById('post-category').value = post.category;
+                document.getElementById('post-type').value = post.type;
+                document.getElementById('post-image').value = post.image;
+                document.getElementById('post-summary').value = post.summary;
+                document.getElementById('post-content').value = post.content.replace(/<br\/>/g, '\n');
+
+                document.getElementById('posts-list-box').classList.add('hidden');
+                document.getElementById('new-post-btn').classList.add('hidden');
+                document.getElementById('post-form-box').classList.remove('hidden');
+            }
+        }
+
+        function savePost(e) {
+            e.preventDefault();
+            const title = document.getElementById('post-title').value;
+            const category = document.getElementById('post-category').value;
+            const type = document.getElementById('post-type').value;
+            const summary = document.getElementById('post-summary').value;
+            const content = document.getElementById('post-content').value;
+            let image = document.getElementById('post-image').value;
+
+            if (!image) {
+                image = "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800";
+            }
+
+            const posts = getPosts();
+            const postData = {
+                id: editingPostId || ('p-' + Date.now()),
+                title,
+                category,
+                type,
+                summary,
+                content: content.replace(/\n/g, '<br/>'),
+                image
+            };
+
+            if (editingPostId) {
+                // Edit mode
+                const index = posts.findIndex(p => p.id === editingPostId);
+                if (index !== -1) {
+                    posts[index] = postData;
+                }
+            } else {
+                // Add mode
+                posts.unshift(postData);
+            }
+
+            localStorage.setItem('mai_posts', JSON.stringify(posts));
+            closePostForm();
+            loadPostsData();
+            alert("Đã lưu và xuất bản bài viết thành công!");
+        }
+
+        function deletePost(postId) {
+            if (confirm("Bạn có chắc chắn muốn xóa vĩnh viễn bài viết này khỏi website không?")) {
+                let posts = getPosts();
+                posts = posts.filter(p => p.id !== postId);
+                localStorage.setItem('mai_posts', JSON.stringify(posts));
+                loadPostsData();
+            }
+        }
+
+        // =========================================================================
+        // 7. TAB CONTENT: QUIZ CONFIGURATION
+        // =========================================================================
+        function loadQuizData() {
+            const questions = getQuestions();
+            const leaderBox = document.getElementById('quiz-leader-box');
+            const agentBox = document.getElementById('quiz-agent-box');
+
+            const createQuizItemHTML = (q, role, index) => `
+                <div class="border border-surface-container bg-surface-container-low/40 p-4 rounded-lg space-y-4">
+                    <div class="flex justify-between items-center text-xs font-label">
+                        <span class="font-bold text-heritage-maroon uppercase tracking-wider">Câu hỏi ${index+1} (Trục: ${q.axis.toUpperCase()})</span>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="font-label text-[10px] text-secondary uppercase tracking-wider block">Nội dung câu hỏi</label>
+                        <textarea rows="2" required class="w-full border border-surface-container rounded p-2 text-xs focus:border-heritage-maroon focus:ring-heritage-maroon/20 outline-none" data-role="${role}" data-id="${q.id}" data-field="text">${q.text}</textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="font-label text-[9px] text-secondary uppercase tracking-wider block">Nhãn Điểm 1 (Tối thiểu)</label>
+                            <input type="text" required class="w-full border border-surface-container rounded px-2 py-1.5 text-xs focus:border-heritage-maroon outline-none" data-role="${role}" data-id="${q.id}" data-field="minLabel" value="${q.minLabel}">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="font-label text-[9px] text-secondary uppercase tracking-wider block">Nhãn Điểm 10 (Tối đa)</label>
+                            <input type="text" required class="w-full border border-surface-container rounded px-2 py-1.5 text-xs focus:border-heritage-maroon outline-none" data-role="${role}" data-id="${q.id}" data-field="maxLabel" value="${q.maxLabel}">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            if (leaderBox) {
+                leaderBox.innerHTML = questions.leader.map((q, idx) => createQuizItemHTML(q, 'leader', idx)).join('');
+            }
+            if (agentBox) {
+                agentBox.innerHTML = questions.agent.map((q, idx) => createQuizItemHTML(q, 'agent', idx)).join('');
+            }
+        }
+
+        function saveQuizQuestions() {
+            const questions = getQuestions();
+
+            // Lưu câu hỏi Leader
+            document.querySelectorAll('textarea[data-role="leader"], input[data-role="leader"]').forEach(el => {
+                const id = el.getAttribute('data-id');
+                const field = el.getAttribute('data-field');
+                const q = questions.leader.find(item => item.id === id);
+                if (q) {
+                    q[field] = el.value;
+                }
+            });
+
+            // Lưu câu hỏi Agent
+            document.querySelectorAll('textarea[data-role="agent"], input[data-role="agent"]').forEach(el => {
+                const id = el.getAttribute('data-id');
+                const field = el.getAttribute('data-field');
+                const q = questions.agent.find(item => item.id === id);
+                if (q) {
+                    q[field] = el.value;
+                }
+            });
+
+            localStorage.setItem('mai_questions', JSON.stringify(questions));
+            alert("Đã lưu và đồng bộ cấu hình câu hỏi chẩn đoán thành công!");
+            loadQuizData();
+        }
+
+        function resetDefaultQuizQuestions() {
+            // Sử dụng dữ liệu định nghĩa ban đầu ở code.html (được định nghĩa lại tạm thời ở đây)
+            const initialQuestionsData = {
+                leader: [
+                    { id: 'l1', axis: 'action', text: 'Tỷ lệ đại lý hoạt động (Active Ratio) trong đội ngũ của bạn hiện tại là bao nhiêu?', minLabel: 'Dưới 20%', maxLabel: 'Trên 60%' },
+                    { id: 'l2', axis: 'tech', text: 'Mức độ tự động hóa các quy trình họp hành, đào tạo và báo cáo qua công nghệ trong đội ngũ:', minLabel: 'Thủ công hoàn toàn', maxLabel: 'Tự động hóa 100%' },
+                    { id: 'l3', axis: 'mindful', text: 'Mức độ bền bỉ, gắn kết và hạn chế stress/rụng nhân sự ở các vị trí nòng cốt:', minLabel: 'Rất kém/Stress nhiều', maxLabel: 'Bền bỉ/Tinh thần tỉnh thức' },
+                    { id: 'l4', axis: 'action', text: 'Kỹ năng coaching, truyền cảm hứng và đồng hành thấu hiểu cùng đội ngũ của bạn:', minLabel: 'Chỉ áp doanh số', maxLabel: 'Coaching thấu cảm' },
+                    { id: 'l5', axis: 'tech', text: 'Mức độ sử dụng dữ liệu thực tế (data-driven) để quản trị và ra quyết định thay vì cảm tính:', minLabel: 'Cảm tính hoàn toàn', maxLabel: 'Dữ liệu thời gian thực' }
+                ],
+                agent: [
+                    { id: 'a1', axis: 'action', text: 'Khả năng duy trì nguồn khách hàng tiềm năng mới một cách chủ động và ổn định:', minLabel: 'Thường xuyên cạn kiệt', maxLabel: 'Nguồn khách hàng vô tận' },
+                    { id: 'a2', axis: 'tech', text: 'Mức độ ứng dụng công cụ số/phần mềm để quản lý phễu khách hàng và lịch sử làm việc:', minLabel: 'Ghi sổ tay/Nhớ tay', maxLabel: 'CRM/App chuyên nghiệp' },
+                    { id: 'a3', axis: 'mindful', text: 'Sự điềm tĩnh, tự tin và bình yên tinh thần khi đối mặt với những lời từ chối của khách hàng:', minLabel: 'Dễ nản lòng/Stress', maxLabel: 'Điềm tĩnh/Tỉnh thức' },
+                    { id: 'a4', axis: 'action', text: 'Kỹ năng cố vấn giải pháp tài chính cá nhân hóa và chốt hợp đồng dựa trên sự thấu cảm:', minLabel: 'Cố bán theo bản năng', maxLabel: 'Cố vấn tài chính tinh tế' },
+                    { id: 'a5', axis: 'mindful', text: 'Sự cam kết tư vấn đúng nhu cầu thực tế của khách hàng thay vì chạy theo hoa hồng sản phẩm:', minLabel: 'Chỉ quan tâm doanh số', maxLabel: 'Cam kết đặt khách hàng lên hàng đầu' }
+                ]
+            };
+
+            if (confirm("Bạn có chắc muốn khôi phục toàn bộ câu hỏi và nhãn mặc định?")) {
+                localStorage.setItem('mai_questions', JSON.stringify(initialQuestionsData));
+                loadQuizData();
+                alert("Đã khôi phục câu hỏi chẩn đoán thành công!");
+            }
+        }
+    </script>
+
+</body>
+</html>
