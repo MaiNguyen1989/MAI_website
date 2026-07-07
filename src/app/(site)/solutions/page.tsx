@@ -205,7 +205,7 @@ export default function SolutionsPage() {
                   Executive Suite Roadmap
                 </span>
                 <p className="font-body text-xs text-secondary mt-3">
-                  Giải pháp Needs-payoff huấn luyện kỹ năng khai vấn và tự động hóa vận hành cho các nhà quản lý bảo hiểm qua 5 cấp độ trưởng thành.
+                  Giải pháp huấn luyện kỹ năng khai vấn và vận hành hệ thống cho các nhà quản lý bảo hiểm qua 5 cấp độ trưởng thành.
                 </p>
               </div>
 
