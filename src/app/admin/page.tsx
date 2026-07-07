@@ -1,0 +1,759 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { Lead, Post, QuizQuestionsConfig, Question } from '@/types';
+import { initialLeads, initialPosts, initialQuestions } from '@/lib/mockData';
+
+export default function AdminPage() {
+  const [isLocked, setIsLocked] = useState(true);
+  const [pin, setPin] = useState('');
+  const [activeTab, setActiveTab] = useState<'overview' | 'leads' | 'posts' | 'quiz'>('overview');
+
+  // Load data from LocalStorage
+  const [leads, setLeads] = useLocalStorage<Lead[]>('mai_leads', initialLeads);
+  const [posts, setPosts] = useLocalStorage<Post[]>('mai_posts', initialPosts);
+  const [questions, setQuestions] = useLocalStorage<QuizQuestionsConfig>('mai_questions', initialQuestions);
+
+  // Date and time display
+  const [currentTime, setCurrentTime] = useState('');
+
+  // Post form states
+  const [isPostFormOpen, setIsPostFormOpen] = useState(false);
+  const [postFormData, setPostFormData] = useState({
+    title: '',
+    category: 'Xu hướng Ngành',
+    type: 'blog' as 'blog' | 'podcast',
+    summary: '',
+    content: '',
+    image: ''
+  });
+
+  // Quiz config editing states
+  const [localQuestions, setLocalQuestions] = useState<QuizQuestionsConfig | null>(null);
+
+  useEffect(() => {
+    setCurrentTime(new Date().toLocaleDateString('vi-VN'));
+    if (questions) {
+      setLocalQuestions(JSON.parse(JSON.stringify(questions))); // deep clone
+    }
+  }, [questions]);
+
+  const handleUnlock = (quick = false) => {
+    if (quick || pin === '1234') {
+      setIsLocked(false);
+      setPin('');
+    } else {
+      alert('Mã PIN không chính xác. PIN demo mặc định: 1234');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLocked(true);
+    setActiveTab('overview');
+  };
+
+  const handleDeleteLead = (id: string) => {
+    if (confirm('Bạn có chắc chắn muốn xóa lead này không?')) {
+      setLeads(leads.filter(l => l.id !== id));
+    }
+  };
+
+  const handleExportLeads = () => {
+    if (leads.length === 0) {
+      alert('Không có dữ liệu để xuất file!');
+      return;
+    }
+
+    let csvContent = '\uFEFF'; // UTF-8 BOM for Excel
+    csvContent += 'Họ và tên,Số điện thoại,Email,Công ty,Vai trò,Điểm Tỉnh thức,Điểm Hành động,Điểm Công nghệ,Thời gian\n';
+
+    leads.forEach(l => {
+      csvContent += `"${l.name}","${l.phone}","${l.email}","${l.company}","${l.role}","${l.scores.mindful}","${l.scores.action}","${l.scores.tech}","${l.date}"\n`;
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `MAI_Leads_Report_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleDeletePost = (id: string) => {
+    if (confirm('Bạn có chắc chắn muốn xóa bài viết này khỏi hệ thống?')) {
+      setPosts(posts.filter(p => p.id !== id));
+    }
+  };
+
+  const handleSavePost = (e: React.FormEvent) => {
+    e.preventDefault();
+    let image = postFormData.image;
+    if (!image) {
+      image = 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800';
+    }
+
+    const newPost: Post = {
+      id: 'p-' + Date.now(),
+      title: postFormData.title,
+      category: postFormData.category,
+      type: postFormData.type,
+      summary: postFormData.summary,
+      content: postFormData.content.replace(/\n/g, '<br/>'),
+      image
+    };
+
+    setPosts([newPost, ...posts]);
+    setIsPostFormOpen(false);
+    setPostFormData({
+      title: '',
+      category: 'Xu hướng Ngành',
+      type: 'blog',
+      summary: '',
+      content: '',
+      image: ''
+    });
+    alert('Bài viết/Podcast đã được đăng xuất bản thành công và hiện ngay trên Blog!');
+  };
+
+  const handleUpdateQuizField = (role: 'leader' | 'agent', index: number, field: keyof Question, value: string) => {
+    if (!localQuestions) return;
+    const updated = { ...localQuestions };
+    updated[role][index] = {
+      ...updated[role][index],
+      [field]: value
+    };
+    setLocalQuestions(updated);
+  };
+
+  const handleSaveQuizConfig = () => {
+    if (localQuestions) {
+      setQuestions(localQuestions);
+      alert('Cấu hình câu hỏi trắc nghiệm đã được lưu thành công!');
+    }
+  };
+
+  const handleResetQuizConfig = () => {
+    if (confirm('Bạn có chắc chắn muốn khôi phục toàn bộ câu hỏi trắc nghiệm về mặc định ban đầu không?')) {
+      setQuestions(initialQuestions);
+      setLocalQuestions(JSON.parse(JSON.stringify(initialQuestions)));
+      alert('Khôi phục cấu hình câu hỏi thành công!');
+    }
+  };
+
+  // Stats calculation
+  const totalLeads = leads?.length || 0;
+  const totalPosts = posts?.length || 0;
+  
+  const getRoleRatio = () => {
+    if (!leads || leads.length === 0) return '0 / 0';
+    const leaderCount = leads.filter(l => l.role.includes('Quản lý') || l.role.includes('leader') || l.role.includes('Executive')).length;
+    const agentCount = leads.length - leaderCount;
+    return `${leaderCount} Leader / ${agentCount} Advisor`;
+  };
+
+  if (isLocked) {
+    return (
+      <div id="admin-lock" className="fixed inset-0 z-50 flex items-center justify-center bg-surface-container-low px-4">
+        <div className="max-w-[400px] w-full bg-zen-white border border-surface-container p-8 text-center space-y-6 rounded-lg shadow-sm">
+          <span className="material-symbols-outlined text-[64px] text-heritage-maroon">
+            admin_panel_settings
+          </span>
+          <div className="space-y-2">
+            <h2 className="font-display text-3xl text-primary font-bold">Bảng Điều Khiển CMS</h2>
+            <p className="font-body text-xs text-secondary leading-relaxed">
+              Khu vực dành riêng cho nhân sự truyền thông MAI Institute. Vui lòng nhập mã PIN bảo mật để tiếp tục.
+            </p>
+          </div>
+          <div className="space-y-4">
+            <input
+              type="password"
+              maxLength={4}
+              value={pin}
+              onChange={(e) => setPin(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleUnlock()}
+              autoFocus
+              className="w-full border border-surface-container text-center tracking-[1em] text-lg font-bold py-3.5 focus:border-heritage-maroon focus:ring-heritage-maroon/20 rounded outline-none bg-background"
+              placeholder="••••"
+            />
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => handleUnlock()}
+                className="w-full bg-heritage-maroon text-zen-white py-3.5 font-label text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all rounded shadow active:scale-[0.98]"
+              >
+                Xác thực truy cập
+              </button>
+              <button
+                onClick={() => handleUnlock(true)}
+                className="w-full border border-heritage-maroon/30 text-heritage-maroon py-2.5 font-label text-xs font-bold uppercase tracking-wider hover:bg-heritage-maroon/5 transition-all rounded"
+              >
+                Đăng nhập nhanh (Mã PIN: 1234)
+              </button>
+            </div>
+          </div>
+          <div className="pt-4 border-t border-surface-container/60">
+            <a
+              href="/"
+              className="text-secondary hover:text-heritage-maroon font-label text-xs font-semibold uppercase tracking-wider transition-colors inline-flex items-center gap-1"
+            >
+              <span className="material-symbols-outlined text-[16px]">arrow_back</span> Quay lại Trang chủ
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div id="admin-workspace" className="min-h-screen flex bg-surface-container-low text-on-surface">
+      {/* SIDEBAR */}
+      <aside className="w-64 bg-primary text-zen-white flex flex-col justify-between fixed h-full z-20">
+        <div className="space-y-8">
+          {/* Brand Logo */}
+          <div className="p-6 border-b border-white/10 flex items-center gap-3">
+            <img
+              alt="MAI Logo"
+              className="h-8 w-8 object-contain bg-zen-white rounded-full p-1"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ9lDDOktfXYovL94tHBrnqXMCK4igx_lTHn325gf1yG1IWLZN-zPHOovHqKgwfiuNBr4HTm-L1O_WhP53ypmNZ37oqnn252tewc5gU2BSEzintj93qZmieuKUWOFwZvx4qynf3EblbM-9M8_87GAy0Ci85iHLaJSKanRB_RDlI5WNxMXmMyAmy2wyfZ_y7O5igVT6Vc0YndNSqJxQgsG64VNoLqcLIqWqjbxuCCy93KsJIEmFkjuau8vMaqw6bASVb__GmYmLbr0"
+            />
+            <span className="font-headline text-xl font-bold tracking-tight">MAI CMS</span>
+          </div>
+
+          {/* Navigation links */}
+          <nav className="px-4 space-y-1">
+            <button
+              onClick={() => setActiveTab('overview')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all ${
+                activeTab === 'overview' ? 'bg-white/10 text-zen-white' : 'text-white/60 hover:text-zen-white hover:bg-white/5'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[20px]">dashboard</span>
+              Tổng quan
+            </button>
+            <button
+              onClick={() => setActiveTab('leads')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all ${
+                activeTab === 'leads' ? 'bg-white/10 text-zen-white' : 'text-white/60 hover:text-zen-white hover:bg-white/5'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[20px]">people</span>
+              Quản lý Leads
+            </button>
+            <button
+              onClick={() => setActiveTab('posts')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all ${
+                activeTab === 'posts' ? 'bg-white/10 text-zen-white' : 'text-white/60 hover:text-zen-white hover:bg-white/5'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[20px]">post_add</span>
+              Đăng bài &amp; Podcast
+            </button>
+            <button
+              onClick={() => setActiveTab('quiz')}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all ${
+                activeTab === 'quiz' ? 'bg-white/10 text-zen-white' : 'text-white/60 hover:text-zen-white hover:bg-white/5'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[20px]">settings_accessibility</span>
+              Cấu hình Quiz
+            </button>
+          </nav>
+        </div>
+
+        {/* Footer Sidebar */}
+        <div className="p-6 border-t border-white/10 space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-8 rounded-full bg-heritage-maroon flex items-center justify-center text-xs font-bold text-zen-white border border-white/20">
+              P
+            </div>
+            <div>
+              <div className="text-xs font-bold font-label">Phương Nguyễn</div>
+              <div className="text-[10px] text-white/50">Media Specialist</div>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <a
+              href="/"
+              className="flex-1 text-center py-2 border border-white/20 hover:bg-white/10 rounded text-[10px] font-label font-bold uppercase tracking-wider transition-all"
+            >
+              Trang chủ
+            </a>
+            <button
+              onClick={handleLogout}
+              className="flex-1 text-center py-2 bg-red-700/80 hover:bg-red-800 rounded text-[10px] font-label font-bold uppercase tracking-wider transition-all"
+            >
+              Đăng xuất
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* MAIN CONTENT CONTAINER */}
+      <main className="flex-1 ml-64 min-h-screen flex flex-col">
+        {/* Header */}
+        <header className="bg-zen-white border-b border-surface-container py-4 px-8 flex justify-between items-center sticky top-0 z-10 shadow-sm">
+          <h1 className="font-headline text-2xl font-bold text-primary">
+            {activeTab === 'overview' && 'Tổng quan hệ thống'}
+            {activeTab === 'leads' && 'Quản lý thông tin Leads'}
+            {activeTab === 'posts' && 'Quản lý Bài viết & Podcasts'}
+            {activeTab === 'quiz' && 'Cấu hình Câu hỏi Chẩn đoán'}
+          </h1>
+          <div className="flex items-center gap-4 text-xs font-label text-secondary">
+            <span className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Hệ thống đang chạy
+            </span>
+            <span className="border-l border-surface-container pl-4">{currentTime}</span>
+          </div>
+        </header>
+
+        {/* Content Area */}
+        <div className="p-8 flex-1">
+          {/* TAB: OVERVIEW */}
+          {activeTab === 'overview' && (
+            <div id="tab-content-overview" className="space-y-8">
+              {/* Stat Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-zen-white border border-surface-container p-6 rounded-lg shadow-sm flex items-center justify-between">
+                  <div className="space-y-1">
+                    <span className="text-xs font-semibold text-secondary uppercase tracking-wider font-label">Tổng số Leads</span>
+                    <h3 className="text-3xl font-bold font-label text-primary">{totalLeads}</h3>
+                    <p className="text-[10px] text-green-700 font-semibold flex items-center gap-0.5">
+                      <span className="material-symbols-outlined text-[12px]">trending_up</span> Dữ liệu thời gian thực
+                    </p>
+                  </div>
+                  <span className="material-symbols-outlined text-[48px] text-heritage-maroon/20">people</span>
+                </div>
+                <div className="bg-zen-white border border-surface-container p-6 rounded-lg shadow-sm flex items-center justify-between">
+                  <div className="space-y-1">
+                    <span className="text-xs font-semibold text-secondary uppercase tracking-wider font-label">Bài viết &amp; Podcast</span>
+                    <h3 className="text-3xl font-bold font-label text-primary">{totalPosts}</h3>
+                    <p className="text-[10px] text-secondary font-semibold">Tự động đồng bộ ra trang chủ</p>
+                  </div>
+                  <span className="material-symbols-outlined text-[48px] text-heritage-maroon/20">newspaper</span>
+                </div>
+                <div className="bg-zen-white border border-surface-container p-6 rounded-lg shadow-sm flex items-center justify-between">
+                  <div className="space-y-1">
+                    <span className="text-xs font-semibold text-secondary uppercase tracking-wider font-label">Phân luồng đối tượng</span>
+                    <h3 className="text-base font-bold font-label text-primary pt-1">{getRoleRatio()}</h3>
+                    <p className="text-[10px] text-secondary font-semibold">Tỉ lệ đăng ký chẩn đoán</p>
+                  </div>
+                  <span className="material-symbols-outlined text-[48px] text-heritage-maroon/20">donut_large</span>
+                </div>
+              </div>
+
+              {/* Recent Leads Table */}
+              <div className="bg-zen-white border border-surface-container rounded-lg shadow-sm p-6 space-y-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="font-headline text-lg font-bold text-primary">Khách hàng mới đăng ký gần đây</h3>
+                  <button
+                    onClick={() => setActiveTab('leads')}
+                    className="text-heritage-maroon font-label text-xs font-bold uppercase tracking-wider hover:text-primary transition-colors flex items-center gap-0.5"
+                  >
+                    Xem tất cả <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+                  </button>
+                </div>
+
+                <div className="overflow-x-auto border border-surface-container rounded-lg">
+                  <table className="w-full text-left text-sm font-body border-collapse">
+                    <thead>
+                      <tr className="bg-paper-grey/60 border-b border-surface-container text-xs font-label font-bold uppercase tracking-wider text-secondary">
+                        <th className="p-4">Họ và tên</th>
+                        <th className="p-4">Số điện thoại</th>
+                        <th className="p-4">Email</th>
+                        <th className="p-4">Công ty</th>
+                        <th className="p-4 text-center">Điểm (M/A/T)</th>
+                        <th className="p-4">Thời gian</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {leads.length === 0 ? (
+                        <tr>
+                          <td colSpan={6} className="text-center p-6 text-secondary">
+                            Chưa có dữ liệu khách hàng đăng ký.
+                          </td>
+                        </tr>
+                      ) : (
+                        leads.slice(0, 3).map((l) => (
+                          <tr key={l.id} className="border-b border-surface-container hover:bg-background/25">
+                            <td className="p-4 font-semibold text-primary">{l.name}</td>
+                            <td className="p-4">{l.phone}</td>
+                            <td className="p-4 text-xs">{l.email}</td>
+                            <td className="p-4 text-xs">{l.company}</td>
+                            <td className="p-4 text-center text-xs font-semibold text-heritage-maroon">
+                              {l.scores.mindful}/{l.scores.action}/{l.scores.tech}
+                            </td>
+                            <td className="p-4 text-xs">{l.date}</td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB: LEADS */}
+          {activeTab === 'leads' && (
+            <div id="admin-tab-leads" className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h3 className="font-headline text-xl font-bold text-primary">Danh sách Leads thu thập</h3>
+                <button
+                  onClick={handleExportLeads}
+                  className="bg-heritage-maroon text-zen-white px-4 py-2 text-xs font-label font-bold uppercase tracking-wider hover:bg-primary-container transition-all flex items-center gap-1.5 rounded-sm"
+                >
+                  <span className="material-symbols-outlined text-[16px]">download</span> Xuất File Excel/CSV
+                </button>
+              </div>
+
+              <div className="overflow-x-auto border border-surface-container rounded-lg bg-zen-white shadow-sm">
+                <table className="w-full text-left text-sm font-body border-collapse">
+                  <thead>
+                    <tr className="bg-paper-grey/60 border-b border-surface-container text-xs font-label font-bold uppercase tracking-wider text-secondary">
+                      <th className="p-4">Họ và tên</th>
+                      <th className="p-4">Số điện thoại</th>
+                      <th className="p-4">Email</th>
+                      <th className="p-4">Công ty</th>
+                      <th className="p-4">Vai trò</th>
+                      <th className="p-4 text-center">Điểm (M/A/T)</th>
+                      <th className="p-4">Thời gian</th>
+                      <th className="p-4 text-center">Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {leads.length === 0 ? (
+                      <tr>
+                        <td colSpan={8} className="text-center p-6 text-secondary">
+                          Chưa có thông tin khách hàng đăng ký trắc nghiệm.
+                        </td>
+                      </tr>
+                    ) : (
+                      leads.map((l) => (
+                        <tr key={l.id} className="border-b border-surface-container hover:bg-background/20">
+                          <td className="p-4 font-semibold text-primary">{l.name}</td>
+                          <td className="p-4">{l.phone}</td>
+                          <td className="p-4 text-xs">{l.email}</td>
+                          <td className="p-4 text-xs">{l.company}</td>
+                          <td className="p-4 text-xs font-bold">{l.role}</td>
+                          <td className="p-4 text-center text-xs font-semibold text-heritage-maroon">
+                            {l.scores.mindful}/{l.scores.action}/{l.scores.tech}
+                          </td>
+                          <td className="p-4 text-xs">{l.date}</td>
+                          <td className="p-4 text-center">
+                            <button
+                              onClick={() => handleDeleteLead(l.id)}
+                              className="text-red-700 hover:text-red-950 font-semibold text-xs uppercase tracking-wider"
+                            >
+                              Xóa
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* TAB: POSTS */}
+          {activeTab === 'posts' && (
+            <div id="admin-tab-posts" className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h3 className="font-headline text-xl font-bold text-primary">Quản lý bài viết &amp; podcasts</h3>
+                {!isPostFormOpen && (
+                  <button
+                    onClick={() => setIsPostFormOpen(true)}
+                    className="bg-heritage-maroon text-zen-white px-4 py-2 text-xs font-label font-bold uppercase tracking-wider hover:bg-primary-container transition-all flex items-center gap-1 rounded-sm"
+                  >
+                    <span className="material-symbols-outlined text-[16px]">add_circle</span> Viết bài mới
+                  </button>
+                )}
+              </div>
+
+              {/* Form bài viết mới */}
+              {isPostFormOpen ? (
+                <div className="bg-paper-grey/30 border border-surface-container rounded-lg p-6 space-y-6">
+                  <div className="flex justify-between items-center border-b border-surface-container/60 pb-3">
+                    <h4 className="font-headline text-lg font-bold text-primary">Tạo Bài Viết / Podcast Mới</h4>
+                    <button
+                      onClick={() => setIsPostFormOpen(false)}
+                      className="text-secondary hover:text-primary font-label text-xs font-bold uppercase tracking-wider"
+                    >
+                      Hủy bỏ
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleSavePost} className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <label className="font-label text-xs font-semibold text-secondary uppercase tracking-wider block">Tiêu đề</label>
+                        <input
+                          type="text"
+                          required
+                          value={postFormData.title}
+                          onChange={(e) => setPostFormData({ ...postFormData, title: e.target.value })}
+                          className="w-full border border-surface-container rounded px-3 py-2 text-sm outline-none focus:border-heritage-maroon bg-background"
+                          placeholder="Nhập tiêu đề bài viết..."
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="font-label text-xs font-semibold text-secondary uppercase tracking-wider block">Danh mục</label>
+                        <select
+                          value={postFormData.category}
+                          onChange={(e) => setPostFormData({ ...postFormData, category: e.target.value })}
+                          className="w-full border border-surface-container rounded px-3 py-2 text-sm outline-none focus:border-heritage-maroon bg-zen-white"
+                        >
+                          <option value="Xu hướng Ngành">Xu hướng Ngành</option>
+                          <option value="Công nghệ Quản trị">Công nghệ Quản trị</option>
+                          <option value="Khai phóng Tâm trí">Khai phóng Tâm trí</option>
+                          <option value="Báo cáo Độc quyền">Báo cáo Độc quyền</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <label className="font-label text-xs font-semibold text-secondary uppercase tracking-wider block">Dạng bài</label>
+                        <select
+                          value={postFormData.type}
+                          onChange={(e) => setPostFormData({ ...postFormData, type: e.target.value as 'blog' | 'podcast' })}
+                          className="w-full border border-surface-container rounded px-3 py-2 text-sm outline-none focus:border-heritage-maroon bg-zen-white"
+                        >
+                          <option value="blog">Blog Bài viết</option>
+                          <option value="podcast">Podcast Âm thanh</option>
+                        </select>
+                      </div>
+                      <div className="space-y-1">
+                        <label className="font-label text-xs font-semibold text-secondary uppercase tracking-wider block">Link ảnh Thumbnail (Tùy chọn)</label>
+                        <input
+                          type="url"
+                          value={postFormData.image}
+                          onChange={(e) => setPostFormData({ ...postFormData, image: e.target.value })}
+                          className="w-full border border-surface-container rounded px-3 py-2 text-sm outline-none focus:border-heritage-maroon bg-background"
+                          placeholder="https://unsplash.com/... (để trống sẽ dùng ảnh mẫu)"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-1">
+                      <label className="font-label text-xs font-semibold text-secondary uppercase tracking-wider block">Tóm tắt ngắn</label>
+                      <input
+                        type="text"
+                        required
+                        value={postFormData.summary}
+                        onChange={(e) => setPostFormData({ ...postFormData, summary: e.target.value })}
+                        className="w-full border border-surface-container rounded px-3 py-2 text-sm outline-none focus:border-heritage-maroon bg-background"
+                        placeholder="Mô tả ngắn hiển thị ở trang ngoài..."
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="font-label text-xs font-semibold text-secondary uppercase tracking-wider block">Nội dung chi tiết (Chấp nhận thẻ HTML cơ bản)</label>
+                      <textarea
+                        rows={6}
+                        required
+                        value={postFormData.content}
+                        onChange={(e) => setPostFormData({ ...postFormData, content: e.target.value })}
+                        className="w-full border border-surface-container rounded p-3 text-sm outline-none focus:border-heritage-maroon bg-background font-body"
+                        placeholder="Nhập nội dung bài viết. Bạn có thể sử dụng các thẻ HTML như <strong>, <ol>, <li> để trình bày..."
+                      />
+                    </div>
+                    <div className="flex gap-4 justify-end pt-2">
+                      <button
+                        type="button"
+                        onClick={() => setIsPostFormOpen(false)}
+                        className="border border-surface-container px-6 py-3 font-label text-xs font-bold uppercase tracking-wider text-secondary rounded hover:bg-background transition-all"
+                      >
+                        Hủy
+                      </button>
+                      <button
+                        type="submit"
+                        className="bg-heritage-maroon text-zen-white px-8 py-3 font-label text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all rounded shadow"
+                      >
+                        Xuất bản ngay
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              ) : (
+                <div id="admin-posts-list-box" className="space-y-4">
+                  <div className="overflow-x-auto border border-surface-container rounded-lg bg-zen-white shadow-sm">
+                    <table className="w-full text-left text-sm font-body border-collapse">
+                      <thead>
+                        <tr className="bg-paper-grey/60 border-b border-surface-container text-xs font-label font-bold uppercase tracking-wider text-secondary">
+                          <th className="p-4">Hình ảnh</th>
+                          <th className="p-4">Tiêu đề</th>
+                          <th className="p-4">Danh mục</th>
+                          <th className="p-4">Dạng</th>
+                          <th className="p-4 text-center">Hành động</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {posts.length === 0 ? (
+                          <tr>
+                            <td colSpan={5} className="text-center p-6 text-secondary">
+                              Không có bài viết nào trên hệ thống.
+                            </td>
+                          </tr>
+                        ) : (
+                          posts.map((p) => (
+                            <tr key={p.id} className="border-b border-surface-container hover:bg-background/20">
+                              <td className="p-4">
+                                <img
+                                  src={p.image}
+                                  className="w-12 h-10 object-cover rounded-sm border border-surface-container"
+                                  alt="Thumbnail"
+                                />
+                              </td>
+                              <td className="p-4 font-semibold text-primary max-w-[300px] truncate">{p.title}</td>
+                              <td className="p-4 text-xs font-semibold uppercase tracking-wider">{p.category}</td>
+                              <td className="p-4 text-xs uppercase font-bold">{p.type}</td>
+                              <td className="p-4 text-center">
+                                <button
+                                  onClick={() => handleDeletePost(p.id)}
+                                  className="text-red-700 hover:text-red-950 font-semibold text-xs uppercase tracking-wider"
+                                >
+                                  Xóa
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB: QUIZ CONFIG */}
+          {activeTab === 'quiz' && localQuestions && (
+            <div id="admin-tab-quiz" className="space-y-6">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="font-headline text-xl font-bold text-primary">Cấu hình câu hỏi trắc nghiệm</h3>
+                  <p className="font-body text-xs text-secondary mt-1">
+                    Chỉnh sửa câu hỏi, vai trò và trọng số thang điểm trượt.
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleResetQuizConfig}
+                    className="border border-heritage-maroon/30 text-heritage-maroon px-4 py-2 text-xs font-label font-bold uppercase tracking-wider hover:bg-heritage-maroon/5 transition-all rounded-sm"
+                  >
+                    Khôi phục mặc định
+                  </button>
+                  <button
+                    onClick={handleSaveQuizConfig}
+                    className="bg-heritage-maroon text-zen-white px-5 py-2 text-xs font-label font-bold uppercase tracking-wider hover:bg-primary-container transition-all rounded-sm shadow"
+                  >
+                    Lưu tất cả thay đổi
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* LEADER QUESTIONS */}
+                <div className="space-y-6 bg-zen-white p-6 border border-surface-container rounded-lg shadow-sm">
+                  <h4 className="font-headline text-lg font-bold text-primary border-b border-surface-container pb-2 flex items-center gap-2">
+                    <span className="material-symbols-outlined text-[20px] text-heritage-maroon">leaderboard</span>
+                    Phân hệ: Nhà Quản Lý
+                  </h4>
+                  <div className="space-y-6" id="admin-quiz-leader-box">
+                    {localQuestions.leader.map((q, idx) => (
+                      <div key={q.id} className="p-4 border border-surface-container bg-background/25 rounded space-y-3">
+                        <div className="flex justify-between items-center text-xs font-label">
+                          <span className="font-bold text-heritage-maroon uppercase tracking-wide">
+                            Câu hỏi {idx + 1} ({q.axis.toUpperCase()})
+                          </span>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-xs text-secondary font-label block">Nội dung câu hỏi:</label>
+                          <textarea
+                            rows={2}
+                            value={q.text}
+                            onChange={(e) => handleUpdateQuizField('leader', idx, 'text', e.target.value)}
+                            className="w-full text-xs border border-surface-container rounded p-2 focus:border-heritage-maroon outline-none bg-background font-body"
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-secondary uppercase tracking-wider font-label block">Nhãn Min (Điểm 1)</label>
+                            <input
+                              type="text"
+                              value={q.minLabel}
+                              onChange={(e) => handleUpdateQuizField('leader', idx, 'minLabel', e.target.value)}
+                              className="w-full text-xs border border-surface-container rounded p-1.5 focus:border-heritage-maroon outline-none bg-background font-body"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-secondary uppercase tracking-wider font-label block">Nhãn Max (Điểm 10)</label>
+                            <input
+                              type="text"
+                              value={q.maxLabel}
+                              onChange={(e) => handleUpdateQuizField('leader', idx, 'maxLabel', e.target.value)}
+                              className="w-full text-xs border border-surface-container rounded p-1.5 focus:border-heritage-maroon outline-none bg-background font-body"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* AGENT QUESTIONS */}
+                <div className="space-y-6 bg-zen-white p-6 border border-surface-container rounded-lg shadow-sm">
+                  <h4 className="font-headline text-lg font-bold text-primary border-b border-surface-container pb-2 flex items-center gap-2">
+                    <span className="material-symbols-outlined text-[20px] text-heritage-maroon">person_celebrate</span>
+                    Phân hệ: Tư Vấn Viên (Advisor)
+                  </h4>
+                  <div className="space-y-6" id="admin-quiz-agent-box">
+                    {localQuestions.agent.map((q, idx) => (
+                      <div key={q.id} className="p-4 border border-surface-container bg-background/25 rounded space-y-3">
+                        <div className="flex justify-between items-center text-xs font-label">
+                          <span className="font-bold text-heritage-maroon uppercase tracking-wide">
+                            Câu hỏi {idx + 1} ({q.axis.toUpperCase()})
+                          </span>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-xs text-secondary font-label block">Nội dung câu hỏi:</label>
+                          <textarea
+                            rows={2}
+                            value={q.text}
+                            onChange={(e) => handleUpdateQuizField('agent', idx, 'text', e.target.value)}
+                            className="w-full text-xs border border-surface-container rounded p-2 focus:border-heritage-maroon outline-none bg-background font-body"
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-secondary uppercase tracking-wider font-label block">Nhãn Min (Điểm 1)</label>
+                            <input
+                              type="text"
+                              value={q.minLabel}
+                              onChange={(e) => handleUpdateQuizField('agent', idx, 'minLabel', e.target.value)}
+                              className="w-full text-xs border border-surface-container rounded p-1.5 focus:border-heritage-maroon outline-none bg-background font-body"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] text-secondary uppercase tracking-wider font-label block">Nhãn Max (Điểm 10)</label>
+                            <input
+                              type="text"
+                              value={q.maxLabel}
+                              onChange={(e) => handleUpdateQuizField('agent', idx, 'maxLabel', e.target.value)}
+                              className="w-full text-xs border border-surface-container rounded p-1.5 focus:border-heritage-maroon outline-none bg-background font-body"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </main>
+    </div>
+  );
+}
