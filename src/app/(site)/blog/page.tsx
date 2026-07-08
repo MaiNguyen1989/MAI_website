@@ -24,6 +24,20 @@ export default function BlogPage() {
     }
   }, []);
 
+  // Auto open post from query param
+  useEffect(() => {
+    if (posts && posts.length > 0 && typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const postId = params.get('post');
+      if (postId) {
+        const found = posts.find(p => p.id === postId);
+        if (found) {
+          setSelectedPost(found);
+        }
+      }
+    }
+  }, [posts]);
+
   useEffect(() => {
     if (!posts) return;
     
@@ -96,7 +110,12 @@ export default function BlogPage() {
               filteredPosts.map((post) => (
                 <article
                   key={post.id}
-                  onClick={() => setSelectedPost(post)}
+                  onClick={() => {
+                    setSelectedPost(post);
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('post', post.id);
+                    window.history.pushState(null, '', url.toString());
+                  }}
                   className="space-y-4 cursor-pointer group bg-zen-white p-4 border border-surface-container rounded hover:border-heritage-maroon transition-soft shadow-sm"
                 >
                   <div className="aspect-[4/3] overflow-hidden bg-surface-container-high rounded-sm">
@@ -124,8 +143,18 @@ export default function BlogPage() {
 
       {/* MODAL: CHI TIẾT BÀI VIẾT BLOG */}
       {selectedPost && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 flex items-center justify-center p-4">
-          <div className="bg-zen-white max-w-[800px] w-full rounded-lg shadow-xl overflow-hidden border border-surface-container transition-all">
+        <div 
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setSelectedPost(null);
+              const url = new URL(window.location.href);
+              url.searchParams.delete('post');
+              window.history.pushState(null, '', url.toString());
+            }
+          }}
+          className="fixed inset-0 z-50 overflow-y-auto bg-black/60 flex items-center justify-center p-4"
+        >
+          <div className="bg-zen-white max-w-[800px] w-full rounded-lg shadow-xl overflow-hidden border border-surface-container transition-all relative">
             <div className="h-64 md:h-80 overflow-hidden relative bg-surface-container">
               <img className="w-full h-full object-cover" src={selectedPost.image} alt={selectedPost.title} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
@@ -138,8 +167,30 @@ export default function BlogPage() {
                 </h2>
               </div>
               <button
-                onClick={() => setSelectedPost(null)}
+                onClick={() => {
+                  const link = `${window.location.origin}/blog?post=${selectedPost.id}`;
+                  navigator.clipboard.writeText(link)
+                    .then(() => alert('Đã copy link bài viết để chia sẻ!'))
+                    .catch(err => {
+                      console.error('Không thể copy: ', err);
+                      alert('Không thể copy link tự động. Link bài viết: ' + link);
+                    });
+                }}
+                className="absolute top-4 left-4 bg-black/50 hover:bg-black/80 text-zen-white px-3 py-2 flex items-center gap-1 text-xs font-label font-bold uppercase tracking-wider rounded transition-colors animate-fade-in"
+                title="Sao chép liên kết bài viết để chia sẻ"
+              >
+                <span className="material-symbols-outlined text-[16px]">content_copy</span>
+                Sao chép liên kết
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedPost(null);
+                  const url = new URL(window.location.href);
+                  url.searchParams.delete('post');
+                  window.history.pushState(null, '', url.toString());
+                }}
                 className="absolute top-4 right-4 bg-black/50 hover:bg-black/80 text-zen-white w-10 h-10 flex items-center justify-center rounded-full transition-colors"
+                title="Đóng"
               >
                 <span className="material-symbols-outlined">close</span>
               </button>

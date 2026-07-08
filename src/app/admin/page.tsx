@@ -20,6 +20,7 @@ export default function AdminPage() {
 
   // Post form states
   const [isPostFormOpen, setIsPostFormOpen] = useState(false);
+  const [editingPostId, setEditingPostId] = useState<string | null>(null);
   const [postFormData, setPostFormData] = useState({
     title: '',
     category: 'Xu hướng Ngành',
@@ -28,6 +29,31 @@ export default function AdminPage() {
     content: '',
     image: ''
   });
+
+  const handleEditPost = (post: Post) => {
+    setEditingPostId(post.id);
+    setPostFormData({
+      title: post.title,
+      category: post.category,
+      type: post.type,
+      summary: post.summary,
+      content: post.content.replace(/<br\s*\/?>/gi, '\n'),
+      image: post.image || ''
+    });
+    setIsPostFormOpen(true);
+  };
+
+  const handleCopyLink = (postId: string) => {
+    if (typeof window !== 'undefined') {
+      const link = `${window.location.origin}/blog?post=${postId}`;
+      navigator.clipboard.writeText(link)
+        .then(() => alert('Đã copy link bài viết vào clipboard!'))
+        .catch(err => {
+          console.error('Không thể copy: ', err);
+          alert('Không thể copy link tự động. Link bài viết: ' + link);
+        });
+    }
+  };
 
   // Quiz config editing states
   const [localQuestions, setLocalQuestions] = useState<QuizQuestionsConfig | null>(null);
@@ -95,17 +121,38 @@ export default function AdminPage() {
       image = 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800';
     }
 
-    const newPost: Post = {
-      id: 'p-' + Date.now(),
-      title: postFormData.title,
-      category: postFormData.category,
-      type: postFormData.type,
-      summary: postFormData.summary,
-      content: postFormData.content.replace(/\n/g, '<br/>'),
-      image
-    };
+    if (editingPostId) {
+      const updatedPosts = posts.map((p) => {
+        if (p.id === editingPostId) {
+          return {
+            ...p,
+            title: postFormData.title,
+            category: postFormData.category,
+            type: postFormData.type,
+            summary: postFormData.summary,
+            content: postFormData.content.replace(/\n/g, '<br/>'),
+            image
+          };
+        }
+        return p;
+      });
+      setPosts(updatedPosts);
+      setEditingPostId(null);
+      alert('Bài viết/Podcast đã được cập nhật thành công!');
+    } else {
+      const newPost: Post = {
+        id: 'p-' + Date.now(),
+        title: postFormData.title,
+        category: postFormData.category,
+        type: postFormData.type,
+        summary: postFormData.summary,
+        content: postFormData.content.replace(/\n/g, '<br/>'),
+        image
+      };
+      setPosts([newPost, ...posts]);
+      alert('Bài viết/Podcast đã được đăng xuất bản thành công và hiện ngay trên Blog!');
+    }
 
-    setPosts([newPost, ...posts]);
     setIsPostFormOpen(false);
     setPostFormData({
       title: '',
@@ -115,7 +162,6 @@ export default function AdminPage() {
       content: '',
       image: ''
     });
-    alert('Bài viết/Podcast đã được đăng xuất bản thành công và hiện ngay trên Blog!');
   };
 
   const handleUpdateQuizField = (role: 'leader' | 'agent', index: number, field: keyof Question, value: string) => {
@@ -477,9 +523,22 @@ export default function AdminPage() {
               {isPostFormOpen ? (
                 <div className="bg-paper-grey/30 border border-surface-container rounded-lg p-6 space-y-6">
                   <div className="flex justify-between items-center border-b border-surface-container/60 pb-3">
-                    <h4 className="font-headline text-lg font-bold text-primary">Tạo Bài Viết / Podcast Mới</h4>
+                    <h4 className="font-headline text-lg font-bold text-primary">
+                      {editingPostId ? 'Chỉnh Sửa Bài Viết / Podcast' : 'Tạo Bài Viết / Podcast Mới'}
+                    </h4>
                     <button
-                      onClick={() => setIsPostFormOpen(false)}
+                      onClick={() => {
+                        setIsPostFormOpen(false);
+                        setEditingPostId(null);
+                        setPostFormData({
+                          title: '',
+                          category: 'Xu hướng Ngành',
+                          type: 'blog',
+                          summary: '',
+                          content: '',
+                          image: ''
+                        });
+                      }}
                       className="text-secondary hover:text-primary font-label text-xs font-bold uppercase tracking-wider"
                     >
                       Hủy bỏ
@@ -561,7 +620,18 @@ export default function AdminPage() {
                     <div className="flex gap-4 justify-end pt-2">
                       <button
                         type="button"
-                        onClick={() => setIsPostFormOpen(false)}
+                        onClick={() => {
+                          setIsPostFormOpen(false);
+                          setEditingPostId(null);
+                          setPostFormData({
+                            title: '',
+                            category: 'Xu hướng Ngành',
+                            type: 'blog',
+                            summary: '',
+                            content: '',
+                            image: ''
+                          });
+                        }}
                         className="border border-surface-container px-6 py-3 font-label text-xs font-bold uppercase tracking-wider text-secondary rounded hover:bg-background transition-all"
                       >
                         Hủy
@@ -570,7 +640,7 @@ export default function AdminPage() {
                         type="submit"
                         className="bg-heritage-maroon text-zen-white px-8 py-3 font-label text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all rounded shadow"
                       >
-                        Xuất bản ngay
+                        {editingPostId ? 'Lưu thay đổi' : 'Xuất bản ngay'}
                       </button>
                     </div>
                   </form>
@@ -609,12 +679,33 @@ export default function AdminPage() {
                               <td className="p-4 text-xs font-semibold uppercase tracking-wider">{p.category}</td>
                               <td className="p-4 text-xs uppercase font-bold">{p.type}</td>
                               <td className="p-4 text-center">
-                                <button
-                                  onClick={() => handleDeletePost(p.id)}
-                                  className="text-red-700 hover:text-red-950 font-semibold text-xs uppercase tracking-wider"
-                                >
-                                  Xóa
-                                </button>
+                                <div className="flex justify-center gap-4">
+                                  <button
+                                    type="button"
+                                    onClick={() => handleCopyLink(p.id)}
+                                    className="text-primary hover:text-heritage-maroon font-semibold text-xs uppercase tracking-wider flex items-center gap-1"
+                                    title="Copy Link để chia sẻ"
+                                  >
+                                    <span className="material-symbols-outlined text-[16px]">content_copy</span>
+                                    Copy Link
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleEditPost(p)}
+                                    className="text-blue-700 hover:text-blue-900 font-semibold text-xs uppercase tracking-wider flex items-center gap-1"
+                                  >
+                                    <span className="material-symbols-outlined text-[16px]">edit</span>
+                                    Sửa
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDeletePost(p.id)}
+                                    className="text-red-700 hover:text-red-950 font-semibold text-xs uppercase tracking-wider flex items-center gap-1"
+                                  >
+                                    <span className="material-symbols-outlined text-[16px]">delete</span>
+                                    Xóa
+                                  </button>
+                                </div>
                               </td>
                             </tr>
                           ))
