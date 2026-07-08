@@ -8,9 +8,21 @@ import { initialPosts } from '@/lib/mockData';
 import BookingModal from '@/components/shared/BookingModal';
 
 export default function HomePage() {
-  const [posts] = useLocalStorage<Post[]>('mai_posts', initialPosts);
+  const [posts, setPosts] = useLocalStorage<Post[]>('mai_posts', initialPosts);
   const [featuredPosts, setFeaturedPosts] = useState<Post[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Sync new posts from code statically to client local storage
+  useEffect(() => {
+    if (posts && posts.length > 0) {
+      const missingPosts = initialPosts.filter(
+        initPost => !posts.some(p => p.id === initPost.id)
+      );
+      if (missingPosts.length > 0) {
+        setPosts([...missingPosts, ...posts]);
+      }
+    }
+  }, [posts, setPosts]);
 
   useEffect(() => {
     // Get top 3 posts

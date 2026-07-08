@@ -6,10 +6,22 @@ import { Post } from '@/types';
 import { initialPosts } from '@/lib/mockData';
 
 export default function BlogPage() {
-  const [posts] = useLocalStorage<Post[]>('mai_posts', initialPosts);
+  const [posts, setPosts] = useLocalStorage<Post[]>('mai_posts', initialPosts);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+
+  // Sync new posts from code statically to client local storage
+  useEffect(() => {
+    if (posts && posts.length > 0) {
+      const missingPosts = initialPosts.filter(
+        initPost => !posts.some(p => p.id === initPost.id)
+      );
+      if (missingPosts.length > 0) {
+        setPosts([...missingPosts, ...posts]);
+      }
+    }
+  }, [posts, setPosts]);
 
   // Check URL query filter
   useEffect(() => {

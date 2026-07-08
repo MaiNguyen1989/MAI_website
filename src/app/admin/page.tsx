@@ -15,6 +15,18 @@ export default function AdminPage() {
   const [posts, setPosts] = useLocalStorage<Post[]>('mai_posts', initialPosts);
   const [questions, setQuestions] = useLocalStorage<QuizQuestionsConfig>('mai_questions', initialQuestions);
 
+  // Sync new posts from code statically to client local storage
+  useEffect(() => {
+    if (posts && posts.length > 0) {
+      const missingPosts = initialPosts.filter(
+        initPost => !posts.some(p => p.id === initPost.id)
+      );
+      if (missingPosts.length > 0) {
+        setPosts([...missingPosts, ...posts]);
+      }
+    }
+  }, [posts, setPosts]);
+
   // Date and time display
   const [currentTime, setCurrentTime] = useState('');
 
