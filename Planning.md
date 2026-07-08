@@ -2,8 +2,9 @@
 
 ## 1. Tổng Quan Tiến Độ
 
-* **Trạng thái hiện tại:** Hoàn thành Phase 1 và hoàn tất tích hợp cơ sở dữ liệu Supabase (Phase 2 - Sprint 4). Sẵn sàng đồng bộ dữ liệu thực tế trên toàn bộ các thiết bị.
-* **Thanh tiến độ triển khai:** `███████░░░ 70%`
+* **Trạng thái hiện tại:** Hoàn thành Phase 2 (Thiết lập Database Supabase & Tích hợp API thực tế). Hệ thống dữ liệu bài viết, leads và câu hỏi đã đồng bộ thời gian thực. Sẵn sàng chuẩn bị bước sang Phase 3 (E-learning & Thanh toán).
+* **Thanh tiến độ triển khai:** `████████░░ 80%`
+
 
 ### Danh sách các hạng mục chi tiết
 
@@ -105,9 +106,14 @@ d:\MAI_website\
 - [x] **5.** Tiến hành dựng giao diện Landing Page tĩnh trước tiên.
 - [x] **6.** Tích hợp cơ chế tự động đồng bộ (auto-merge) bài viết mới tĩnh từ file code vào `localStorage` của trình duyệt cũ.
 
-### Các bước triển khai cho Phase 2 (Database & Supabase):
-- [ ] **1.** Khởi tạo project Supabase mới và cấu hình biến môi trường (`.env.local`).
-- [ ] **2.** Tạo các migrations SQL để định nghĩa cấu trúc bảng (như `posts`, `leads`, `profiles`).
-- [ ] **3.** Thiết lập các chính sách Row Level Security (RLS) trên các bảng dữ liệu của Supabase.
-- [ ] **4.** Tích hợp thư viện Supabase client sdk vào mã nguồn Next.js.
-- [ ] **5.** Thay thế dữ liệu đọc/ghi từ `localStorage` bằng việc gọi API Supabase ở các trang Landing, Blog và Admin CMS.
+### Các bước triển khai cho Phase 2 (Database & Supabase) - [ĐÃ HOÀN THÀNH]:
+- [x] **1.** Khởi tạo project Supabase mới và cấu hình biến môi trường (`.env.local` và Vercel).
+- [x] **2.** Tạo các migrations SQL để định nghĩa cấu trúc bảng (như `posts`, `leads`, `questions`).
+- [x] **3.** Thiết lập các chính sách Row Level Security (RLS) trên các bảng dữ liệu của Supabase.
+- [x] **4.** Tích hợp thư viện Supabase client sdk vào mã nguồn Next.js.
+- [x] **5.** Thay thế dữ liệu đọc/ghi từ `localStorage` bằng việc gọi API Supabase ở các trang Landing, Blog và Admin CMS.
+
+### Các bước chuẩn bị cho Phase 3 (E-learning & Thanh toán VietQR):
+- [ ] **1.** Thiết kế schema SQL tạo bảng `courses` (khóa học) và `lessons` (bài học).
+- [ ] **2.** Xây dựng module phát video học thử, đính kèm bài tập thực hành.
+- [ ] **3.** Tích hợp API thanh toán tự động qua VietQR/PayOS cho các công cụ & khóa học trả phí.
