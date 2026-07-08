@@ -114,6 +114,23 @@ export default function DiagnosePage() {
     }
   };
 
+  const getSolutionRedirectUrl = () => {
+    const minAxis = getMinAxis(computedScores);
+    if (selectedRole === 'leader') {
+      if (minAxis === 'mindful') {
+        return '/solutions?branch=management&stage=2'; // Hướng tới Team Leader (Kỹ năng giao tiếp khai vấn / giảm stress)
+      } else {
+        return '/solutions?branch=management&stage=5'; // Hướng tới System Builder (COACHMATE - Hệ thống quản trị)
+      }
+    } else {
+      if (minAxis === 'mindful') {
+        return '/solutions?branch=specialist&stage=2'; // Hướng tới LIBA Level 1 (Tư vấn chuẩn mực & điềm tĩnh)
+      } else {
+        return '/solutions?branch=specialist&stage=3'; // Hướng tới LIBA Level 2 (Hoạch định tài chính chiến lược)
+      }
+    }
+  };
+
   const handleLeadSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const date = new Date().toISOString().slice(0, 16).replace('T', ' ');
@@ -433,7 +450,7 @@ export default function DiagnosePage() {
                 <h4 className="font-headline text-xl font-bold text-primary mt-2">{proposal.advice}</h4>
                 <p className="font-body text-xs text-secondary mt-2 leading-relaxed">{proposal.details}</p>
                 <button
-                  onClick={() => window.location.href = '/solutions'}
+                  onClick={() => window.location.href = getSolutionRedirectUrl()}
                   className="mt-4 bg-heritage-maroon text-zen-white px-5 py-2.5 font-label text-xs font-bold uppercase tracking-wider hover:bg-primary-container transition-all rounded-sm"
                 >
                   Chi tiết giải pháp {proposal.solutionName}
