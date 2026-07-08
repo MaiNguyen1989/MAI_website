@@ -225,7 +225,7 @@ function SolutionsContent() {
             Career Orientation &amp; Programs
           </span>
           <h1 className="font-display text-4xl md:text-6xl text-primary mb-6 animate-fadeIn">
-            Học Viện Đào Tạo Hiệu Suất Cao
+            Học Viện Hành Động Tỉnh Thức
           </h1>
           <p className="font-body text-sm md:text-base text-secondary max-w-2xl mx-auto leading-relaxed animate-fadeIn">
             Lộ trình chuyển đổi hiệu suất và chuẩn hóa quy trình thấu cảm, thiết kế riêng cho ngành Bảo hiểm Nhân thọ tại Việt Nam.
