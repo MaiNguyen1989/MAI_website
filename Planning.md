@@ -98,8 +98,16 @@ d:\MAI_website\
 
 ## 5. Bước Tiếp Theo Ngay Lập Tức
 
-- [ ] **1.** Thống nhất với đại diện MAI Institute về bộ nhận diện thương hiệu (Bảng màu, Font chữ Serif).
-- [ ] **2.** Thiết kế Wireframe/Figma chi tiết cho luồng Quiz (đặc biệt là thanh Slider và Card chọn vai trò).
-- [ ] **3.** Khởi tạo dự án Next.js (App Router, TypeScript, Tailwind CSS) trong thư mục làm việc.
-- [ ] **4.** Tạo tệp dữ liệu Mock Data chứa danh sách câu hỏi chẩn đoán và bài viết blog mẫu để chạy thử Prototype.
-- [ ] **5.** Tiến hành dựng giao diện Landing Page tĩnh trước tiên.
+- [x] **1.** Thống nhất với đại diện MAI Institute về bộ nhận diện thương hiệu (Bảng màu, Font chữ Serif).
+- [x] **2.** Thiết kế Wireframe/Figma chi tiết cho luồng Quiz (đặc biệt là thanh Slider và Card chọn vai trò).
+- [x] **3.** Khởi tạo dự án Next.js (App Router, TypeScript, Tailwind CSS) trong thư mục làm việc.
+- [x] **4.** Tạo tệp dữ liệu Mock Data chứa danh sách câu hỏi chẩn đoán và bài viết blog mẫu để chạy thử Prototype.
+- [x] **5.** Tiến hành dựng giao diện Landing Page tĩnh trước tiên.
+- [x] **6.** Tích hợp cơ chế tự động đồng bộ (auto-merge) bài viết mới tĩnh từ file code vào `localStorage` của trình duyệt cũ.
+
+### Các bước triển khai cho Phase 2 (Database & Supabase):
+- [ ] **1.** Khởi tạo project Supabase mới và cấu hình biến môi trường (`.env.local`).
+- [ ] **2.** Tạo các migrations SQL để định nghĩa cấu trúc bảng (như `posts`, `leads`, `profiles`).
+- [ ] **3.** Thiết lập các chính sách Row Level Security (RLS) trên các bảng dữ liệu của Supabase.
+- [ ] **4.** Tích hợp thư viện Supabase client sdk vào mã nguồn Next.js.
+- [ ] **5.** Thay thế dữ liệu đọc/ghi từ `localStorage` bằng việc gọi API Supabase ở các trang Landing, Blog và Admin CMS.
