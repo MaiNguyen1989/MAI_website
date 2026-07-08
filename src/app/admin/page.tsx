@@ -4,31 +4,88 @@ import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { Lead, Post, QuizQuestionsConfig, Question } from '@/types';
 import { initialLeads, initialPosts, initialQuestions } from '@/lib/mockData';
+import { supabase } from '@/lib/supabase';
 
 export default function AdminPage() {
   const [isLocked, setIsLocked] = useState(true);
   const [pin, setPin] = useState('');
   const [activeTab, setActiveTab] = useState<'overview' | 'leads' | 'posts' | 'quiz'>('overview');
 
-  // Load data from LocalStorage
-  const [leads, setLeads] = useLocalStorage<Lead[]>('mai_leads', initialLeads);
-  const [posts, setPosts] = useLocalStorage<Post[]>('mai_posts', initialPosts);
-  const [questions, setQuestions] = useLocalStorage<QuizQuestionsConfig>('mai_questions', initialQuestions);
-
-  // Sync new posts from code statically to client local storage
-  useEffect(() => {
-    if (posts && posts.length > 0) {
-      const missingPosts = initialPosts.filter(
-        initPost => !posts.some(p => p.id === initPost.id)
-      );
-      if (missingPosts.length > 0) {
-        setPosts([...missingPosts, ...posts]);
-      }
-    }
-  }, [posts, setPosts]);
+  // Load data from States instead of LocalStorage
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [questions, setQuestions] = useState<QuizQuestionsConfig>(initialQuestions);
 
   // Date and time display
   const [currentTime, setCurrentTime] = useState('');
+
+  // Load data from Supabase
+  useEffect(() => {
+    async function loadData() {
+      try {
+        // Fetch posts
+        const { data: postsData, error: postsError } = await supabase
+          .from('posts')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (postsError) throw postsError;
+        if (postsData && postsData.length > 0) {
+          setPosts(postsData as Post[]);
+        } else {
+          setPosts(initialPosts);
+        }
+
+        // Fetch leads
+        const { data: leadsData, error: leadsError } = await supabase
+          .from('leads')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (leadsError) throw leadsError;
+        if (leadsData && leadsData.length > 0) {
+          setLeads(leadsData as Lead[]);
+        } else {
+          setLeads(initialLeads);
+        }
+
+        // Fetch questions
+        const { data: qData, error: qError } = await supabase
+          .from('questions')
+          .select('*');
+        if (qError) throw qError;
+        if (qData && qData.length > 0) {
+          const leaderQuestions: Question[] = [];
+          const agentQuestions: Question[] = [];
+          
+          qData.forEach((q: any) => {
+            const formatted: Question = {
+              id: q.id,
+              axis: q.axis as 'action' | 'tech' | 'mindful',
+              text: q.text,
+              minLabel: q.min_label,
+              maxLabel: q.max_label
+            };
+            if (q.role === 'leader') {
+              leaderQuestions.push(formatted);
+            } else {
+              agentQuestions.push(formatted);
+            }
+          });
+          
+          setQuestions({
+            leader: leaderQuestions.sort((a, b) => a.id.localeCompare(b.id)),
+            agent: agentQuestions.sort((a, b) => a.id.localeCompare(b.id))
+          });
+        }
+      } catch (err) {
+        console.error('Lỗi khi load dữ liệu CMS từ Supabase:', err);
+        // Fallback về mock data nếu Supabase chưa cấu hình
+        setPosts(initialPosts);
+        setLeads(initialLeads);
+        setQuestions(initialQuestions);
+      }
+    }
+    loadData();
+  }, []);
 
   // Post form states
   const [isPostFormOpen, setIsPostFormOpen] = useState(false);
@@ -91,9 +148,19 @@ export default function AdminPage() {
     setActiveTab('overview');
   };
 
-  const handleDeleteLead = (id: string) => {
+  const handleDeleteLead = async (id: string) => {
     if (confirm('Bạn có chắc chắn muốn xóa lead này không?')) {
-      setLeads(leads.filter(l => l.id !== id));
+      try {
+        const { error } = await supabase
+          .from('leads')
+          .delete()
+          .eq('id', id);
+        if (error) throw error;
+        setLeads(leads.filter(l => l.id !== id));
+      } catch (err) {
+        console.error('Lỗi khi xóa lead:', err);
+        alert('Không thể xóa lead trên Supabase: ' + (err as Error).message);
+      }
     }
   };
 
@@ -120,13 +187,23 @@ export default function AdminPage() {
     document.body.removeChild(link);
   };
 
-  const handleDeletePost = (id: string) => {
+  const handleDeletePost = async (id: string) => {
     if (confirm('Bạn có chắc chắn muốn xóa bài viết này khỏi hệ thống?')) {
-      setPosts(posts.filter(p => p.id !== id));
+      try {
+        const { error } = await supabase
+          .from('posts')
+          .delete()
+          .eq('id', id);
+        if (error) throw error;
+        setPosts(posts.filter(p => p.id !== id));
+      } catch (err) {
+        console.error('Lỗi khi xóa bài viết:', err);
+        alert('Không thể xóa bài viết trên Supabase: ' + (err as Error).message);
+      }
     }
   };
 
-  const handleSavePost = (e: React.FormEvent) => {
+  const handleSavePost = async (e: React.FormEvent) => {
     e.preventDefault();
     let image = postFormData.image;
     if (!image) {
@@ -134,23 +211,38 @@ export default function AdminPage() {
     }
 
     if (editingPostId) {
-      const updatedPosts = posts.map((p) => {
-        if (p.id === editingPostId) {
-          return {
-            ...p,
-            title: postFormData.title,
-            category: postFormData.category,
-            type: postFormData.type,
-            summary: postFormData.summary,
-            content: postFormData.content.replace(/\n/g, '<br/>'),
-            image
-          };
-        }
-        return p;
-      });
-      setPosts(updatedPosts);
-      setEditingPostId(null);
-      alert('Bài viết/Podcast đã được cập nhật thành công!');
+      const updatedPost = {
+        title: postFormData.title,
+        category: postFormData.category,
+        type: postFormData.type,
+        summary: postFormData.summary,
+        content: postFormData.content.replace(/\n/g, '<br/>'),
+        image
+      };
+
+      try {
+        const { error } = await supabase
+          .from('posts')
+          .update(updatedPost)
+          .eq('id', editingPostId);
+        if (error) throw error;
+
+        const updatedPosts = posts.map((p) => {
+          if (p.id === editingPostId) {
+            return {
+              ...p,
+              ...updatedPost
+            };
+          }
+          return p;
+        });
+        setPosts(updatedPosts);
+        setEditingPostId(null);
+        alert('Bài viết/Podcast đã được cập nhật thành công trên Supabase!');
+      } catch (err) {
+        console.error('Lỗi khi cập nhật bài viết:', err);
+        alert('Lỗi cập nhật bài viết: ' + (err as Error).message);
+      }
     } else {
       const newPost: Post = {
         id: 'p-' + Date.now(),
@@ -161,8 +253,19 @@ export default function AdminPage() {
         content: postFormData.content.replace(/\n/g, '<br/>'),
         image
       };
-      setPosts([newPost, ...posts]);
-      alert('Bài viết/Podcast đã được đăng xuất bản thành công và hiện ngay trên Blog!');
+
+      try {
+        const { error } = await supabase
+          .from('posts')
+          .insert(newPost);
+        if (error) throw error;
+
+        setPosts([newPost, ...posts]);
+        alert('Bài viết/Podcast đã được đăng xuất bản thành công và hiện ngay trên Blog!');
+      } catch (err) {
+        console.error('Lỗi khi đăng bài viết:', err);
+        alert('Lỗi đăng bài viết: ' + (err as Error).message);
+      }
     }
 
     setIsPostFormOpen(false);
@@ -186,18 +289,82 @@ export default function AdminPage() {
     setLocalQuestions(updated);
   };
 
-  const handleSaveQuizConfig = () => {
+  const handleSaveQuizConfig = async () => {
     if (localQuestions) {
-      setQuestions(localQuestions);
-      alert('Cấu hình câu hỏi trắc nghiệm đã được lưu thành công!');
+      try {
+        const flatQuestions: any[] = [];
+        localQuestions.leader.forEach((q) => {
+          flatQuestions.push({
+            id: q.id,
+            role: 'leader',
+            axis: q.axis,
+            text: q.text,
+            min_label: q.minLabel,
+            max_label: q.maxLabel
+          });
+        });
+        localQuestions.agent.forEach((q) => {
+          flatQuestions.push({
+            id: q.id,
+            role: 'agent',
+            axis: q.axis,
+            text: q.text,
+            min_label: q.minLabel,
+            max_label: q.maxLabel
+          });
+        });
+
+        const { error } = await supabase
+          .from('questions')
+          .upsert(flatQuestions);
+        if (error) throw error;
+
+        setQuestions(localQuestions);
+        alert('Cấu hình câu hỏi trắc nghiệm đã được lưu thành công trên Supabase!');
+      } catch (err) {
+        console.error('Lỗi khi lưu câu hỏi lên Supabase:', err);
+        alert('Lỗi khi lưu cấu hình câu hỏi: ' + (err as Error).message);
+      }
     }
   };
 
-  const handleResetQuizConfig = () => {
+  const handleResetQuizConfig = async () => {
     if (confirm('Bạn có chắc chắn muốn khôi phục toàn bộ câu hỏi trắc nghiệm về mặc định ban đầu không?')) {
-      setQuestions(initialQuestions);
-      setLocalQuestions(JSON.parse(JSON.stringify(initialQuestions)));
-      alert('Khôi phục cấu hình câu hỏi thành công!');
+      try {
+        const flatQuestions: any[] = [];
+        initialQuestions.leader.forEach((q) => {
+          flatQuestions.push({
+            id: q.id,
+            role: 'leader',
+            axis: q.axis,
+            text: q.text,
+            min_label: q.minLabel,
+            max_label: q.maxLabel
+          });
+        });
+        initialQuestions.agent.forEach((q) => {
+          flatQuestions.push({
+            id: q.id,
+            role: 'agent',
+            axis: q.axis,
+            text: q.text,
+            min_label: q.minLabel,
+            max_label: q.maxLabel
+          });
+        });
+
+        const { error } = await supabase
+          .from('questions')
+          .upsert(flatQuestions);
+        if (error) throw error;
+
+        setQuestions(initialQuestions);
+        setLocalQuestions(JSON.parse(JSON.stringify(initialQuestions)));
+        alert('Khôi phục cấu hình câu hỏi thành công trên Supabase!');
+      } catch (err) {
+        console.error('Lỗi khi khôi phục câu hỏi:', err);
+        alert('Lỗi khôi phục câu hỏi: ' + (err as Error).message);
+      }
     }
   };
 

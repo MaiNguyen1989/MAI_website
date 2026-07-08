@@ -4,24 +4,37 @@ import React, { useState, useEffect } from 'react';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { Post } from '@/types';
 import { initialPosts } from '@/lib/mockData';
+import { supabase } from '@/lib/supabase';
 
 export default function BlogPage() {
-  const [posts, setPosts] = useLocalStorage<Post[]>('mai_posts', initialPosts);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
-  // Sync new posts from code statically to client local storage
   useEffect(() => {
-    if (posts && posts.length > 0) {
-      const missingPosts = initialPosts.filter(
-        initPost => !posts.some(p => p.id === initPost.id)
-      );
-      if (missingPosts.length > 0) {
-        setPosts([...missingPosts, ...posts]);
+    async function fetchPosts() {
+      try {
+        const { data, error } = await supabase
+          .from('posts')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        if (data && data.length > 0) {
+          setPosts(data as Post[]);
+        } else {
+          // Fallback về mock data nếu DB rỗng
+          setPosts(initialPosts);
+        }
+      } catch (err) {
+        console.error('Lỗi khi fetch posts từ Supabase:', err);
+        // Fallback về mock data nếu Supabase chưa được cấu hình
+        setPosts(initialPosts);
       }
     }
-  }, [posts, setPosts]);
+    fetchPosts();
+  }, []);
 
   // Check URL query filter
   useEffect(() => {

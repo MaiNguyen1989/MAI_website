@@ -2,8 +2,8 @@
 
 ## 1. Tổng Quan Tiến Độ
 
-* **Trạng thái hiện tại:** Hoàn thành Phase 1 (Frontend Prototype SPA & CMS Dashboard chạy bằng Mock Data). Đã đẩy mã nguồn lên GitHub và sẵn sàng deploy lên Vercel. Chuẩn bị bước sang Phase 2 (Thiết lập Database Supabase & Tích hợp API thực tế).
-* **Thanh tiến độ triển khai:** `██████░░░░ 55%`
+* **Trạng thái hiện tại:** Hoàn thành Phase 1 và hoàn tất tích hợp cơ sở dữ liệu Supabase (Phase 2 - Sprint 4). Sẵn sàng đồng bộ dữ liệu thực tế trên toàn bộ các thiết bị.
+* **Thanh tiến độ triển khai:** `███████░░░ 70%`
 
 ### Danh sách các hạng mục chi tiết
 
@@ -13,7 +13,7 @@
 | ✅ Thiết kế Kiến trúc Hệ thống (System design.md) | Hoàn thành | **P0** | Chốt phương án sử dụng Next.js + Supabase + Vercel. |
 | ✅ Thiết kế UI/UX & Giao diện | Hoàn thành | **P0** | Thiết kế Prototype trực quan, responsive sang trọng dựa trên Design System. |
 | ✅ Xây dựng Frontend Prototype (Mock data) | Hoàn thành | **P0** | Trình diễn luồng chẩn đoán và Radar SVG động thông qua localStorage. |
-| ❌ Thiết kế Database & Cài đặt Supabase | Chưa bắt đầu | **P1** | Khởi tạo bảng, thiết lập quan hệ và Row Level Security. |
+| ✅ Thiết kế Database & Cài đặt Supabase | Hoàn thành | **P1** | Cấu hình Supabase Client, tạo bảng (posts, leads, questions) và RLS policies. |
 | ❌ Xây dựng API & Edge Functions (PDF) | Chưa bắt đầu | **P1** | Logic tính điểm và sinh file PDF kết quả tự động. |
 | ✅ Phát triển CMS Admin & Blog | Hoàn thành | **P1** | Tách biệt trang admin.html độc lập, hỗ trợ đăng bài viết & quản lý Leads. |
 | ❌ Xây dựng Module E-learning (V1.1) | Chưa bắt đầu | **P2** | Trang học thử video, bài tập thực hành. |

@@ -6,30 +6,36 @@ import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { Post } from '@/types';
 import { initialPosts } from '@/lib/mockData';
 import BookingModal from '@/components/shared/BookingModal';
+import { supabase } from '@/lib/supabase';
 
 export default function HomePage() {
-  const [posts, setPosts] = useLocalStorage<Post[]>('mai_posts', initialPosts);
   const [featuredPosts, setFeaturedPosts] = useState<Post[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Sync new posts from code statically to client local storage
   useEffect(() => {
-    if (posts && posts.length > 0) {
-      const missingPosts = initialPosts.filter(
-        initPost => !posts.some(p => p.id === initPost.id)
-      );
-      if (missingPosts.length > 0) {
-        setPosts([...missingPosts, ...posts]);
+    async function fetchFeaturedPosts() {
+      try {
+        const { data, error } = await supabase
+          .from('posts')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(3);
+        
+        if (error) throw error;
+        if (data && data.length > 0) {
+          setFeaturedPosts(data as Post[]);
+        } else {
+          // Fallback về mock data nếu DB rỗng
+          setFeaturedPosts(initialPosts.slice(0, 3));
+        }
+      } catch (err) {
+        console.error('Lỗi khi fetch bài viết từ Supabase:', err);
+        // Fallback về mock data nếu Supabase chưa cấu hình
+        setFeaturedPosts(initialPosts.slice(0, 3));
       }
     }
-  }, [posts, setPosts]);
-
-  useEffect(() => {
-    // Get top 3 posts
-    if (posts && posts.length > 0) {
-      setFeaturedPosts(posts.slice(0, 3));
-    }
-  }, [posts]);
+    fetchFeaturedPosts();
+  }, []);
 
   return (
     <div id="view-home" className="view-content">

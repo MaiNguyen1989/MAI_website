@@ -5,10 +5,51 @@ import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { Question, Lead, LeadScores } from '@/types';
 import { initialQuestions, initialLeads } from '@/lib/mockData';
 import RadarChart from '@/components/charts/RadarChart';
+import { supabase } from '@/lib/supabase';
 
 export default function DiagnosePage() {
-  const [questionsConfig] = useLocalStorage<typeof initialQuestions>('mai_questions', initialQuestions);
-  const [leads, setLeads] = useLocalStorage<Lead[]>('mai_leads', initialLeads);
+  const [questionsConfig, setQuestionsConfig] = useState<typeof initialQuestions>(initialQuestions);
+
+  // Fetch questions from Supabase on load
+  useEffect(() => {
+    async function fetchQuestions() {
+      try {
+        const { data, error } = await supabase
+          .from('questions')
+          .select('*');
+        
+        if (error) throw error;
+        if (data && data.length > 0) {
+          const leaderQuestions: Question[] = [];
+          const agentQuestions: Question[] = [];
+          
+          data.forEach((q: any) => {
+            const formatted: Question = {
+              id: q.id,
+              axis: q.axis as 'action' | 'tech' | 'mindful',
+              text: q.text,
+              minLabel: q.min_label,
+              maxLabel: q.max_label
+            };
+            if (q.role === 'leader') {
+              leaderQuestions.push(formatted);
+            } else {
+              agentQuestions.push(formatted);
+            }
+          });
+          
+          setQuestionsConfig({
+            leader: leaderQuestions.sort((a, b) => a.id.localeCompare(b.id)),
+            agent: agentQuestions.sort((a, b) => a.id.localeCompare(b.id))
+          });
+        }
+      } catch (err) {
+        console.error('Lỗi khi fetch câu hỏi từ Supabase:', err);
+        // Fallback dùng initialQuestions tĩnh
+      }
+    }
+    fetchQuestions();
+  }, []);
 
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
   const [selectedRole, setSelectedRole] = useState<'leader' | 'agent' | null>(null);
@@ -131,7 +172,7 @@ export default function DiagnosePage() {
     }
   };
 
-  const handleLeadSubmit = (e: React.FormEvent) => {
+  const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const date = new Date().toISOString().slice(0, 16).replace('T', ' ');
 
@@ -146,7 +187,32 @@ export default function DiagnosePage() {
       date
     };
 
-    setLeads([newLead, ...leads]);
+    // Save lead to Supabase
+    try {
+      const { error } = await supabase
+        .from('leads')
+        .insert({
+          id: newLead.id,
+          name: newLead.name,
+          phone: newLead.phone,
+          email: newLead.email,
+          company: newLead.company,
+          role: newLead.role,
+          scores: newLead.scores,
+          date: newLead.date
+        });
+      if (error) throw error;
+    } catch (err) {
+      console.error('Lỗi khi lưu lead lên Supabase:', err);
+      // Fallback ghi LocalStorage để dữ liệu không bị mất nếu Supabase chưa cấu hình
+      try {
+        const item = window.localStorage.getItem('mai_leads');
+        const localLeads = item ? JSON.parse(item) : initialLeads;
+        window.localStorage.setItem('mai_leads', JSON.stringify([newLead, ...localLeads]));
+      } catch (e) {
+        console.warn('Lỗi ghi LocalStorage fallback:', e);
+      }
+    }
 
     // Tạo đề xuất cá nhân hóa
     const minAxis = getMinAxis(computedScores);
