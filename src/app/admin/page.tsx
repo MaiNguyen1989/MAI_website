@@ -550,11 +550,11 @@ export default function AdminPage() {
         <div className="p-6 border-t border-white/10 space-y-4">
           <div className="flex items-center gap-3">
             <div className="h-8 w-8 rounded-full bg-heritage-maroon flex items-center justify-center text-xs font-bold text-zen-white border border-white/20">
-              P
+              M
             </div>
             <div>
-              <div className="text-xs font-bold font-label">Phương Nguyễn</div>
-              <div className="text-[10px] text-white/50">Media Specialist</div>
+              <div className="text-xs font-bold font-label">Mai Nguyễn</div>
+              <div className="text-[10px] text-white/50">Admin</div>
             </div>
           </div>
           <div className="flex gap-2">
