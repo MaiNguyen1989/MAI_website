@@ -8,8 +8,30 @@ import { supabase } from '@/lib/supabase';
 
 export default function AdminPage() {
   const [isLocked, setIsLocked] = useState(true);
-  const [pin, setPin] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  const [authError, setAuthError] = useState('');
   const [activeTab, setActiveTab] = useState<'overview' | 'leads' | 'posts' | 'quiz'>('overview');
+
+  // Check current session on mount
+  useEffect(() => {
+    async function checkSession() {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          setIsLocked(false);
+        } else {
+          setIsLocked(true);
+        }
+      } catch (err) {
+        console.error('Lỗi check session:', err);
+      } finally {
+        setIsLoadingAuth(false);
+      }
+    }
+    checkSession();
+  }, []);
 
   // Load data from States instead of LocalStorage
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -134,18 +156,36 @@ export default function AdminPage() {
     }
   }, [questions]);
 
-  const handleUnlock = (quick = false) => {
-    if (quick || pin === '1234') {
-      setIsLocked(false);
-      setPin('');
-    } else {
-      alert('Mã PIN không chính xác. PIN demo mặc định: 1234');
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError('');
+    setIsLoadingAuth(true);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) throw error;
+      if (data.session) {
+        setIsLocked(false);
+        setPassword('');
+      }
+    } catch (err) {
+      console.error('Đăng nhập thất bại:', err);
+      setAuthError('Email hoặc mật khẩu không chính xác.');
+    } finally {
+      setIsLoadingAuth(false);
     }
   };
 
-  const handleLogout = () => {
-    setIsLocked(true);
-    setActiveTab('overview');
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      setIsLocked(true);
+      setActiveTab('overview');
+    } catch (err) {
+      console.error('Đăng xuất thất bại:', err);
+    }
   };
 
   const handleDeleteLead = async (id: string) => {
@@ -389,35 +429,54 @@ export default function AdminPage() {
           <div className="space-y-2">
             <h2 className="font-display text-3xl text-primary font-bold">Bảng Điều Khiển CMS</h2>
             <p className="font-body text-xs text-secondary leading-relaxed">
-              Khu vực dành riêng cho nhân sự truyền thông MAI Institute. Vui lòng nhập mã PIN bảo mật để tiếp tục.
+              Khu vực dành riêng cho nhân sự truyền thông MAI Institute. Vui lòng đăng nhập để tiếp tục.
             </p>
           </div>
-          <div className="space-y-4">
-            <input
-              type="password"
-              maxLength={4}
-              value={pin}
-              onChange={(e) => setPin(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleUnlock()}
-              autoFocus
-              className="w-full border border-surface-container text-center tracking-[1em] text-lg font-bold py-3.5 focus:border-heritage-maroon focus:ring-heritage-maroon/20 rounded outline-none bg-background"
-              placeholder="••••"
-            />
-            <div className="flex flex-col gap-2">
-              <button
-                onClick={() => handleUnlock()}
-                className="w-full bg-heritage-maroon text-zen-white py-3.5 font-label text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all rounded shadow active:scale-[0.98]"
-              >
-                Xác thực truy cập
-              </button>
-              <button
-                onClick={() => handleUnlock(true)}
-                className="w-full border border-heritage-maroon/30 text-heritage-maroon py-2.5 font-label text-xs font-bold uppercase tracking-wider hover:bg-heritage-maroon/5 transition-all rounded"
-              >
-                Đăng nhập nhanh (Mã PIN: 1234)
-              </button>
+
+          {isLoadingAuth && !email ? (
+            <div className="py-6 text-center text-xs text-secondary font-label">
+              <div className="w-8 h-8 border-4 border-heritage-maroon border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+              Đang kiểm tra phiên làm việc...
             </div>
-          </div>
+          ) : (
+            <form onSubmit={handleLogin} className="space-y-4 text-left">
+              {authError && (
+                <div className="text-red-700 bg-red-50 text-xs p-3 rounded border border-red-200 font-body text-center">
+                  {authError}
+                </div>
+              )}
+              <div className="space-y-1">
+                <label className="font-label text-[10px] font-semibold text-secondary uppercase tracking-wider block">Email Admin</label>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full border border-surface-container rounded px-3 py-2 text-sm focus:border-heritage-maroon outline-none bg-background font-body"
+                  placeholder="admin@maiinstitute.com"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="font-label text-[10px] font-semibold text-secondary uppercase tracking-wider block">Mật khẩu</label>
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full border border-surface-container rounded px-3 py-2 text-sm focus:border-heritage-maroon outline-none bg-background font-body"
+                  placeholder="••••••••"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={isLoadingAuth}
+                className="w-full bg-heritage-maroon text-zen-white py-3.5 font-label text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all rounded shadow active:scale-[0.98] disabled:opacity-50"
+              >
+                {isLoadingAuth ? 'Đang xác thực...' : 'Đăng nhập'}
+              </button>
+            </form>
+          )}
+
           <div className="pt-4 border-t border-surface-container/60">
             <a
               href="/"
