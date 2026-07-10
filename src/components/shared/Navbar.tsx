@@ -65,7 +65,7 @@ export default function Navbar() {
             onClick={() => setIsModalOpen(true)}
             className="bg-heritage-maroon text-zen-white px-6 py-3 font-label text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all active:scale-95 duration-150 rounded-sm"
           >
-            Tư vấn Chiến lược
+            Tư vấn Giải pháp
           </button>
         </div>
       </nav>

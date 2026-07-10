@@ -1,0 +1,146 @@
+================================================================================
+TỆP TIN QUẢN LÝ NỘI DUNG WEBSITE MAI INSTITUTE (content_management.txt)
+================================================================================
+HƯỚNG DẪN SỬ DỤNG:
+1. File này chứa toàn bộ nội dung văn bản đang hiển thị trên các trang chính của website.
+2. Để thay đổi câu chữ của bất kỳ phần nào, hãy chỉnh sửa trực tiếp nội dung đó sau phần nhãn định danh "[MÃ]:" (ở phía bên phải).
+3. Vui lòng GIỮ NGUYÊN các nhãn định danh ở đầu dòng (ví dụ: [NAVBAR_001], [TRANG_CHU_002]...) để AI nhận diện và cập nhật vào code chính xác.
+4. Sau khi thay đổi xong, hãy lưu file này lại và gửi yêu cầu cho tôi, tôi sẽ tự động cập nhật đồng loạt vào các file code nguồn của website.
+
+================================================================================
+[FILE: src/components/shared/Navbar.tsx] (Thanh điều hướng / Menu)
+--------------------------------------------------------------------------------
+[NAVBAR_LOGO]: MAI Institute
+[NAVBAR_MENU_SOLUTIONS]: Giải pháp
+[NAVBAR_MENU_DIAGNOSE]: Công cụ Chẩn đoán
+[NAVBAR_MENU_BLOG]: Blog
+[NAVBAR_MENU_PODCAST]: Podcast
+[NAVBAR_MENU_ABOUT]: Về chúng tôi
+[NAVBAR_BTN_CTA]: Tư vấn Giải pháp
+
+================================================================================
+[FILE: src/components/shared/Footer.tsx] (Chân trang)
+--------------------------------------------------------------------------------
+[FOOTER_LOGO]: MAI Institute
+[FOOTER_DESC]: Học viện đào tạo & Cung cấp công cụ quản trị tiên phong dành riêng cho các nhà lãnh đạo kinh doanh Bảo hiểm Nhân thọ thế hệ mới tại Việt Nam.
+[FOOTER_NAV_TITLE_1]: Khám phá
+[FOOTER_NAV_ITEM_1_1]: Giải pháp Đào tạo
+[FOOTER_NAV_ITEM_1_2]: Bài trắc nghiệm Chẩn đoán
+[FOOTER_NAV_ITEM_1_3]: Kho tài liệu & Podcast
+[FOOTER_NAV_TITLE_2]: Hệ thống
+[FOOTER_NAV_ITEM_2_1]: Blog Tạp chí
+[FOOTER_NAV_ITEM_2_2]: Quản trị viên | CMS Login
+[FOOTER_COPYRIGHT]: © MAI Institute. Mindful Action for Elite Executives.
+
+================================================================================
+[FILE: src/app/(site)/page.tsx] (Trang chủ)
+--------------------------------------------------------------------------------
+[TRANG_CHU_HERO_SUB]: The Mindful Leadership Philosophy
+[TRANG_CHU_HERO_TITLE]: Dẫn dắt bằng Tầm nhìn.\nQuản trị bằng Dữ liệu.
+[TRANG_CHU_HERO_DESC]: Học viện tối ưu hóa hiệu suất toàn diện dành riêng cho Nhà lãnh đạo Bảo hiểm Nhân thọ thế hệ mới. Ứng dụng Zen vào thực thi chiến lược.
+[TRANG_CHU_HERO_BTN_DIAGNOSE]: Bắt đầu chẩn đoán ngay (Free 5-Min Audit)
+[TRANG_CHU_HERO_BTN_SOLUTIONS]: Xem lộ trình đào tạo
+
+[TRANG_CHU_DIAG_SUB]: Interactive Diagnostic
+[TRANG_CHU_DIAG_TITLE]: Sức khỏe hệ thống của bạn đang ở mức nào?
+[TRANG_CHU_DIAG_DESC]: Sử dụng khung chẩn đoán "Mindful Action" để nhận diện các lỗ hổng ẩn sâu trong cấu trúc quản trị và kỹ năng tư vấn cốt lõi của đội ngũ. Chúng tôi cung cấp cái nhìn 360 độ về hiệu suất thực tế thay vì chỉ nhìn vào doanh số.
+[TRANG_CHU_DIAG_SKILL_1]: Kỹ năng tư vấn
+[TRANG_CHU_DIAG_SKILL_2]: Quản trị tự động hóa
+[TRANG_CHU_DIAG_SKILL_3]: Tư duy lãnh đạo
+[TRANG_CHU_DIAG_BTN]: Bắt đầu chẩn đoán hệ thống
+
+[TRANG_CHU_ARCH_SUB]: Our Architecture
+[TRANG_CHU_ARCH_TITLE]: Lộ trình bứt phá. Kết quả thực thi.
+[TRANG_CHU_ARCH_LEADERS_SUB]: Dành cho lãnh đạo và quản lý
+[TRANG_CHU_ARCH_LEADERS_TITLE]: Phát triển năng lực quản lý
+[TRANG_CHU_ARCH_LEADERS_DESC]: Giải pháp dành riêng cho Lãnh đạo và Quản lý cấp cao ngành Bảo hiểm nhân thọ. Tập trung vào nghệ thuật lãnh đạo qua khai vấn kết hợp cùng hệ thống quản trị tự động.
+[TRANG_CHU_ARCH_LEADERS_FEAT_1]: Hệ thống quản trị doanh nghiệp BHNT
+[TRANG_CHU_ARCH_LEADERS_FEAT_2]: Kỹ năng huấn luyện & Đồng hành
+[TRANG_CHU_ARCH_LEADERS_LINK]: Tìm hiểu giải pháp chi tiết
+
+[TRANG_CHU_ARCH_AGENTS_SUB]: Dành cho đại lý 
+[TRANG_CHU_ARCH_AGENTS_TITLE]: Phát triển chuyên môn tư vấn
+[TRANG_CHU_ARCH_AGENTS_DESC]: Chuẩn hóa kỹ năng tư vấn chuyên nghiệp cho đội ngũ Đại lý. Chuyển đổi từ "Bán hàng" sang "Cố vấn tài chính" dựa trên các giá trị nhân văn và kỹ thuật chốt đơn thực chiến.
+[TRANG_CHU_ARCH_AGENTS_FEAT_1]: Quy trình tư vấn dựa trên hiểu biết sâu sắc về khách hàng và Tài chính cá nhân
+[TRANG_CHU_ARCH_AGENTS_FEAT_2]: Quản trị phễu khách hàng hiện đại
+[TRANG_CHU_ARCH_AGENTS_LINK]: Nâng tầm chuyên nghiệp
+
+[TRANG_CHU_BLOG_SUB]: Insights & Wisdom
+[TRANG_CHU_BLOG_TITLE]: Tầm nhìn & Tư duy
+[TRANG_CHU_BLOG_LINK]: Tất cả bài viết
+
+[TRANG_CHU_CTA_TITLE]: Sẵn sàng để tái định nghĩa tiêu chuẩn hiệu suất?
+[TRANG_CHU_CTA_DESC]: Đặt lịch hẹn 30 phút tư vấn miễn phí cùng chuyên gia giải pháp của MAI Institute.
+[TRANG_CHU_CTA_BTN]: Đặt lịch tư vấn ngay
+
+[TRANG_CHU_ABOUT_SUB]: Our Foundations
+[TRANG_CHU_ABOUT_TITLE]: Đội ngũ & Triết lý
+[TRANG_CHU_ABOUT_PHIL_TITLE]: Triết lý của chúng tôi
+[TRANG_CHU_ABOUT_PHIL_DESC]: Tại MAI Institute, chúng tôi tin rằng sự thành công bền vững của một nhà lãnh đạo bảo hiểm không chỉ đến từ những con số khô khan, mà còn từ sự tỉnh thức trong từng quyết định. Chúng tôi kết hợp tinh hoa của Mindfulness (Sự tỉnh thức) với sức mạnh của Công nghệ và dữ liệu (Hành động dựa trên dữ liệu) để tạo ra một hệ sinh thái quản trị toàn diện.
+[TRANG_CHU_ABOUT_TEAM_TITLE]: Đội ngũ vận hành
+[TRANG_CHU_ABOUT_TEAM_DESC]: Đội ngũ của chúng tôi bao gồm những chuyên gia dày dạn kinh nghiệm trong ngành bảo hiểm nhân thọ, các nhà tư vấn chiến lược và những người thực hành phát triển bản thân dựa trên sự thấu hiểu về tâm thức. Sự kết hợp đa dạng này cho phép chúng tôi mang đến những góc nhìn độc đáo và các giải pháp thực thi hiệu quả nhất cho các Lãnh đạo và Quản lý cấp cao thế hệ mới.
+
+================================================================================
+[FILE: src/app/(site)/about/page.tsx] (Trang Đội ngũ & Triết lý)
+--------------------------------------------------------------------------------
+[ABOUT_HERO_SUB]: Mindful Action for Executives
+[ABOUT_HERO_TITLE]: Kiến tạo Thế hệ Lãnh đạo Bảo hiểm Tỉnh thức & Hệ thống
+[ABOUT_HERO_DESC]: MAI Institute đồng hành cùng các nhà quản lý kinh doanh Bảo hiểm Nhân thọ thế hệ mới bứt phá giới hạn hiệu suất bằng sự kết hợp duy nhất giữa tư duy Tỉnh thức và Quản trị dựa trên dữ liệu.
+
+[ABOUT_PHIL_SUB]: Triết lý Đào tạo
+[ABOUT_PHIL_TITLE]: Hành động Tỉnh thức
+[ABOUT_PHIL_QUOTE]: Huấn luyện không phải là làm đầy kiến thức, mà là đồng hành để người quản lý nhìn nhận, tự chuyển hóa nội lực và dẫn dắt bằng sự thấu hiểu.
+[ABOUT_PHIL_COLUMN_1_TITLE]: Sự Tỉnh thức (Mindfulness)
+[ABOUT_PHIL_COLUMN_1_DESC]: Lắng nghe sâu sắc, thấu hiểu tâm lý hành vi và ứng dụng tư duy tỉnh thức để phát triển nội lực vững vàng. Định vị người làm nghề bảo hiểm thành chuyên gia tài chính tử tế, lấy khách hàng làm trọng tâm.
+[ABOUT_PHIL_COLUMN_2_TITLE]: Hệ thống & Dữ liệu
+[ABOUT_PHIL_COLUMN_2_DESC]: Đơn giản hóa quản trị bằng công nghệ và tự động hóa AI. Xây dựng các mô hình định tư vấn, bộ tiêu chuẩn thẩm định quyền lợi và quy trình hệ thống tối giản để tối ưu hiệu suất thực tế.
+
+[ABOUT_FOUNDERS_SUB]: Our Leadership
+[ABOUT_FOUNDERS_TITLE]: Ban Sáng lập & Chuyên gia
+[ABOUT_FOUNDERS_DESC]: Những người đồng hành, chuyển giao tri thức và công cụ giúp bạn định hình doanh nghiệp bảo hiểm bền vững.
+
+[ABOUT_HANH_ROLE]: Founder MAI Institute
+[ABOUT_HANH_NAME]: Nguyễn Thị Hồng Hạnh
+[ABOUT_HANH_TITLE]: Mentor & Coach | Chuyên gia Khai vấn Lãnh đạo
+[ABOUT_HANH_BIO_1]: Với hơn 20 năm tâm huyết trong ngành bảo hiểm nhân thọ, từng giữ vị trí Trưởng bộ phận đào tạo và quản lý chất lượng đại lý tại tập đoàn bảo hiểm hàng đầu, cô không chỉ chuyển giao tri thức mà còn kiến tạo một không gian để người làm nghề nhìn nhận, trưởng thành và vững vàng nội lực.
+[ABOUT_HANH_BIO_2]: Đối với cô, huấn luyện không phải là làm đầy kiến thức, mà là đồng hành để cấp quản lý chuyển hóa tư duy lãnh đạo đối tác, giúp đội ngũ tư vấn định vị bản thân thành những chuyên gia tài chính có chuyên môn, làm nghề bằng sự thấu hiểu và tử tế.
+[ABOUT_HANH_EXP_1]: Thạc sĩ Quản trị Kinh doanh cấp cao (Executive MBA) – Đại học Hawaii, Mỹ.
+[ABOUT_HANH_EXP_2]: Cựu Trưởng bộ phận Đào tạo Đại lý (Head of Agency Training) tại tập đoàn bảo hiểm nhân thọ đa quốc gia hàng đầu.
+[ABOUT_HANH_EXP_3]: Tích lũy hơn 20 năm kinh nghiệm thực chiến trong quản lý chất lượng đào tạo, thiết kế chương trình huấn luyện và đồng hành cùng hàng ngàn quản lý phân phối.
+[ABOUT_HANH_ACH_1]: Chứng chỉ chuyên môn FLMI (Fellow, Life Management Institute) và ACS từ tổ chức LOMA, Hoa Kỳ.
+[ABOUT_HANH_ACH_2]: Chứng chỉ chuyên môn quốc tế về Quản trị Sự thay đổi (Change Management), CHLB Đức.
+[ABOUT_HANH_ACH_3]: Chuyên gia Khai vấn và Cố vấn Chuyên nghiệp được chứng nhận (CCMP - Certified Coach & Mentor Professional), Malaysia.
+[ABOUT_HANH_ACH_4]: Ngôi sao Xuất sắc Châu Á (vào các năm 2005 và 2014) vì những đóng góp vượt bậc cho sự nghiệp đào tạo.
+[ABOUT_HANH_ACH_5]: Ngôi sao Xuất sắc Toàn cầu (năm 2019) vinh danh nhà đào tạo xuất sắc nhất hệ thống tập đoàn.
+
+[ABOUT_NHAT_ROLE]: Co-Founder MAI Institute
+[ABOUT_NHAT_NAME]: Nguyễn Minh Nhật
+[ABOUT_NHAT_TITLE]: Trainer & Consultant | Nhà Sáng lập LIBA Institute
+[ABOUT_NHAT_BIO_1]: Hành trình từ năm 2017 của anh gắn liền với việc đơn giản hóa những khái niệm tài chính phức tạp thành các mô hình thực tế và bộ trò chơi giáo dục tài chính trực quan.
+[ABOUT_NHAT_BIO_2]: Với kinh nghiệm huấn luyện hàng ngàn đại lý bảo hiểm và thực hành hoạch định tài chính sâu sắc, anh Nhật không chỉ chuyển giao công cụ, mà sẽ cùng bạn kiến tạo một thế hệ tư vấn viên bảo hiểm nhân thọ chuyên nghiệp, làm việc bằng tư duy hệ thống và sự minh bạch tuyệt đối.
+[ABOUT_NHAT_EXP_1]: Cử nhân Tài chính – Đại học Kinh tế TP.HCM (UEH).
+[ABOUT_NHAT_EXP_2]: Sáng lập LIBA Institute – Học viện chuyên sâu về đào tạo tư duy tài chính toàn diện.
+[ABOUT_NHAT_EXP_3]: Đào tạo trực tiếp và chuyển giao năng lực hoạch định tài chính cho hơn 1000+ đại lý bảo hiểm và hàng trăm doanh nghiệp quy mô lớn tại Việt Nam.
+[ABOUT_NHAT_ACH_1]: Tác giả bộ tiêu chuẩn An tâm Tài chính & Mô hình Pentagon ứng dụng trong tư vấn.
+[ABOUT_NHAT_ACH_2]: Tác giả 3 bộ trò chơi giáo dục tài chính nổi tiếng: MoneyWe, MoneyMe, MoneySense.
+[ABOUT_NHAT_ACH_3]: Tác giả Game bảo hiểm Money Care – công cụ trực quan hóa lợi ích bảo hiểm.
+[ABOUT_NHAT_ACH_4]: Sáng lập Encolaw – bộ tiêu chuẩn chuyên biệt hỗ trợ thẩm định quyền lợi bảo hiểm nhân thọ cho khách hàng.
+[ABOUT_NHAT_ACH_5]: Giảng viên Giáo dục Tài chính quốc tế được chứng nhận bởi tổ chức NFEC (National Financial Educators Council - Hoa Kỳ).
+[ABOUT_NHAT_ACH_6]: Giảng viên được chứng nhận quốc tế bởi Google (Level 1 Educator).
+
+[ABOUT_MAI_ROLE]: Co-Founder MAI Institute
+[ABOUT_MAI_NAME]: Nguyễn Thị Quỳnh Mai
+[ABOUT_MAI_TITLE]: Operations & Platform Lead | Thạc sĩ Tài chính Pháp
+[ABOUT_MAI_BIO_1]: Sở hữu bằng Thạc sĩ Tài chính tại Pháp cùng hơn 11 năm kinh nghiệm trong quản trị chuỗi cung ứng, tài chính doanh nghiệp và nghiên cứu tâm lý học hành vi chuyên sâu. Chị Mai mang đến tư duy hệ thống tối giản kết hợp cùng sự thấu hiểu về hành trình phát triển tâm trí của con người.
+[ABOUT_MAI_BIO_2]: Với niềm đam mê trong việc ứng dụng Trí tuệ Nhân tạo (AI) vào quản trị giáo dục, chị là người xây dựng nền móng công nghệ, thiết kế các giải pháp back-office thông minh. Từ đó kiến tạo nên các giải pháp hỗ trợ vượt trội cho quá trình đào tạo và phát triển con người.
+[ABOUT_MAI_EXP_1]: Cử nhân Kinh Tế – Đại học Francois Rabelais Tours, Cộng hòa Pháp.
+[ABOUT_MAI_EXP_2]: Thạc Sĩ Tài Chính Doanh Nghiệp – Viện Quản trị Doanh nghiệp (IAE) Toulouse, Pháp.
+[ABOUT_MAI_EXP_3]: Hơn 6 năm kinh nghiệm quản trị tài chính doanh nghiệp và vận hành chuỗi cung ứng (Supply Chain) tại  doanh nghiệp đa quốc gia.
+[ABOUT_MAI_ACH_1]: 5 năm nghiên cứu chuyên sâu về khoa học hành vi, tâm lý học nhận thức và phát triển nội lực con người.
+[ABOUT_MAI_ACH_2]: Ứng dụng thực hành tư duy tỉnh thức (mindfulness) vào việc xây dựng trải nghiệm chuyển hóa toàn diện cho học viên trong các khóa đào tạo.
+[ABOUT_MAI_ACH_3]: Kiến trúc sư thiết kế cấu trúc hệ thống dữ liệu học tập và quy trình hệ thống tinh gọn của học viện.
+[ABOUT_MAI_ACH_4]: Tích hợp các mô hình AI tiên tiến vào quản lý dữ liệu lớn và tối ưu hóa trải nghiệm học tập cá nhân hóa trên môi trường số.
+
+[ABOUT_CTA_TITLE]: Sẵn sàng bứt phá hiệu suất hệ thống đại lý của bạn?
+[ABOUT_CTA_DESC]: Đặt lịch hẹn 30 phút thảo luận cùng đội ngũ chuyên gia của MAI Institute để nhận diện các giải pháp chuyển đổi phù hợp nhất.
+[ABOUT_CTA_BTN]: Đăng ký tham vấn giải pháp cho đội ngũ của bạn.

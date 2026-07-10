@@ -17,7 +17,7 @@ export default function Footer() {
             <span className="font-headline text-2xl text-heritage-maroon font-bold tracking-tight">MAI Institute</span>
           </div>
           <p className="font-body text-xs text-secondary leading-relaxed max-w-sm">
-            Học viện đào tạo &amp; Cung cấp công cụ quản trị tiên phong dành riêng cho các nhà lãnh đạo phân phối Bảo hiểm Nhân thọ thế hệ mới tại Việt Nam.
+            Học viện đào tạo &amp; Cung cấp công cụ quản trị tiên phong dành riêng cho các nhà lãnh đạo kinh doanh Bảo hiểm Nhân thọ thế hệ mới tại Việt Nam.
           </p>
         </div>
         

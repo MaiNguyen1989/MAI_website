@@ -172,11 +172,11 @@ export default function HomePage() {
             >
               <div>
                 <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-widest mb-4 block">
-                  For Leaders
+                  Dành cho lãnh đạo và quản lý
                 </span>
-                <h3 className="font-headline text-3xl mb-4 text-primary">Executive Suite</h3>
+                <h3 className="font-headline text-3xl mb-4 text-primary">Phát triển năng lực quản lý</h3>
                 <p className="font-body text-base text-secondary mb-8 leading-relaxed">
-                  Giải pháp dành riêng cho Agency Leaders và Quản lý cấp cao. Tập trung vào nghệ thuật lãnh đạo tỉnh thức (Mindful Leadership) kết hợp cùng hệ thống quản trị tự động hóa (Tech Automation).
+                  Giải pháp dành riêng cho Lãnh đạo và Quản lý cấp cao ngành Bảo hiểm nhân thọ. Tập trung vào nghệ thuật lãnh đạo qua khai vấn kết hợp cùng hệ thống quản trị tự động.
                 </p>
               </div>
               <div>
@@ -187,7 +187,7 @@ export default function HomePage() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="material-symbols-outlined text-[18px] text-heritage-maroon">check_circle</span>
-                    Kỹ năng huấn luyện &amp; Truyền cảm hứng
+                    Kỹ năng huấn luyện &amp; Đồng hành
                   </li>
                 </ul>
                 <div className="flex items-center text-heritage-maroon font-label text-xs font-bold uppercase tracking-widest gap-2 group-hover:gap-4 transition-soft">
@@ -203,9 +203,9 @@ export default function HomePage() {
             >
               <div>
                 <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-widest mb-4 block">
-                  For Agents
+                  Dành cho đại lý 
                 </span>
-                <h3 className="font-headline text-3xl mb-4 text-primary">Professional Suite</h3>
+                <h3 className="font-headline text-3xl mb-4 text-primary">Phát triển chuyên môn tư vấn</h3>
                 <p className="font-body text-base text-secondary mb-8 leading-relaxed">
                   Chuẩn hóa kỹ năng tư vấn chuyên nghiệp cho đội ngũ Đại lý. Chuyển đổi từ &quot;Bán hàng&quot; sang &quot;Cố vấn tài chính&quot; dựa trên các giá trị nhân văn và kỹ thuật chốt đơn thực chiến.
                 </p>
@@ -214,7 +214,7 @@ export default function HomePage() {
                 <ul className="space-y-3 mb-8 text-sm font-body text-secondary border-t border-surface-container/50 pt-6">
                   <li className="flex items-center gap-2">
                     <span className="material-symbols-outlined text-[18px] text-heritage-maroon">check_circle</span>
-                    Quy trình tư vấn 5 bước tinh hoa
+                    Quy trình tư vấn dựa trên hiểu biết sâu sắc về khách hàng và Tài chính cá nhân
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="material-symbols-outlined text-[18px] text-heritage-maroon">check_circle</span>
@@ -288,7 +288,7 @@ export default function HomePage() {
             Sẵn sàng để tái định nghĩa tiêu chuẩn hiệu suất?
           </h2>
           <p className="font-body text-base md:text-lg mb-10 opacity-80 max-w-xl mx-auto leading-relaxed">
-            Đặt lịch hẹn 15 phút tư vấn miễn phí cùng chuyên gia chiến lược của MAI Institute.
+            Đặt lịch hẹn 30 phút tư vấn miễn phí cùng chuyên gia giải pháp của MAI Institute.
           </p>
           <button
             onClick={() => setIsModalOpen(true)}
@@ -317,7 +317,7 @@ export default function HomePage() {
                 Triết lý của chúng tôi
               </h3>
               <p className="font-body text-base text-secondary leading-relaxed">
-                Tại MAI Institute, chúng tôi believe rằng sự thành công bền vững của một nhà lãnh đạo bảo hiểm không chỉ đến từ những con số khô khan, mà còn từ sự tỉnh thức trong từng quyết định. Chúng tôi kết hợp tinh hoa của Mindfulness (Sự tỉnh thức) với sức mạnh của Data-driven Action (Hành động dựa trên dữ liệu) để tạo ra một hệ sinh thái quản trị toàn diện.
+                Tại MAI Institute, chúng tôi tin rằng sự thành công bền vững của một nhà lãnh đạo bảo hiểm không chỉ đến từ những con số khô khan, mà còn từ sự tỉnh thức trong từng quyết định. Chúng tôi kết hợp tinh hoa của Mindfulness (Sự tỉnh thức) với sức mạnh của Công nghệ và dữ liệu (Hành động dựa trên dữ liệu) để tạo ra một hệ sinh thái quản trị toàn diện.
               </p>
             </div>
             <div className="space-y-6">
@@ -325,7 +325,7 @@ export default function HomePage() {
                 Đội ngũ vận hành
               </h3>
               <p className="font-body text-base text-secondary leading-relaxed">
-                Đội ngũ của chúng tôi bao gồm những chuyên gia dày dạn kinh nghiệm trong ngành bảo hiểm nhân thọ, các nhà tư vấn chiến lược và những người thực hành Zen lâu năm. Sự kết hợp đa dạng này cho phép chúng tôi mang đến những góc nhìn độc đáo và các giải pháp thực thi hiệu quả nhất cho các Agency Leaders thế hệ mới.
+                Đội ngũ của chúng tôi bao gồm những chuyên gia dày dạn kinh nghiệm trong ngành bảo hiểm nhân thọ, các nhà tư vấn chiến lược và những người thực hành phát triển bản thân dựa trên sự thấu hiểu về tâm thức. Sự kết hợp đa dạng này cho phép chúng tôi mang đến những góc nhìn độc đáo và các giải pháp thực thi hiệu quả nhất cho các Lãnh đạo và Quản lý cấp cao thế hệ mới.
               </p>
             </div>
           </div>

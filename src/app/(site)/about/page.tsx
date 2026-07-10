@@ -30,13 +30,13 @@ export default function AboutPage() {
       <section className="py-16 md:py-24 border-b border-surface-container">
         <div className="max-w-container-max mx-auto px-margin-desktop text-center">
           <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-[0.2em] mb-4 block">
-            Mindful Action for Elite Executives
+            Mindful Action for Executives
           </span>
           <h1 className="font-display text-4xl md:text-6xl text-primary mb-6 leading-tight max-w-4xl mx-auto">
             Kiến tạo Thế hệ Lãnh đạo Bảo hiểm Tỉnh thức &amp; Hệ thống
           </h1>
           <p className="font-body text-base md:text-lg text-secondary max-w-2xl mx-auto leading-relaxed">
-            MAI Institute đồng hành cùng các nhà quản lý phân phối Bảo hiểm Nhân thọ thế hệ mới bứt phá giới hạn hiệu suất bằng sự kết hợp duy nhất giữa tư duy Tỉnh thức và Quản trị dựa trên dữ liệu.
+            MAI Institute đồng hành cùng các nhà quản lý kinh doanh Bảo hiểm Nhân thọ thế hệ mới bứt phá giới hạn hiệu suất bằng sự kết hợp duy nhất giữa tư duy Tỉnh thức và Quản trị dựa trên dữ liệu.
           </p>
           <div className="w-24 h-1 bg-heritage-maroon mx-auto mt-8 rounded-full"></div>
         </div>
@@ -82,7 +82,7 @@ export default function AboutPage() {
                 </div>
                 <h3 className="font-headline text-xl font-bold text-primary">Hệ thống &amp; Dữ liệu</h3>
                 <p className="font-body text-sm text-secondary leading-relaxed">
-                  Đơn giản hóa quản trị bằng công nghệ và tự động hóa AI. Xây dựng các mô hình định lượng dòng tiền, bộ tiêu chuẩn thẩm định quyền lợi và quy trình back-office tối giản để tối ưu hiệu suất thực tế.
+                  Đơn giản hóa quản trị bằng công nghệ và tự động hóa AI. Xây dựng các mô hình định tư vấn, bộ tiêu chuẩn thẩm định quyền lợi và quy trình hệ thống tối giản để tối ưu hiệu suất thực tế.
                 </p>
               </div>
 
@@ -162,10 +162,10 @@ export default function AboutPage() {
                   {activeTabHanh === 'bio' && (
                     <div className="space-y-4 animate-fade-in">
                       <p>
-                        Với hơn 20 năm tâm huyết trong ngành bảo hiểm nhân thọ, từng giữ vị trí Trưởng bộ phận đào tạo và quản lý chất lượng đại lý tại tập đoàn bảo hiểm hàng đầu, chị không chỉ chuyển giao tri thức mà còn kiến tạo một không gian để người làm nghề nhìn nhận, trưởng thành và vững vàng nội lực.
+                        Với hơn 20 năm tâm huyết trong ngành bảo hiểm nhân thọ, từng giữ vị trí Trưởng bộ phận đào tạo và quản lý chất lượng đại lý tại tập đoàn bảo hiểm hàng đầu, cô không chỉ chuyển giao tri thức mà còn kiến tạo một không gian để người làm nghề nhìn nhận, trưởng thành và vững vàng nội lực.
                       </p>
                       <p>
-                        Đối với chị, huấn luyện không phải là làm đầy kiến thức, mà là đồng hành để cấp quản lý chuyển hóa tư duy lãnh đạo đối tác, giúp đội ngũ tư vấn định vị bản thân thành những chuyên gia tài chính có chuyên môn, làm nghề bằng sự thấu hiểu và tử tế.
+                        Đối với cô, huấn luyện không phải là làm đầy kiến thức, mà là đồng hành để cấp quản lý chuyển hóa tư duy lãnh đạo đối tác, giúp đội ngũ tư vấn định vị bản thân thành những chuyên gia tài chính có chuyên môn, làm nghề bằng sự thấu hiểu và tử tế.
                       </p>
                     </div>
                   )}
@@ -279,7 +279,7 @@ export default function AboutPage() {
                           <li>Tác giả bộ tiêu chuẩn An tâm Tài chính &amp; Mô hình Pentagon ứng dụng trong tư vấn.</li>
                           <li>Tác giả 3 bộ trò chơi giáo dục tài chính nổi tiếng: MoneyWe, MoneyMe, MoneySense.</li>
                           <li>Tác giả Game bảo hiểm Money Care – công cụ trực quan hóa lợi ích bảo hiểm.</li>
-                          <li>Đồng sáng lập Encolaw – bộ tiêu chuẩn chuyên biệt hỗ trợ thẩm định quyền lợi bảo hiểm nhân thọ cho khách hàng.</li>
+                          <li>Sáng lập Encolaw – bộ tiêu chuẩn chuyên biệt hỗ trợ thẩm định quyền lợi bảo hiểm nhân thọ cho khách hàng.</li>
                         </ul>
                       </li>
                       <li>
@@ -377,7 +377,7 @@ export default function AboutPage() {
                         <strong className="text-primary">Thạc Sĩ Tài Chính Doanh Nghiệp</strong> – Viện Quản trị Doanh nghiệp (IAE) Toulouse, Pháp.
                       </li>
                       <li>
-                        Hơn 11 năm kinh nghiệm quản trị tài chính doanh nghiệp và vận hành chuỗi cung ứng (Supply Chain) tại các doanh nghiệp đa quốc gia.
+                        Hơn 6 năm kinh nghiệm quản trị tài chính doanh nghiệp và vận hành chuỗi cung ứng (Supply Chain) tại doanh nghiệp đa quốc gia.
                       </li>
                     </ul>
                   )}
@@ -394,7 +394,7 @@ export default function AboutPage() {
                       <li>
                         <strong className="text-primary">Năng lực hệ thống &amp; Tự động hóa AI:</strong>
                         <ul className="pl-6 mt-1 list-circle space-y-1">
-                          <li>Kiến trúc sư thiết kế cấu trúc hệ thống dữ liệu học tập và quy trình back-office tinh gọn của học viện.</li>
+                          <li>Kiến trúc sư thiết kế cấu trúc hệ thống dữ liệu học tập và quy trình hệ thống tinh gọn của học viện.</li>
                           <li>Tích hợp các mô hình AI tiên tiến vào quản lý dữ liệu lớn và tối ưu hóa trải nghiệm học tập cá nhân hóa trên môi trường số.</li>
                         </ul>
                       </li>
@@ -422,13 +422,13 @@ export default function AboutPage() {
             Sẵn sàng bứt phá hiệu suất hệ thống đại lý của bạn?
           </h2>
           <p className="font-body text-sm md:text-base opacity-80 max-w-xl mx-auto leading-relaxed">
-            Đặt lịch hẹn 15 phút thảo luận cùng đội ngũ chuyên gia của MAI Institute để nhận diện các giải pháp chuyển đổi phù hợp nhất.
+            Đặt lịch hẹn 30 phút thảo luận cùng đội ngũ chuyên gia của MAI Institute để nhận diện các giải pháp chuyển đổi phù hợp nhất.
           </p>
           <button
             onClick={() => setIsModalOpen(true)}
             className="bg-zen-white text-heritage-maroon px-8 py-4 font-label text-xs font-bold uppercase tracking-widest hover:bg-paper-grey transition-all active:scale-95 duration-150 rounded-sm shadow-md"
           >
-            Đăng ký tham vấn chiến lược
+            Đăng ký tham vấn giải pháp cho đội ngũ của bạn.
           </button>
         </div>
       </section>
