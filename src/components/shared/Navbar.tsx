@@ -55,7 +55,7 @@ export default function Navbar() {
               );
             })}
             <Link
-              href="/#about-section"
+              href="/about"
               className="nav-item text-secondary hover:text-heritage-maroon transition-all font-label text-xs font-semibold uppercase tracking-wider"
             >
               Về chúng tôi
