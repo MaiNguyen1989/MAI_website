@@ -110,20 +110,7 @@ VALUES
 ON CONFLICT (id) DO NOTHING;
 
 
--- Chèn dữ liệu câu hỏi mẫu
-INSERT INTO public.questions (id, role, axis, text, min_label, max_label)
-VALUES
-('l1', 'leader', 'action', 'Tỷ lệ đại lý hoạt động (Active Ratio) trong đội ngũ của bạn hiện tại là bao nhiêu?', 'Dưới 20%', 'Trên 60%'),
-('l2', 'leader', 'tech', 'Mức độ tự động hóa các quy trình họp hành, đào tạo và báo cáo qua công nghệ trong đội ngũ:', 'Thủ công hoàn toàn', 'Tự động hóa 100%'),
-('l3', 'leader', 'mindful', 'Mức độ bền bỉ, gắn kết và hạn chế stress/rụng nhân sự ở các vị trí nòng cốt:', 'Rất kém/Stress nhiều', 'Bền bỉ/Tinh thần tỉnh thức'),
-('l4', 'leader', 'action', 'Kỹ năng coaching, truyền cảm hứng và đồng hành thấu hiểu cùng đội ngũ của bạn:', 'Chỉ áp doanh số', 'Coaching thấu cảm'),
-('l5', 'leader', 'tech', 'Mức độ sử dụng dữ liệu thực tế (data-driven) để quản trị và ra quyết định thay vì cảm tính:', 'Cảm tính hoàn toàn', 'Dữ liệu thời gian thực'),
-('a1', 'agent', 'action', 'Khả năng duy trì nguồn khách hàng tiềm năng mới một cách chủ động và ổn định:', 'Thường xuyên cạn kiệt', 'Nguồn khách hàng vô tận'),
-('a2', 'agent', 'tech', 'Mức độ ứng dụng công cụ số/phần mềm để quản lý phễu khách hàng và lịch sử làm việc:', 'Ghi sổ tay/Nhớ tay', 'CRM/App chuyên nghiệp'),
-('a3', 'agent', 'mindful', 'Sự điềm tĩnh, tự tin và bình yên tinh thần khi đối mặt với những lời từ chối của khách hàng:', 'Dễ nản lòng/Stress', 'Điềm tĩnh/Tỉnh thức'),
-('a4', 'agent', 'action', 'Kỹ năng cố vấn giải pháp tài chính cá nhân hóa và chốt hợp đồng dựa trên sự thấu cảm:', 'Cố bán theo bản năng', 'Cố vấn tài chính tinh tế'),
-('a5', 'agent', 'mindful', 'Sự cam kết tư vấn đúng nhu cầu thực tế của khách hàng thay vì chạy theo hoa hồng sản phẩm:', 'Chỉ quan tâm doanh số', 'Cam kết đặt khách hàng lên hàng đầu')
-ON CONFLICT (id) DO NOTHING;
+-- Bảng questions sẽ không seed dữ liệu tĩnh vì câu hỏi trắc nghiệm đã được chuyển sang quản trị ở frontend Next.js.
 
 
 -- Chèn dữ liệu leads mẫu

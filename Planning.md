@@ -2,8 +2,8 @@
 
 ## 1. Tổng Quan Tiến Độ
 
-* **Trạng thái hiện tại:** Hoàn thành Phase 2 (Thiết lập Database Supabase & Tích hợp API thực tế). Hệ thống dữ liệu bài viết, leads và câu hỏi đã đồng bộ thời gian thực. Sẵn sàng chuẩn bị bước sang Phase 3 (E-learning & Thanh toán).
-* **Thanh tiến độ triển khai:** `████████░░ 80%`
+* **Trạng thái hiện tại:** Hoàn thành xuất sắc Phase 2 (Cập nhật thuật toán tính điểm tích lũy LPIS, tái cấu trúc luồng chẩn đoán và tự động lưu database). Hệ thống chẩn đoán, biểu đồ Radar/Bar không che chữ, và CMS quản lý Leads đã đồng bộ thời gian thực. Dự án đạt 90% tiến độ lõi chẩn đoán, sẵn sàng chuẩn bị bước sang Phase 3 (E-learning & Thanh toán).
+* **Thanh tiến độ triển khai:** `█████████░ 90%`
 
 
 ### Danh sách các hạng mục chi tiết
@@ -86,14 +86,15 @@ d:\MAI_website\
 
 ---
 
-## 4. Quyết Định Cần Xác Nhận
+## 4. Quyết Định Kỹ Thuật & Kiến Trúc Đã Chốt
 
-| Hạng mục | Đề xuất tối ưu | Trạng thái | Ghi chú |
+| Hạng mục | Quyết định đã chốt | Trạng thái | Ghi chú |
 | :--- | :--- | :--- | :--- |
-| **Bảng màu & Design System** | Phối màu đẳng cấp: Deep Navy làm chủ đạo, Warm White/Gold làm điểm nhấn. Font Serif (Playfair Display) kết hợp Sans-serif (Inter). | **Chờ xác nhận** | Cần khách hàng MAI Institute phê duyệt trực tiếp. |
-| **Thư viện Sinh file PDF** | Sử dụng thư viện `pdf-lib` chạy trên Supabase Edge Functions. | **Chờ xác nhận** | Đảm bảo hiệu năng tải trang ở client và bảo mật link tải tài liệu. |
+| **Bảng màu & Design System** | Phối màu đẳng cấp: Deep Navy làm chủ đạo, Warm White/Gold làm điểm nhấn. Font Serif (Playfair Display) kết hợp Sans-serif (Inter). | **Đã chốt** | Phù hợp với định vị sang trọng McKinsey-style. |
+| **Tải Báo cáo PDF** | **Hủy bỏ hoàn toàn** theo yêu cầu của khách hàng. Thay thế bằng việc hiển thị kết quả phân tích đầy đủ và chi tiết trực tiếp trên web ở Bước 5. | **Đã chốt** | Tránh phiền hà nhập form lần 2 và tăng thời gian tương tác trực quan trên web. |
 | **Cổng thanh toán trực tuyến**| PayOS (Miễn phí phí giao dịch VietQR). | **Đã chốt** | Phù hợp nhất cho thị trường Việt Nam. |
-| **Hosting Lưu trữ Video** | YouTube Embed (Chế độ Không công khai) cho MVP. Vimeo cho Phase trả phí. | **Chờ xác nhận** | Tối ưu chi phí hạ tầng ban đầu. |
+| **Thuật toán tính điểm** | Thay đổi sang **Tích lũy đạt ngưỡng 50%** để định vị cấp độ nền móng vững chắc, tránh bị lệch do 1 câu vượt cấp đơn lẻ. | **Đã chốt** | Đảm bảo tính công bằng và chính xác cho cả Leader & Agent. |
+| **Hình thức lưu trữ Leads** | Tự động đồng bộ lên Supabase `leads` ngay khi làm xong Quiz thông qua loading (Bước 4), kèm LocalStorage dự phòng. | **Đã chốt** | Dữ liệu được gom về một mối an toàn, phục vụ tìm insight. |
 
 ---
 

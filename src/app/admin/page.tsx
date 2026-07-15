@@ -36,7 +36,7 @@ export default function AdminPage() {
   // Load data from States instead of LocalStorage
   const [leads, setLeads] = useState<Lead[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
-  const [questions, setQuestions] = useState<QuizQuestionsConfig>(initialQuestions);
+  const [questions, setQuestions] = useState<any>(initialQuestions);
 
   // Date and time display
   const [currentTime, setCurrentTime] = useState('');
@@ -69,35 +69,8 @@ export default function AdminPage() {
           setLeads(initialLeads);
         }
 
-        // Fetch questions
-        const { data: qData, error: qError } = await supabase
-          .from('questions')
-          .select('*');
-        if (qError) throw qError;
-        if (qData && qData.length > 0) {
-          const leaderQuestions: Question[] = [];
-          const agentQuestions: Question[] = [];
-          
-          qData.forEach((q: any) => {
-            const formatted: Question = {
-              id: q.id,
-              axis: q.axis as 'action' | 'tech' | 'mindful',
-              text: q.text,
-              minLabel: q.min_label,
-              maxLabel: q.max_label
-            };
-            if (q.role === 'leader') {
-              leaderQuestions.push(formatted);
-            } else {
-              agentQuestions.push(formatted);
-            }
-          });
-          
-          setQuestions({
-            leader: leaderQuestions.sort((a, b) => a.id.localeCompare(b.id)),
-            agent: agentQuestions.sort((a, b) => a.id.localeCompare(b.id))
-          });
-        }
+        // Vì câu hỏi trắc nghiệm mới được lưu tĩnh ở frontend, ta sử dụng trực tiếp initialQuestions
+        setQuestions(initialQuestions);
       } catch (err) {
         console.error('Lỗi khi load dữ liệu CMS từ Supabase:', err);
         // Fallback về mock data nếu Supabase chưa cấu hình
@@ -147,7 +120,7 @@ export default function AdminPage() {
   };
 
   // Quiz config editing states
-  const [localQuestions, setLocalQuestions] = useState<QuizQuestionsConfig | null>(null);
+  const [localQuestions, setLocalQuestions] = useState<any>(null);
 
   useEffect(() => {
     setCurrentTime(new Date().toLocaleDateString('vi-VN'));
@@ -319,93 +292,24 @@ export default function AdminPage() {
     });
   };
 
-  const handleUpdateQuizField = (role: 'leader' | 'agent', index: number, field: keyof Question, value: string) => {
+  const handleUpdateQuizField = (role: 'leader' | 'agent', index: number, field: string, value: string) => {
     if (!localQuestions) return;
     const updated = { ...localQuestions };
-    updated[role][index] = {
-      ...updated[role][index],
-      [field]: value
-    };
-    setLocalQuestions(updated);
+    if (updated[role] && updated[role][index]) {
+      updated[role][index] = {
+        ...updated[role][index],
+        [field]: value
+      };
+      setLocalQuestions(updated);
+    }
   };
 
   const handleSaveQuizConfig = async () => {
-    if (localQuestions) {
-      try {
-        const flatQuestions: any[] = [];
-        localQuestions.leader.forEach((q) => {
-          flatQuestions.push({
-            id: q.id,
-            role: 'leader',
-            axis: q.axis,
-            text: q.text,
-            min_label: q.minLabel,
-            max_label: q.maxLabel
-          });
-        });
-        localQuestions.agent.forEach((q) => {
-          flatQuestions.push({
-            id: q.id,
-            role: 'agent',
-            axis: q.axis,
-            text: q.text,
-            min_label: q.minLabel,
-            max_label: q.maxLabel
-          });
-        });
-
-        const { error } = await supabase
-          .from('questions')
-          .upsert(flatQuestions);
-        if (error) throw error;
-
-        setQuestions(localQuestions);
-        alert('Cấu hình câu hỏi trắc nghiệm đã được lưu thành công trên Supabase!');
-      } catch (err) {
-        console.error('Lỗi khi lưu câu hỏi lên Supabase:', err);
-        alert('Lỗi khi lưu cấu hình câu hỏi: ' + (err as Error).message);
-      }
-    }
+    alert('Chức năng chỉnh sửa câu hỏi trực tiếp trên CMS tạm thời bị khóa do cấu trúc câu hỏi mới (chọn đáp án trắc nghiệm) được thiết lập tĩnh ở Frontend để tối ưu hiệu năng.');
   };
 
   const handleResetQuizConfig = async () => {
-    if (confirm('Bạn có chắc chắn muốn khôi phục toàn bộ câu hỏi trắc nghiệm về mặc định ban đầu không?')) {
-      try {
-        const flatQuestions: any[] = [];
-        initialQuestions.leader.forEach((q) => {
-          flatQuestions.push({
-            id: q.id,
-            role: 'leader',
-            axis: q.axis,
-            text: q.text,
-            min_label: q.minLabel,
-            max_label: q.maxLabel
-          });
-        });
-        initialQuestions.agent.forEach((q) => {
-          flatQuestions.push({
-            id: q.id,
-            role: 'agent',
-            axis: q.axis,
-            text: q.text,
-            min_label: q.minLabel,
-            max_label: q.maxLabel
-          });
-        });
-
-        const { error } = await supabase
-          .from('questions')
-          .upsert(flatQuestions);
-        if (error) throw error;
-
-        setQuestions(initialQuestions);
-        setLocalQuestions(JSON.parse(JSON.stringify(initialQuestions)));
-        alert('Khôi phục cấu hình câu hỏi thành công trên Supabase!');
-      } catch (err) {
-        console.error('Lỗi khi khôi phục câu hỏi:', err);
-        alert('Lỗi khôi phục câu hỏi: ' + (err as Error).message);
-      }
-    }
+    alert('Hệ thống câu hỏi trắc nghiệm mặc định đã được lưu tĩnh tại mã nguồn Frontend.');
   };
 
   // Stats calculation
@@ -957,127 +861,17 @@ export default function AdminPage() {
           )}
 
           {/* TAB: QUIZ CONFIG */}
-          {activeTab === 'quiz' && localQuestions && (
-            <div id="admin-tab-quiz" className="space-y-6">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="font-headline text-xl font-bold text-primary">Cấu hình câu hỏi trắc nghiệm</h3>
-                  <p className="font-body text-xs text-secondary mt-1">
-                    Chỉnh sửa câu hỏi, vai trò và trọng số thang điểm trượt.
-                  </p>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={handleResetQuizConfig}
-                    className="border border-heritage-maroon/30 text-heritage-maroon px-4 py-2 text-xs font-label font-bold uppercase tracking-wider hover:bg-heritage-maroon/5 transition-all rounded-sm"
-                  >
-                    Khôi phục mặc định
-                  </button>
-                  <button
-                    onClick={handleSaveQuizConfig}
-                    className="bg-heritage-maroon text-zen-white px-5 py-2 text-xs font-label font-bold uppercase tracking-wider hover:bg-primary-container transition-all rounded-sm shadow"
-                  >
-                    Lưu tất cả thay đổi
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* LEADER QUESTIONS */}
-                <div className="space-y-6 bg-zen-white p-6 border border-surface-container rounded-lg shadow-sm">
-                  <h4 className="font-headline text-lg font-bold text-primary border-b border-surface-container pb-2 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-[20px] text-heritage-maroon">leaderboard</span>
-                    Phân hệ: Nhà Quản Lý
-                  </h4>
-                  <div className="space-y-6" id="admin-quiz-leader-box">
-                    {localQuestions.leader.map((q, idx) => (
-                      <div key={q.id} className="p-4 border border-surface-container bg-background/25 rounded space-y-3">
-                        <div className="flex justify-between items-center text-xs font-label">
-                          <span className="font-bold text-heritage-maroon uppercase tracking-wide">
-                            Câu hỏi {idx + 1} ({q.axis.toUpperCase()})
-                          </span>
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-xs text-secondary font-label block">Nội dung câu hỏi:</label>
-                          <textarea
-                            rows={2}
-                            value={q.text}
-                            onChange={(e) => handleUpdateQuizField('leader', idx, 'text', e.target.value)}
-                            className="w-full text-xs border border-surface-container rounded p-2 focus:border-heritage-maroon outline-none bg-background font-body"
-                          />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-1">
-                            <label className="text-[10px] text-secondary uppercase tracking-wider font-label block">Nhãn Min (Điểm 1)</label>
-                            <input
-                              type="text"
-                              value={q.minLabel}
-                              onChange={(e) => handleUpdateQuizField('leader', idx, 'minLabel', e.target.value)}
-                              className="w-full text-xs border border-surface-container rounded p-1.5 focus:border-heritage-maroon outline-none bg-background font-body"
-                            />
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-[10px] text-secondary uppercase tracking-wider font-label block">Nhãn Max (Điểm 10)</label>
-                            <input
-                              type="text"
-                              value={q.maxLabel}
-                              onChange={(e) => handleUpdateQuizField('leader', idx, 'maxLabel', e.target.value)}
-                              className="w-full text-xs border border-surface-container rounded p-1.5 focus:border-heritage-maroon outline-none bg-background font-body"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* AGENT QUESTIONS */}
-                <div className="space-y-6 bg-zen-white p-6 border border-surface-container rounded-lg shadow-sm">
-                  <h4 className="font-headline text-lg font-bold text-primary border-b border-surface-container pb-2 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-[20px] text-heritage-maroon">person_celebrate</span>
-                    Phân hệ: Tư Vấn Viên (Advisor)
-                  </h4>
-                  <div className="space-y-6" id="admin-quiz-agent-box">
-                    {localQuestions.agent.map((q, idx) => (
-                      <div key={q.id} className="p-4 border border-surface-container bg-background/25 rounded space-y-3">
-                        <div className="flex justify-between items-center text-xs font-label">
-                          <span className="font-bold text-heritage-maroon uppercase tracking-wide">
-                            Câu hỏi {idx + 1} ({q.axis.toUpperCase()})
-                          </span>
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-xs text-secondary font-label block">Nội dung câu hỏi:</label>
-                          <textarea
-                            rows={2}
-                            value={q.text}
-                            onChange={(e) => handleUpdateQuizField('agent', idx, 'text', e.target.value)}
-                            className="w-full text-xs border border-surface-container rounded p-2 focus:border-heritage-maroon outline-none bg-background font-body"
-                          />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-1">
-                            <label className="text-[10px] text-secondary uppercase tracking-wider font-label block">Nhãn Min (Điểm 1)</label>
-                            <input
-                              type="text"
-                              value={q.minLabel}
-                              onChange={(e) => handleUpdateQuizField('agent', idx, 'minLabel', e.target.value)}
-                              className="w-full text-xs border border-surface-container rounded p-1.5 focus:border-heritage-maroon outline-none bg-background font-body"
-                            />
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-[10px] text-secondary uppercase tracking-wider font-label block">Nhãn Max (Điểm 10)</label>
-                            <input
-                              type="text"
-                              value={q.maxLabel}
-                              onChange={(e) => handleUpdateQuizField('agent', idx, 'maxLabel', e.target.value)}
-                              className="w-full text-xs border border-surface-container rounded p-1.5 focus:border-heritage-maroon outline-none bg-background font-body"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+          {activeTab === 'quiz' && (
+            <div id="admin-tab-quiz" className="bg-zen-white border border-surface-container rounded-lg p-8 shadow-sm text-center space-y-4">
+              <span className="material-symbols-outlined text-[64px] text-heritage-maroon/60">settings_accessibility</span>
+              <h3 className="font-headline text-xl font-bold text-primary">Cấu hình Hệ thống Trắc nghiệm</h3>
+              <p className="font-body text-sm text-secondary max-w-lg mx-auto">
+                Hiện tại, hệ thống câu hỏi trắc nghiệm chọn đáp án định hướng (TVV & Quản lý) đã được chuyển sang cấu hình tĩnh tại mã nguồn Frontend để tối ưu hóa hiệu năng, tốc độ tải trang nhanh và đồng bộ hóa các option đáp án chi tiết.
+              </p>
+              <div className="pt-2">
+                <span className="inline-block bg-heritage-maroon/5 border border-heritage-maroon/20 text-heritage-maroon text-xs font-semibold px-4 py-2 rounded-full font-label uppercase tracking-wider">
+                  Quản lý tĩnh ở file: mockData.ts
+                </span>
               </div>
             </div>
           )}
