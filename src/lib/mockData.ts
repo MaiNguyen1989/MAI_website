@@ -1,7 +1,5 @@
 import { Question, Post, Lead } from '../types';
 
-import { Question, Post, Lead } from '../types';
-
 export const initialQuestions: { leader: Question[]; agent: Question[] } = {
   leader: [
     {
