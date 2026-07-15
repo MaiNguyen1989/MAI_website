@@ -290,8 +290,8 @@ export default function DiagnosePage() {
       };
 
       const stageDescs = {
-        G1: 'Bạn đang trong quá trình xây dựng niềm tin vào sản phẩm và tìm kiếm những khách hàng đầu tiên. Cảm xúc của bạn dễ trồi sụt theo lời từ chối của khách hàng.',
-        G2: 'Bạn đã quyết định gắn bó với nghề, nhưng áp lực lớn nhất lúc này là thu nhập chưa ổn định, doanh số còn lên xuống thất thường theo tháng.',
+        G1: 'Bạn đang ở bước khởi đầu đầy tiềm năng, tập trung xây dựng niềm tin vào sản phẩm và tiếp cận những khách hàng đầu tiên. Đây là giai đoạn tích lũy trải nghiệm quan trọng, giúp bạn rèn luyện bản lĩnh và sự kiên trì trước những phản hồi ban đầu từ thị trường.',
+        G2: 'Bạn đã lựa chọn gắn bó nghiêm túc với nghề và tích lũy được những kết quả ban đầu. Để tạo bước đột phá tiếp theo, mục tiêu trọng tâm của bạn là xây dựng tính đều đặn trong hoạt động hàng ngày, giúp thu nhập ổn định và doanh số tăng trưởng bền vững hơn.',
         G3: 'Bạn đã biết làm nghề một cách độc lập. Bạn có kỷ luật, tự lên kế hoạch làm việc mà không cần quản lý phải đôn đốc hay nhắc nhở.',
         G4: 'Bạn đã dịch chuyển sang tư duy dài hạn, vận hành công việc như một doanh nghiệp cá nhân với nguồn khách giới thiệu (Referral) dồi dào.'
       };
@@ -404,29 +404,29 @@ export default function DiagnosePage() {
       };
 
       const levelDescs = {
-        L1: 'Bạn giỏi thực chiến cá nhân, nhưng đang biến mình thành "ngôi sao cô đơn", kết quả đội nhóm phụ thuộc vào việc bạn tự bán.',
-        L2: 'Bạn là một người quản lý tận tụy, nhưng đang mắc sai lầm "Làm thay". Bạn mệt mỏi vì suốt ngày phải đi chốt sales hộ và thúc giục TVV hoạt động.',
-        L3: 'Bạn đã biết buông việc chi tiết để tập trung phát triển các Trưởng nhóm (UM/SUM). Tuy nhiên, bạn vẫn đang quản trị bằng cảm tính hoặc chưa có bộ quy trình chuẩn hóa để nhân bản diện rộng.',
-        L4: 'Bạn vận hành đội ngũ như một cỗ máy bài bản, nói chuyện bằng dữ liệu, Dashboard và SOP. Điểm cần cải thiện là thổi thêm "phần hồn" (Văn hóa, sự gắn kết tự nhiên) vào hệ thống.',
+        L1: 'Bạn sở hữu năng lực thực chiến cá nhân xuất sắc và là điểm tựa vững chắc cho đội nhóm. Để phát triển quy mô lớn hơn, bạn có thể chuyển dịch dần từ một cá nhân tự lực sang vai trò dẫn dắt, nhân bản công thức thành công cho các thành viên xung quanh.',
+        L2: 'Bạn là một người quản lý vô cùng tận tụy và luôn sát cánh hỗ trợ đội ngũ. Để tối ưu hóa hiệu suất và giúp nhân sự tự lập, bạn có thể tập trung chuyển giao quy trình, khuyến khích các tư vấn viên chủ động tự chốt sales và tự vận hành hoạt động của mình.',
+        L3: 'Bạn đã có bước tiến lớn khi tập trung phát triển các Trưởng nhóm (UM/SUM) để mở rộng đội ngũ. Để nâng tầm hệ thống lên quy mô lớn hơn, bạn có thể bổ sung các quy trình chuẩn hóa và công cụ đo lường rõ ràng, giúp việc vận hành trở nên chuyên nghiệp và dễ dàng nhân bản hơn nữa.',
+        L4: 'Bạn vận hành đội ngũ một cách bài bản, quản trị hiệu quả thông qua dữ liệu, Dashboard và SOP. Để tối ưu hóa, bạn có thể chú trọng bồi đắp thêm sợi dây gắn kết văn hóa và sự đồng lòng tự nhiên giữa các thành viên, giúp hệ thống phát triển bền vững hơn.',
         L5: 'Bạn đã chạm tới đỉnh cao của kiến tạo môi trường. Hệ thống tự chạy và tự sản sinh lãnh đạo mới ngay cả khi bạn vắng mặt.'
       };
 
       // Mâu thuẫn giữa tư duy (Câu 1) và thực thi (Câu 4 / 2)
       let conflictText = "";
       if (opt1.weight >= 4 && (opt4.weight === 2 || opt2.weight === 2)) {
-        conflictText = "Hệ thống phát hiện khoảng cách giữa Góc nhìn và Thực tế của bạn: Ở phần định vị Cấp độ, bạn thể hiện tư duy mong muốn hướng tới việc tối ưu hệ thống và xây dựng quy trình bài bản (Tương đương Cấp độ Business Builder / System Builder). Tuy nhiên, ở hành vi thực tế, bạn lại chấm ở mức Level 2 (Bản năng/Làm thay) – bạn vẫn đang dành nhiều thời gian để làm thay việc chuyên môn và trực tiếp đi gặp khách cùng TVV khi họ gặp khó. Bạn đang bị mâu thuẫn giữa tầm nhìn quản trị và thói quen ôm đồm sự vụ.";
+        conflictText = "Hệ thống nhận thấy bạn có tầm nhìn quản trị rất tiến bộ khi hướng tới việc tối ưu hệ thống và quy trình bài bản (Tương đương Cấp độ Business/System Builder). Để tầm nhìn này nhanh chóng đi vào thực tế, bạn có thể từng bước điều chỉnh hành vi thực tế hàng ngày, giảm bớt việc giải quyết sự vụ chi tiết hoặc làm thay nhân sự, từ đó tập trung tối đa vào việc chuyển giao và tạo không gian tự chủ lớn hơn cho đội ngũ của mình.";
       }
 
       // Xác định hình thái hệ thống
       let systemShape = "Hình thoi co cụm";
-      let systemShapeDesc = "Cả 4 trục L–P–I–S đều nằm ở vùng Bản năng hoặc Nhận thức. Doanh nghiệp hoặc đội nhóm của bạn đang vận hành hoàn toàn phụ thuộc vào sự vụ phát sinh hàng ngày. Bạn vừa thâm dụng thời gian để tự làm chuyên môn thay nhân sự, vừa là 'trục chống' duy nhất để mọi thứ không sụp đổ.";
+      let systemShapeDesc = "Cả 4 trục L–P–I–S đang ở giai đoạn khởi đầu tích lũy. Đội nhóm của bạn hiện tại vận hành chủ yếu dựa vào nỗ lực thực chiến cá nhân của bạn. Đây là thời cơ rất tốt để bạn bắt đầu xây dựng các quy trình cơ bản và phân quyền dần cho nhân sự, giúp giảm tải công việc và chuẩn bị cho sự bứt phá quy mô lớn hơn.";
 
       if (lScore >= 6 && iScore >= 6 && pScore < 6 && sScore < 6) {
         systemShape = "Mũi tên lệch trái";
         systemShapeDesc = "Điểm Lãnh đạo và Độc lập tốt, nhưng Hiệu suất và Hệ thống ở mức Bản năng/Nhận thức. Bạn là một nhà lãnh đạo có sức ảnh hưởng cá nhân lớn, đội ngũ rất yêu quý và có thể tự làm việc khi vắng mặt bạn trong ngắn hạn. Tuy nhiên, bạn đang quản lý hoàn toàn bằng cảm tính và truyền miệng. Đội nhóm thiếu các chỉ số đo lường PDCA rõ ràng và không có quy trình SOP chuẩn hóa.";
       } else if (pScore >= 6 && sScore >= 6 && lScore < 6 && iScore < 6) {
         systemShape = "Cánh buồm lệch phải";
-        systemShapeDesc = "Điểm Quản trị hiệu suất và Quy trình hệ thống rất bài bản, nhưng điểm Lãnh đạo và Tính độc lập lại rất kém. Bạn là một nhà xây dựng quy trình tốt, có dashboard và công cụ công nghệ đầy đủ. Nhưng bạn đang mắc sai lầm lớn về mặt con người: Bạn chưa biết cách đào tạo, phân quyền và xây dựng đội ngũ kế thừa. Hệ thống của bạn có 'xác' (công cụ) nhưng thiếu 'hồn' (văn hóa và năng lực tự chủ).";
+        systemShapeDesc = "Bạn sở hữu hệ thống quy trình bài bản và công cụ đo lường hiệu suất rõ ràng. Để tối ưu hóa nguồn lực này, bạn có thể chú trọng phát triển thêm yếu tố con người bằng cách tăng cường đào tạo, phân quyền và nâng đỡ các nhân sự kế thừa. Điều này sẽ thổi thêm sức sống và sự gắn kết tự nhiên vào hệ thống vận hành chuyên nghiệp sẵn có của bạn.";
       } else if (lScore >= 6 && pScore >= 6 && iScore >= 6 && sScore >= 6) {
         systemShape = "Hệ thống phát triển cân bằng";
         systemShapeDesc = "Chúc mừng! Các chỉ số L-P-I-S của bạn phát triển khá đồng đều và vững chắc. Bạn đang đi đúng hướng trên lộ trình xây dựng một hệ điều hành doanh nghiệp bảo hiểm tự vận hành và nhân bản bền vững.";
@@ -729,7 +729,9 @@ export default function DiagnosePage() {
                 Diagnostic Result
               </span>
               <h2 className="font-display text-3xl text-primary font-medium">Bản đồ Định vị của Bạn</h2>
-              <p className="font-body text-xs text-secondary mt-1">Kết quả phân tích chẩn đoán dựa trên dữ liệu phản tư.</p>
+              <p className="font-body text-sm text-secondary mt-2 max-w-lg mx-auto leading-relaxed">
+                Cảm ơn bạn đã làm trắc nghiệm với MAI Institute, sau đây là kết quả trắc nghiệm dựa trên lựa chọn của bạn.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center border-b border-surface-container/40 pb-8">
@@ -760,7 +762,7 @@ export default function DiagnosePage() {
                       <div className="bg-heritage-maroon/[0.02] border border-heritage-maroon/10 p-4 rounded text-xs space-y-2">
                         <span className="font-bold text-heritage-maroon uppercase block font-label">⚠️ Cảnh báo Điểm nghẽn (Blind Spots):</span>
                         <p className="text-secondary leading-relaxed text-[11px]">
-                          Hệ thống nhận thấy bạn có xu hướng chẩn đoán ở giai đoạn thấp hơn vùng trọng tâm tại một số khía cạnh (như nguồn khách hàng hoặc quản trị thời vụ). Hãy tham khảo lộ trình hành động ưu tiên ở dưới để gỡ nghẽn.
+                          Hệ thống nhận thấy bạn có cơ hội tối ưu hóa thêm tại một số khía cạnh chưa đồng bộ với vùng trọng tâm hiện tại (như nguồn khách hàng hoặc quản trị thời vụ).
                         </p>
                       </div>
                     )}
@@ -809,13 +811,13 @@ export default function DiagnosePage() {
                       id: 'G1',
                       title: 'G1 - Gia nhập',
                       roleName: 'Người bán sản phẩm bảo vệ',
-                      desc: 'Bạn đang trong quá trình xây dựng niềm tin vào sản phẩm và tìm kiếm những khách hàng đầu tiên. Cảm xúc của bạn dễ trồi sụt theo lời từ chối của khách hàng.'
+                      desc: 'Bạn đang ở bước khởi đầu đầy tiềm năng, tập trung xây dựng niềm tin vào sản phẩm và tiếp cận những khách hàng đầu tiên. Đây là giai đoạn tích lũy trải nghiệm quan trọng, giúp bạn rèn luyện bản lĩnh và sự kiên trì trước những phản hồi ban đầu từ thị trường.'
                     },
                     {
                       id: 'G2',
                       title: 'G2 - Sống được với nghề',
                       roleName: 'Nhà tư vấn giải pháp tích lũy',
-                      desc: 'Bạn đã quyết định gắn bó với nghề, nhưng áp lực lớn nhất lúc này là thu nhập chưa ổn định, doanh số còn lên xuống thất thường theo tháng.'
+                      desc: 'Bạn đã lựa chọn gắn bó nghiêm túc với nghề và tích lũy được những kết quả ban đầu. Để tạo bước đột phá tiếp theo, mục tiêu trọng tâm của bạn là xây dựng tính đều đặn trong hoạt động hàng ngày, giúp thu nhập ổn định và doanh số tăng trưởng bền vững hơn.'
                     },
                     {
                       id: 'G3',
@@ -871,25 +873,25 @@ export default function DiagnosePage() {
                       id: 'L1',
                       title: 'L1 - Self-Leader',
                       roleName: 'Làm chủ bản thân',
-                      desc: 'Bạn giỏi thực chiến cá nhân, nhưng đang biến mình thành "ngôi sao cô đơn", kết quả đội nhóm phụ thuộc vào việc bạn tự bán.'
+                      desc: 'Bạn sở hữu năng lực thực chiến cá nhân xuất sắc và là điểm tựa vững chắc cho đội nhóm. Để phát triển quy mô lớn hơn, bạn có thể chuyển dịch dần từ một cá nhân tự lực sang vai trò dẫn dắt, nhân bản công thức thành công cho các thành viên xung quanh.'
                     },
                     {
                       id: 'L2',
                       title: 'L2 - Team Leader',
                       roleName: 'Dẫn dắt đội nhóm',
-                      desc: 'Bạn là một người quản lý tận tụy, nhưng đang mắc sai lầm "Làm thay". Bạn mệt mỏi vì suốt ngày phải đi chốt sales hộ và thúc giục TVV hoạt động.'
+                      desc: 'Bạn là một người quản lý vô cùng tận tụy và luôn sát cánh hỗ trợ đội ngũ. Để tối ưu hóa hiệu suất và giúp nhân sự tự lập, bạn có thể tập trung chuyển giao quy trình, khuyến khích các tư vấn viên chủ động tự chốt sales và tự vận hành hoạt động của mình.'
                     },
                     {
                       id: 'L3',
                       title: 'L3 - Team Builder',
                       roleName: 'Kiến tạo và phát triển đội nhóm',
-                      desc: 'Bạn đã biết buông việc chi tiết để tập trung phát triển các Trưởng nhóm (UM/SUM). Tuy nhiên, bạn vẫn đang quản trị bằng cảm tính hoặc chưa có bộ quy trình chuẩn hóa để nhân bản diện rộng.'
+                      desc: 'Bạn đã có bước tiến lớn khi tập trung phát triển các Trưởng nhóm (UM/SUM) để mở rộng đội ngũ. Để nâng tầm hệ thống lên quy mô lớn hơn, bạn có thể bổ sung các quy trình chuẩn hóa và công cụ đo lường rõ ràng, giúp việc vận hành trở nên chuyên nghiệp và dễ dàng nhân bản hơn nữa.'
                     },
                     {
                       id: 'L4',
                       title: 'L4 - Business Builder',
                       roleName: 'Xây dựng và tối ưu hệ thống kinh doanh',
-                      desc: 'Bạn vận hành đội ngũ như một cỗ máy bài bản, nói chuyện bằng dữ liệu, Dashboard và SOP. Điểm cần cải thiện là thổi thêm "phần hồn" (Văn hóa, sự gắn kết tự nhiên) vào hệ thống.'
+                      desc: 'Bạn vận hành đội ngũ một cách bài bản, quản trị hiệu quả thông qua dữ liệu, Dashboard và SOP. Để tối ưu hóa, bạn có thể chú trọng bồi đắp thêm sợi dây gắn kết văn hóa và sự đồng lòng tự nhiên giữa các thành viên, giúp hệ thống phát triển bền vững hơn.'
                     },
                     {
                       id: 'L5',
@@ -966,37 +968,37 @@ export default function DiagnosePage() {
                       label: 'Leadership (L) - Lãnh đạo',
                       score: leaderResult.scores.l,
                       desc: Number(leaderResult.scores.l) >= 7
-                        ? 'Tốt. Bạn sở hữu tư duy định hướng và khai vấn tốt, chủ động giao quyền và nâng đỡ trưởng nhóm cấp dưới thay vì can thiệp ôm sự vụ.'
+                        ? 'Vững vàng. Bạn sở hữu tư duy định hướng và khai vấn tốt, chủ động giao quyền và nâng đỡ trưởng nhóm cấp dưới thay vì can thiệp ôm sự vụ.'
                         : Number(leaderResult.scores.l) >= 4
-                        ? 'Trung bình. Bạn đã bắt đầu ý thức về việc coaching và phát triển con người, nhưng hành động đôi lúc vẫn mang tính chất áp đặt khi chịu áp lực số.'
-                        : 'Yếu. Quản trị theo bản năng của một Best Seller cũ. Bạn chưa biết cách khai vấn đội ngũ và đang ôm đồm mọi quyết định.'
+                        ? 'Đang phát triển. Bạn đã bắt đầu ý thức về việc coaching và phát triển con người, nhưng hành động đôi lúc vẫn mang tính chất áp đặt khi chịu áp lực số.'
+                        : 'Đang khởi động. Quản trị dựa nhiều vào kinh nghiệm thực chiến cá nhân xuất sắc trước đây. Đây là thời điểm tuyệt vời để bạn trang bị thêm các kỹ năng khai vấn, chuyển giao quyền chủ động cho đội ngũ.'
                     },
                     {
                       label: 'Performance (P) - Hiệu suất',
                       score: leaderResult.scores.p,
                       desc: Number(leaderResult.scores.p) >= 7
-                        ? 'Tốt. Bạn thiết lập chỉ số và dashboard theo dõi hiệu suất ngày (Active Ratio) khoa học. Các buổi giao ban dựa hoàn toàn trên con số thực tế.'
+                        ? 'Vững vàng. Bạn thiết lập chỉ số và dashboard theo dõi hiệu suất ngày (Active Ratio) khoa học. Các buổi giao ban dựa hoàn toàn trên con số thực tế.'
                         : Number(leaderResult.scores.p) >= 4
-                        ? 'Trung bình. Có theo dõi kết quả kinh doanh nhưng chưa chuẩn hóa chỉ số hoạt động. Đôi lúc nhận định hiệu suất còn mang tính cảm tính.'
-                        : 'Yếu. Bạn hầu như chỉ quản trị theo doanh số cuối tháng, không kiểm soát được hành vi và phễu hoạt động hàng ngày của TVV.'
+                        ? 'Đang phát triển. Có theo dõi kết quả kinh doanh nhưng chưa chuẩn hóa chỉ số hoạt động. Đôi lúc nhận định hiệu suất còn mang tính cảm tính.'
+                        : 'Đang khởi động. Hiện tại việc quản trị chủ yếu tập trung vào kết quả doanh số cuối tháng. Bạn có cơ hội nâng cấp hiệu suất bằng cách xây dựng và đồng hành cùng TVV qua việc theo dõi phễu hoạt động hàng ngày.'
                     },
                     {
                       label: 'Independence (I) - Độc lập',
                       score: leaderResult.scores.i,
                       desc: Number(leaderResult.scores.i) >= 7
-                        ? 'Tốt. Các trưởng nhóm (UM/SUM) của bạn có độ tự lập rất cao, hệ thống tự chạy ổn định và giữ vững doanh số ngay cả khi bạn vắng mặt.'
+                        ? 'Vững vàng. Các trưởng nhóm (UM/SUM) của bạn có độ tự lập rất cao, hệ thống tự chạy ổn định và giữ vững doanh số ngay cả khi bạn vắng mặt.'
                         : Number(leaderResult.scores.i) >= 4
-                        ? 'Trung bình. Nhóm có thể hoạt động ngắn hạn khi bạn đi vắng nhưng hiệu suất và kỷ luật làm việc sẽ giảm dần nếu thiếu sự đôn đốc của bạn.'
-                        : 'Yếu. Đội nhóm hoàn toàn phụ thuộc vào sự hiện diện của bạn. Khi bạn không chạm tay vào việc, hệ thống gần như bị đóng băng.'
+                        ? 'Đang phát triển. Nhóm có thể hoạt động ngắn hạn khi bạn đi vắng nhưng hiệu suất và kỷ luật làm việc sẽ giảm dần nếu thiếu sự đôn đốc của bạn.'
+                        : 'Đang khởi động. Đội nhóm hiện tại đang vận hành dựa nhiều trên sự đôn đốc trực tiếp của bạn. Để giúp nhân sự tự lập và phát triển vững vàng hơn, việc chuyển giao và chuẩn hóa quy trình sẽ là bước đi đột phá.'
                     },
                     {
                       label: 'System (S) - Hệ thống',
                       score: leaderResult.scores.s,
                       desc: Number(leaderResult.scores.s) >= 7
-                        ? 'Tốt. Bạn đã chuẩn hóa các quy trình cốt lõi (SOPs) về tuyển dụng, đào tạo và bàn giao công nghệ. Có đường ống phát triển lãnh đạo kế thừa tốt.'
+                        ? 'Vững vàng. Bạn đã chuẩn hóa các quy trình cốt lõi (SOPs) về tuyển dụng, đào tạo và bàn giao công nghệ. Có đường ống phát triển lãnh đạo kế thừa tốt.'
                         : Number(leaderResult.scores.s) >= 4
-                        ? 'Trung bình. Đã có một số quy trình viết tay hoặc slide đào tạo nhưng chưa tạo thành một hệ điều hành đồng bộ để nhân bản tự động.'
-                        : 'Yếu. Hoạt động chủ yếu dựa vào truyền miệng và kinh nghiệm cá nhân. Thiếu quy trình chuẩn hóa khiến việc nhân bản đội nhóm gặp khó khăn.'
+                        ? 'Đang phát triển. Đã có một số quy trình viết tay hoặc slide đào tạo nhưng chưa tạo thành một hệ điều hành đồng bộ để nhân bản tự động.'
+                        : 'Đang khởi động. Công việc hiện tại phần lớn được truyền đạt qua kinh nghiệm cá nhân. Việc chuẩn hóa quy trình (SOPs) sẽ giúp bạn dễ dàng nhân bản và giải phóng thời gian quản lý hiệu quả hơn.'
                     }
                   ].map((axis, aIdx) => (
                     <div key={aIdx} className="p-3 border border-surface-container/60 rounded bg-background/5 space-y-1">
@@ -1063,39 +1065,12 @@ export default function DiagnosePage() {
               </div>
             )}
 
-            {/* Khối đề xuất chương trình đào tạo & SOP hành động (không chứa PDF) */}
-            <div className="border border-surface-container rounded-lg p-6 bg-background/10 space-y-4">
-              <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-widest block border-b border-heritage-maroon/15 pb-2">
-                🎯 ĐỀ XUẤT CHƯƠNG TRÌNH PHÁT TRIỂN DÀNH RIÊNG CHO BẠN
-              </span>
-              <h4 className="font-headline text-lg font-bold text-primary">{proposal.advice}</h4>
-              <p className="font-body text-xs text-secondary leading-relaxed">{proposal.details}</p>
-              <button
-                onClick={() => window.location.href = selectedRole === 'leader' ? '/solutions?branch=management' : '/solutions?branch=specialist'}
-                className="bg-heritage-maroon text-zen-white px-6 py-2.5 font-label text-xs font-bold uppercase tracking-wider hover:bg-primary-container transition-all rounded-sm active:scale-95 duration-100"
-              >
-                Tìm hiểu giải pháp {proposal.solutionName}
-              </button>
+            {/* Câu kết khích lệ từ MAI Institute */}
+            <div className="text-center py-6 px-4 border-t border-surface-container/60 mt-8">
+              <p className="font-body text-sm text-secondary italic leading-relaxed max-w-xl mx-auto">
+                MAI Institute tin rằng với sự thấu suốt về hiện trạng và lộ trình phát triển rõ ràng, bạn sẽ không ngừng bứt phá giới hạn và đạt được những cột mốc rực rỡ hơn nữa trên hành trình phát triển sự nghiệp của mình. Chúc bạn luôn vững tin và gặt hái nhiều thành công!
+              </p>
             </div>
-
-            {/* SOP hành động gỡ nghẽn */}
-            {proposal.actions.length > 0 && (
-              <div className="bg-heritage-maroon/[0.02] border border-heritage-maroon/15 p-6 rounded-lg space-y-4">
-                <h3 className="font-headline text-sm font-bold text-heritage-maroon uppercase tracking-widest block font-label border-b border-heritage-maroon/10 pb-2">
-                  🚶 Lộ trình Hành động Ưu tiên tuần này (SOP gỡ nghẽn):
-                </h3>
-                <ul className="space-y-3">
-                  {proposal.actions.map((act, aIdx) => (
-                    <li key={aIdx} className="flex gap-3 text-xs leading-relaxed text-secondary">
-                      <span className="w-5 h-5 rounded-full bg-heritage-maroon/10 text-heritage-maroon flex items-center justify-center font-bold shrink-0">
-                        {aIdx + 1}
-                      </span>
-                      <span>{act}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
             
             <div className="text-center pt-4">
               <button
