@@ -86,16 +86,16 @@ export default function HomePage() {
               Interactive Diagnostic
             </span>
             <h2 className="font-headline text-4xl md:text-5xl leading-tight text-primary">
-              Sức khỏe hệ thống của bạn đang ở mức nào?
+              Định vị Năng lực & Hệ điều hành Quản trị của Bạn
             </h2>
             <p className="font-body text-base text-secondary max-w-lg leading-relaxed">
-              Sử dụng khung chẩn đoán &quot;Mindful Action&quot; để nhận diện các lỗ hổng ẩn sâu trong cấu trúc quản trị và kỹ năng tư vấn cốt lõi của đội ngũ. Chúng tôi cung cấp cái nhìn 360 độ về hiệu suất thực tế thay vì chỉ nhìn vào doanh số.
+              Khung chẩn đoán chuyên sâu thiết kế riêng cho ngành BHNT. Giúp Tư vấn viên xác định mức độ tự chủ nghề nghiệp (G1 - G4) và giúp Nhà quản lý đo lường toàn diện hệ điều hành qua 4 trục LPIS cốt lõi, phát hiện nhanh các điểm nghẽn vận hành thực tế.
             </p>
 
             <div className="space-y-6 pt-4">
               <div className="space-y-2">
                 <div className="flex justify-between font-label text-xs font-bold text-secondary uppercase tracking-wider">
-                  <span>Kỹ năng tư vấn</span>
+                  <span>Tự chủ & Bản lĩnh làm nghề (TVV)</span>
                   <span className="text-heritage-maroon font-semibold">75%</span>
                 </div>
                 <div className="h-1 bg-surface-container overflow-hidden rounded-sm">
@@ -104,20 +104,20 @@ export default function HomePage() {
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between font-label text-xs font-bold text-secondary uppercase tracking-wider">
-                  <span>Quản trị tự động hóa</span>
-                  <span className="text-heritage-maroon font-semibold">40%</span>
+                  <span>Quản trị hiệu suất & Số liệu (LPIS - P)</span>
+                  <span className="text-heritage-maroon font-semibold">60%</span>
                 </div>
                 <div className="h-1 bg-surface-container overflow-hidden rounded-sm">
-                  <div className="h-full bg-heritage-maroon rounded-sm" style={{ width: '40%' }}></div>
+                  <div className="h-full bg-heritage-maroon rounded-sm" style={{ width: '60%' }}></div>
                 </div>
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between font-label text-xs font-bold text-secondary uppercase tracking-wider">
-                  <span>Tư duy lãnh đạo</span>
-                  <span className="text-heritage-maroon font-semibold">90%</span>
+                  <span>Quy trình hóa & Nhân bản (LPIS - S)</span>
+                  <span className="text-heritage-maroon font-semibold">45%</span>
                 </div>
                 <div className="h-1 bg-surface-container overflow-hidden rounded-sm">
-                  <div className="h-full bg-heritage-maroon rounded-sm" style={{ width: '90%' }}></div>
+                  <div className="h-full bg-heritage-maroon rounded-sm" style={{ width: '45%' }}></div>
                 </div>
               </div>
             </div>
@@ -127,7 +127,7 @@ export default function HomePage() {
                 href="/diagnose"
                 className="bg-heritage-maroon text-zen-white px-6 py-4 font-label text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all flex items-center gap-2 rounded-sm"
               >
-                Bắt đầu chẩn đoán hệ thống <span className="material-symbols-outlined text-[16px]">play_arrow</span>
+                Bắt đầu chẩn đoán ngay <span className="material-symbols-outlined text-[16px]">play_arrow</span>
               </Link>
             </div>
           </div>
@@ -140,11 +140,45 @@ export default function HomePage() {
                   <div className="w-3/4 h-3/4 border border-dashed border-outline-variant/50 rounded-full"></div>
                   <div className="absolute w-1/2 h-1/2 border border-dashed border-outline-variant/70 rounded-full"></div>
                 </div>
-                <svg className="w-full h-full absolute inset-0 transform -rotate-90 opacity-20" viewBox="0 0 100 100">
-                  <polygon fill="#630d0d" points="50,15 80,45 70,75 30,75 20,45"></polygon>
-                </svg>
-                <span className="material-symbols-outlined text-heritage-maroon text-[56px] transition-transform duration-300 group-hover:scale-110">
-                  analytics
+                
+                {/* LPIS Radar Chart Mockup */}
+                <div className="absolute inset-0 flex items-center justify-center p-6 -rotate-45 transition-transform duration-700 group-hover:rotate-[315deg]">
+                  <svg className="w-full h-full" viewBox="0 0 100 100">
+                    {/* Trục dọc L-I và Trục ngang S-P */}
+                    <line x1="50" y1="12" x2="50" y2="88" stroke="#630d0d" strokeWidth="0.5" strokeDasharray="2,2" opacity="0.3" />
+                    <line x1="12" y1="50" x2="88" y2="50" stroke="#630d0d" strokeWidth="0.5" strokeDasharray="2,2" opacity="0.3" />
+                    
+                    {/* Vòng tròn đồng tâm */}
+                    <circle cx="50" cy="50" r="18" fill="none" stroke="#630d0d" strokeWidth="0.25" opacity="0.2" />
+                    <circle cx="50" cy="50" r="30" fill="none" stroke="#630d0d" strokeWidth="0.25" opacity="0.2" />
+                    <circle cx="50" cy="50" r="38" fill="none" stroke="#630d0d" strokeWidth="0.25" opacity="0.2" />
+                    
+                    {/* Nhãn chữ 4 đầu trục */}
+                    <text x="50" y="9" textAnchor="middle" fontSize="6" fontWeight="bold" fill="#630d0d" opacity="0.8">L</text>
+                    <text x="92" y="52" textAnchor="middle" fontSize="6" fontWeight="bold" fill="#630d0d" opacity="0.8">P</text>
+                    <text x="50" y="95" textAnchor="middle" fontSize="6" fontWeight="bold" fill="#630d0d" opacity="0.8">I</text>
+                    <text x="8" y="52" textAnchor="middle" fontSize="6" fontWeight="bold" fill="#630d0d" opacity="0.8">S</text>
+                    
+                    {/* Đa giác Radar (LPIS polygon) lệch nhẹ đại diện cho hình thái lệch trái thực tế */}
+                    <polygon 
+                      points="50,22 78,50 50,74 38,50" 
+                      fill="#630d0d" 
+                      fillOpacity="0.15" 
+                      stroke="#630d0d" 
+                      strokeWidth="1.2" 
+                      className="transition-all duration-500 group-hover:fill-opacity-25"
+                    />
+                    
+                    {/* Điểm nút */}
+                    <circle cx="50" cy="22" r="1.5" fill="#630d0d" />
+                    <circle cx="78" cy="50" r="1.5" fill="#630d0d" />
+                    <circle cx="50" cy="74" r="1.5" fill="#630d0d" />
+                    <circle cx="38" cy="50" r="1.5" fill="#630d0d" />
+                  </svg>
+                </div>
+
+                <span className="material-symbols-outlined text-heritage-maroon text-[50px] transition-all duration-500 group-hover:scale-110 z-10 bg-zen-white p-2 rounded-full shadow-sm">
+                  insights
                 </span>
               </div>
             </div>
