@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { Post } from '@/types';
 import { initialPosts } from '@/lib/mockData';
@@ -88,6 +89,17 @@ export default function BlogPage() {
     <div id="view-blog" className="view-content">
       <section className="py-12 px-margin-desktop">
         <div className="max-w-container-max mx-auto">
+          <div className="flex justify-start mb-6">
+            <Link 
+              href="/" 
+              className="inline-flex items-center gap-2 text-xs font-label font-bold text-secondary hover:text-heritage-maroon transition-colors group"
+            >
+              <span className="material-symbols-outlined text-[16px] group-hover:-translate-x-1 transition-transform">
+                arrow_back
+              </span>
+              Quay lại Trang chủ
+            </Link>
+          </div>
           <div className="text-center mb-12">
             <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-widest block mb-2">
               Thought Leadership
