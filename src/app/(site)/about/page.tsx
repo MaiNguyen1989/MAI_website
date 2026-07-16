@@ -130,8 +130,8 @@ export default function AboutPage() {
                 <div className="relative w-full max-w-[400px] aspect-[4/5] rounded-xl overflow-hidden shadow-md group border border-surface-container">
                   <img
                     alt="Nguyễn Thị Hồng Hạnh"
-                    className="w-full h-full object-cover transition-soft group-hover:scale-[1.05]"
-                    src="/images/hong-hanh.jpg"
+                    className="w-full h-full object-cover transition-soft group-hover:scale-[1.02]"
+                    src="/images/hong-hanh.png"
                   />
                 </div>
               </div>
