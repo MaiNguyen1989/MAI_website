@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import BookingModal from '@/components/shared/BookingModal';
 
 interface TabContent {
@@ -25,6 +26,17 @@ export default function AboutPage() {
 
   return (
     <div id="view-about" className="view-content bg-background min-h-screen pt-24 pb-20">
+      <div className="max-w-container-max mx-auto px-margin-desktop mb-4">
+        <Link 
+          href="/" 
+          className="inline-flex items-center gap-2 text-xs font-label font-bold text-secondary hover:text-heritage-maroon transition-colors group"
+        >
+          <span className="material-symbols-outlined text-[16px] group-hover:-translate-x-1 transition-transform">
+            arrow_back
+          </span>
+          Quay lại Trang chủ
+        </Link>
+      </div>
       
       {/* Hero Section */}
       <section className="py-16 md:py-24 border-b border-surface-container">

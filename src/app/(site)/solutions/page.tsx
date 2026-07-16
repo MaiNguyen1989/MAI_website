@@ -3,6 +3,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import BookingModal from '@/components/shared/BookingModal';
+import Link from 'next/link';
 
 interface Milestone {
   stage: string;
@@ -238,6 +239,17 @@ function SolutionsContent() {
       {/* Header */}
       <section className="py-16 px-margin-desktop bg-paper-grey/20">
         <div className="max-w-container-max mx-auto text-center">
+          <div className="flex justify-start mb-6">
+            <Link 
+              href="/" 
+              className="inline-flex items-center gap-2 text-xs font-label font-bold text-secondary hover:text-heritage-maroon transition-colors group"
+            >
+              <span className="material-symbols-outlined text-[16px] group-hover:-translate-x-1 transition-transform">
+                arrow_back
+              </span>
+              Quay lại Trang chủ
+            </Link>
+          </div>
           <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-widest block mb-2 animate-fadeIn">
             Career Orientation &amp; Programs
           </span>

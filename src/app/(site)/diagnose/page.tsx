@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Question, Lead, LeadScores } from '@/types';
 import { initialQuestions } from '@/lib/mockData';
 import RadarChart from '@/components/charts/RadarChart';
@@ -493,6 +494,17 @@ export default function DiagnosePage() {
   return (
     <div id="view-diagnose" className="view-content py-12 px-margin-desktop min-h-[85vh] flex items-center">
       <div className="max-w-[750px] w-full mx-auto bg-zen-white border border-surface-container rounded-lg shadow-sm p-8 md:p-12 relative">
+        <div className="mb-6">
+          <Link 
+            href="/" 
+            className="inline-flex items-center gap-2 text-xs font-label font-bold text-secondary hover:text-heritage-maroon transition-colors group"
+          >
+            <span className="material-symbols-outlined text-[16px] group-hover:-translate-x-1 transition-transform">
+              arrow_back
+            </span>
+            Quay lại Trang chủ
+          </Link>
+        </div>
         
         {/* Step 1: Chọn vai trò */}
         {step === 1 && (
