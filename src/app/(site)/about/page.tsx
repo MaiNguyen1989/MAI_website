@@ -291,7 +291,7 @@ export default function AboutPage() {
                           <li>Tác giả bộ tiêu chuẩn An tâm Tài chính &amp; Mô hình Pentagon ứng dụng trong tư vấn.</li>
                           <li>Tác giả 3 bộ trò chơi giáo dục tài chính nổi tiếng: MoneyWe, MoneyMe, MoneySense.</li>
                           <li>Tác giả Game bảo hiểm Money Care – công cụ trực quan hóa lợi ích bảo hiểm.</li>
-                          <li>Sáng lập Encolaw – bộ tiêu chuẩn chuyên biệt hỗ trợ thẩm định quyền lợi bảo hiểm nhân thọ cho khách hàng.</li>
+                          <li>Sáng lập bộ tiêu chuẩn chuyên biệt hỗ trợ thẩm định quyền lợi bảo hiểm nhân thọ cho khách hàng.</li>
                         </ul>
                       </li>
                       <li>
@@ -375,7 +375,7 @@ export default function AboutPage() {
                         Sở hữu bằng Thạc sĩ Tài chính tại Pháp cùng hơn 11 năm kinh nghiệm trong quản trị chuỗi cung ứng, tài chính doanh nghiệp và nghiên cứu tâm lý học hành vi chuyên sâu. Chị Mai mang đến tư duy hệ thống tối giản kết hợp cùng sự thấu hiểu về hành trình phát triển tâm trí của con người.
                       </p>
                       <p>
-                        Sở hữu tư duy hệ thống tinh gọn và tâm lý học hành vi, chị Quỳnh Mai đảm bảo mọi chương trình huấn luyện của MAI Institute đều được đóng gói chuẩn hóa, dễ dàng tích hợp công cụ dữ liệu và ứng dụng thực tế cho các đội ngũ kinh doanh BHNT.
+                        Với tư duy hệ thống tinh gọn và hiểu biết về tâm lý học hành vi, chị Quỳnh Mai đảm bảo mọi chương trình huấn luyện của MAI Institute đều được đóng gói chuẩn hóa, dễ dàng tích hợp công cụ dữ liệu và ứng dụng thực tế cho các đội ngũ kinh doanh BHNT.
                       </p>
                     </div>
                   )}
