@@ -251,13 +251,13 @@ function SolutionsContent() {
             </Link>
           </div>
           <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-widest block mb-2 animate-fadeIn">
-            Career Orientation &amp; Programs
+            CHƯƠNG TRÌNH ĐÀO TẠO &amp; HỆ THỐNG GIẢI PHÁP
           </span>
           <h1 className="font-display text-4xl md:text-6xl text-primary mb-6 animate-fadeIn">
-            Học Viện Hành Động Tỉnh Thức
+            Giải Pháp Đóng Gói Trực Quan Cho Ngành BHNT
           </h1>
           <p className="font-body text-sm md:text-base text-secondary max-w-2xl mx-auto leading-relaxed animate-fadeIn">
-            Lộ trình chuyển đổi hiệu suất và chuẩn hóa quy trình thấu cảm, thiết kế riêng cho ngành Bảo hiểm Nhân thọ tại Việt Nam.
+            Được thiết kế dựa trên trải nghiệm thực địa 20+ năm và tri thức quản trị quốc tế, giải quyết triệt để các điểm nghẽn vận hành của Tư vấn viên và Nhà quản lý.
           </p>
         </div>
       </section>
@@ -300,7 +300,7 @@ function SolutionsContent() {
                   <h3 className="font-display text-xl font-bold text-primary">LIBA – Cố Vấn Chuyên Nghiệp</h3>
                 </div>
                 <p className="font-body text-xs md:text-sm text-secondary leading-relaxed">
-                  Định hình tư duy phân tích quyền lợi và hoạch định tài chính toàn diện. Chuyển đổi vai trò từ người bán hàng sang Chuyên gia cố vấn tài chính đáng tin cậy.
+                  LIBA — Chuẩn Hóa Năng Lực Cố Vấn | Chuyển đổi từ bán sản phẩm sang Chuyên gia phân tích quyền lợi và hoạch định tài chính trung lập dựa trên quy trình rà soát minh bạch.
                 </p>
               </div>
               <div className="pt-6 border-t border-surface-container/60 mt-6 flex justify-between items-center text-xs font-label font-bold text-heritage-maroon uppercase tracking-wider">
@@ -336,7 +336,7 @@ function SolutionsContent() {
                   <h3 className="font-display text-xl font-bold text-primary">Coaching – Nâng Tầm Quản Trị</h3>
                 </div>
                 <p className="font-body text-xs md:text-sm text-secondary leading-relaxed">
-                  Khai phóng năng lực dẫn dắt. Dịch chuyển từ quản lý áp đặt sang tư duy khai vấn đồng hành, giải phóng sức lao động và kiến tạo đội ngũ tự vận hành.
+                  Mindful Leadership Coaching — Quản Trị bằng Đồng Hành | Chuyển giao quy trình khai vấn, giải phóng nhà quản lý khỏi sự vụ và kích hoạt tính tự chủ của đại lý.
                 </p>
               </div>
               <div className="pt-6 border-t border-surface-container/60 mt-6 flex justify-between items-center text-xs font-label font-bold text-heritage-maroon uppercase tracking-wider">
@@ -372,7 +372,7 @@ function SolutionsContent() {
                   <h3 className="font-display text-xl font-bold text-primary">Tổ Chức Workshop Khách Hàng</h3>
                 </div>
                 <p className="font-body text-xs md:text-sm text-secondary leading-relaxed">
-                  Đồng hành cùng Đại lý tổ chức các sự kiện Talkshow/Workshop chia sẻ tri thức tài chính chuyên sâu, kiến tạo sự tin tưởng và gắn kết tự nhiên cùng khách hàng.
+                  Dịch Vụ Workshop Khách Hàng — Trao Giá Trị Thực Chất | Đồng hành tổ chức các buổi chia sẻ tri thức tài chính trung lập, tạo dựng lòng tin và gắn kết tự nhiên với khách hàng.
                 </p>
               </div>
               <div className="pt-6 border-t border-surface-container/60 mt-6 flex justify-between items-center text-xs font-label font-bold text-heritage-maroon uppercase tracking-wider">
@@ -411,7 +411,7 @@ function SolutionsContent() {
                     LIBA: Định Hình Tư Duy Cố Vấn Bảo Hiểm Chuyên Nghiệp
                   </h2>
                   <p className="font-body text-sm md:text-base text-secondary leading-relaxed">
-                    Trong môi trường thị trường hiện nay, khi niềm tin của khách hàng trở thành tài sản quý giá nhất, những phương pháp kinh doanh dựa trên sự nể nang hay quảng bá đơn thuần đã không còn mang lại sự bền vững. Một đại lý bảo hiểm muốn tồn tại và phát triển dài hạn không chỉ cần kỹ năng chốt hợp đồng, mà cần một nền tảng chuyên môn sâu sắc để trở thành một &quot;đối tác tài chính&quot; đáng tin cậy của khách hàng.
+                    Phần lớn Tư vấn viên BHNT dừng bước không phải vì thiếu kiên trì, mà vì họ bị đẩy ra thị trường với tâm thế đi &quot;bán sản phẩm&quot; thay vì &quot;cố vấn giải pháp&quot;. LIBA (Life Insurance Benefits Analyst) trao cho bạn bộ tiêu chuẩn rà soát quyền lợi minh bạch — để bạn tự tin làm nghề bằng sự thấu hiểu và tử tế.
                   </p>
                   <p className="font-body text-sm md:text-base text-secondary leading-relaxed">
                     <strong>LIBA (Life Insurance Benefits Analyst)</strong> là chương trình đào tạo chuyên biệt do MAI Institute phát triển, hướng tới việc chuyển đổi vai trò của người tư vấn: từ một người bán sản phẩm đơn thuần trở thành một Chuyên gia phân tích quyền lợi và hoạch định tài chính.
@@ -424,7 +424,7 @@ function SolutionsContent() {
                       Giải pháp cho nhà quản lý
                     </h4>
                     <p className="font-body text-xs text-secondary leading-relaxed">
-                      LIBA là giải pháp hệ thống hóa năng lực cho đội ngũ. Chúng tôi giúp bạn chuẩn hóa quy trình làm việc, biến kiến thức bảo hiểm khô khan thành các công cụ tư vấn trực quan, dễ hiểu và dễ sao chép, xây dựng văn phòng vận hành dựa trên năng lực thực chất.
+                      Giải pháp giải phóng sức lao động quản lý: LIBA đóng gói sẵn bộ công cụ tư vấn trực quan và quy trình review hợp đồng chuẩn hóa, giúp văn phòng của bạn đào tạo đại lý mới nhanh chóng, sao chép dễ dàng và giữ vững chỉ số duy trì hợp đồng.
                     </p>
                   </div>
                 </div>
@@ -661,7 +661,7 @@ function SolutionsContent() {
                     Mindful Leadership Coaching: Khai Phong Năng Lực Dẫn Dắt
                   </h2>
                   <p className="font-body text-sm md:text-base text-secondary leading-relaxed">
-                    Trong hành trình phát triển sự nghiệp Bảo hiểm Nhân thọ, một nhà quản lý xuất sắc không được định nghĩa bằng việc họ tự mình mang về bao nhiêu doanh số, mà bằng việc họ giúp bao nhiêu cộng sự bên dưới đạt được thành công bền vững. Tuy nhiên, phần lớn các quản lý kinh doanh hiện nay đang thăng tiến bằng bản năng và kinh nghiệm cá nhân, dẫn đến cái bẫy &quot;siêu nhân độc hành&quot; – bận rộn 10-12 tiếng mỗi ngày để xử lý sự vụ, làm thay và &quot;sạc pin cảm xúc&quot; cho cấp dưới nhưng hệ thống vẫn gãy rụng.
+                    Bạn thăng tiến bằng năng lực cá nhân xuất sắc, nhưng lại đang kiệt sức vì phải đóng vai &quot;bảo mẫu cảm xúc&quot; và &quot;đi dập lửa&quot; từng ca sự vụ cho đội ngũ tuyến dưới? Mindful Leadership Coaching giúp bạn thoát khỏi vòng xoáy đó bằng quy trình khai vấn chuẩn mực.
                   </p>
                   <p className="font-body text-sm md:text-base text-secondary leading-relaxed">
                     <strong>Mindful Leadership Coaching</strong> là chương trình huấn luyện năng lực khai vấn chuyên biệt do MAI Institute thiết kế dành riêng cho đội ngũ quản lý kinh doanh BHNT (UM, SM, GA, AD). Chương trình giúp nhà quản lý chuyển đổi triệt để từ phong cách &quot;quản lý - kiểm soát&quot; áp đặt sang phong cách &quot;khai vấn - đồng hành&quot;, khơi dậy động lực tự thân và năng lực tự chủ của đại lý.
@@ -907,10 +907,10 @@ function SolutionsContent() {
                     Dịch vụ đồng hành Talkshow &amp; Workshop
                   </span>
                   <h2 className="font-display text-3xl md:text-4xl text-primary font-bold">
-                    Trao Gửi Tri Thức - Đồng Hành Bền Vững
+                    Đồng Hành Workshop — Kiến Tạo Lòng Tin Bằng Tri Thức Trung Lập
                   </h2>
                   <p className="font-body text-sm text-secondary leading-relaxed">
-                    Giải pháp phối hợp toàn diện giúp nhà tư vấn và quản lý gia tăng mức độ gắn kết, củng cố uy tín chuyên môn và phát triển thị trường bền vững thông qua các chương trình chia sẻ tri thức thực tiễn.
+                    MAI Institute cùng bạn thiết kế và vận hành các buổi Talkshow/Workshop giáo dục tài chính minh bạch cho khách hàng. Không ép chốt đơn tại chỗ, không hô hào chiêu trò — trao đúng giá trị để khách hàng tự mở lòng.
                   </p>
                 </div>
 

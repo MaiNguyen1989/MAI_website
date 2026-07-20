@@ -102,11 +102,11 @@ export default function BlogPage() {
           </div>
           <div className="text-center mb-12">
             <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-widest block mb-2">
-              Thought Leadership
+              GÓC CHUYÊN MÔN &amp; TRẢI NGHIỆM THỰC ĐỊA
             </span>
-            <h1 className="font-display text-4xl md:text-5xl text-primary font-medium">Tầm Nhìn &amp; Tư Duy Quản Trị</h1>
+            <h1 className="font-display text-4xl md:text-5xl text-primary font-medium">Góc Nhìn Điềm Đạm — Tri Thức Thực Chiến</h1>
             <p className="font-body text-sm text-secondary mt-2">
-              Nơi chia sẻ góc nhìn sâu sắc về Mindful Leadership và Data-driven trong ngành Bảo hiểm.
+              Bóc tách bản chất các điểm nghẽn trong ngành Bảo hiểm Nhân thọ qua góc nhìn thấu hiểu, tư duy hệ thống và những câu chuyện thực tế tại văn phòng BHNT.
             </p>
           </div>
 

@@ -17,13 +17,13 @@ export default function HomePage() {
       try {
         const { data, error } = await supabase
           .from('posts')
-          .select('*')
+          .select('id, title, category, type, summary, image, created_at')
           .order('created_at', { ascending: false })
           .limit(3);
         
         if (error) throw error;
         if (data && data.length > 0) {
-          setFeaturedPosts(data as Post[]);
+          setFeaturedPosts(data as unknown as Post[]);
         } else {
           // Fallback về mock data nếu DB rỗng
           setFeaturedPosts(initialPosts.slice(0, 3));
@@ -52,26 +52,26 @@ export default function HomePage() {
         <div className="relative z-10 w-full px-margin-desktop max-w-container-max mx-auto">
           <div className="max-w-3xl">
             <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-[0.2em] mb-6 block">
-              The Mindful Leadership Philosophy
+              MINDFUL LEADERSHIP &amp; SYSTEMIC ADVISORY
             </span>
-            <h1 className="font-display text-5xl md:text-7xl mb-8 leading-[1.1] text-primary">
-              Dẫn dắt bằng Tầm nhìn.<br />Quản trị bằng Dữ liệu.
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6 leading-[1.2] text-primary">
+              Tái Định Nghĩa Chuẩn Mực Làm Nghề.<br />Kiến Tạo Hệ Thống Quản Trị Tự Vận Hành.
             </h1>
             <p className="font-body text-lg text-secondary mb-10 max-w-2xl leading-relaxed">
-              Học viện tối ưu hóa hiệu suất toàn diện dành riêng cho Nhà lãnh đạo Bảo hiểm Nhân thọ thế hệ mới. Ứng dụng Zen vào thực thi chiến lược.
+              MAI Institute đồng hành cùng Tư vấn viên và Nhà quản lý Bảo hiểm Nhân thọ chuyển hóa từ mô hình bán hàng ngắn hạn sang Chuyên gia cố vấn tài chính trung lập và xây dựng hệ thống nhân sự kế thừa bền vững.
             </p>
             <div className="flex flex-wrap items-center gap-6">
               <Link
                 href="/diagnose"
                 className="bg-heritage-maroon text-zen-white px-8 py-5 font-label text-sm font-bold uppercase tracking-widest transition-soft hover:shadow-xl hover:-translate-y-0.5 rounded-sm"
               >
-                Bắt đầu chẩn đoán ngay (Free 5-Min Audit)
+                Chẩn đoán hệ điều hành (5 Phút Rà Soát)
               </Link>
               <Link
                 href="/solutions"
                 className="text-heritage-maroon font-label text-sm font-bold uppercase tracking-widest border-b-2 border-heritage-maroon/20 hover:border-heritage-maroon transition-soft flex items-center gap-2"
               >
-                Xem lộ trình đào tạo <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                Khám phá lộ trình chuyển hóa <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
               </Link>
             </div>
           </div>
@@ -83,13 +83,13 @@ export default function HomePage() {
         <div className="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-widest block">
-              Interactive Diagnostic
+              RÀ SOÁT VẤN ĐỀ THỰC TẾ
             </span>
             <h2 className="font-headline text-4xl md:text-5xl leading-tight text-primary">
-              Định vị Năng lực & Hệ điều hành Quản trị của Bạn
+              Nhận Diện Điểm Nghẽn Vận Hành &amp; Tự Chủ Nghề Nghiệp
             </h2>
             <p className="font-body text-base text-secondary max-w-lg leading-relaxed">
-              Khung chẩn đoán chuyên sâu thiết kế riêng cho ngành BHNT. Giúp Tư vấn viên xác định mức độ tự chủ nghề nghiệp (G1 - G4) và giúp Nhà quản lý đo lường toàn diện hệ điều hành qua 4 trục LPIS cốt lõi, phát hiện nhanh các điểm nghẽn vận hành thực tế.
+              Khung chẩn đoán độc lập giúp Tư vấn viên xác định chính xác cấp độ tự chủ (G1 - G4) và giúp Nhà quản lý rà soát toàn diện 4 trục hệ điều hành LPIS — phát hiện rào cản gốc rễ đang khiến đội ngũ kiệt sức hoặc gãy rụng.
             </p>
 
             <div className="space-y-6 pt-4">
@@ -191,10 +191,10 @@ export default function HomePage() {
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="mb-16 text-center">
             <span className="font-label text-xs font-bold text-secondary uppercase tracking-widest block mb-2">
-              Our Architecture
+              HỆ THỐNG GIẢI PHÁP ĐÓNG GÓI
             </span>
             <h2 className="font-headline text-4xl md:text-5xl mb-4 text-primary">
-              Lộ trình bứt phá. Kết quả thực thi.
+              Lộ trình chuẩn hóa &amp; Chuyển hóa từ gốc
             </h2>
             <div className="w-20 h-1 bg-heritage-maroon mx-auto rounded-full"></div>
           </div>
@@ -206,11 +206,11 @@ export default function HomePage() {
             >
               <div>
                 <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-widest mb-4 block">
-                  Dành cho lãnh đạo và quản lý
+                  DÀNH CHO NHÀ QUẢN LÝ KINH DOANH
                 </span>
-                <h3 className="font-headline text-3xl mb-4 text-primary">Phát triển năng lực quản lý</h3>
+                <h3 className="font-headline text-3xl mb-4 text-primary">Quản trị thảnh thơi &amp; Khai vấn lãnh đạo</h3>
                 <p className="font-body text-base text-secondary mb-8 leading-relaxed">
-                  Giải pháp dành riêng cho Lãnh đạo và Quản lý cấp cao ngành Bảo hiểm nhân thọ. Tập trung vào nghệ thuật lãnh đạo qua khai vấn kết hợp cùng hệ thống quản trị tự động.
+                  Chuyển giao năng lực khai vấn. Giúp nhà quản lý thoát khỏi cái bẫy sự vụ, kích hoạt động lực tự thân của đội ngũ và kiến tạo văn hóa kế thừa.
                 </p>
               </div>
               <div>
@@ -237,11 +237,11 @@ export default function HomePage() {
             >
               <div>
                 <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-widest mb-4 block">
-                  Dành cho đại lý 
+                  DÀNH CHO TƯ VẤN VIÊN BHNT
                 </span>
-                <h3 className="font-headline text-3xl mb-4 text-primary">Phát triển chuyên môn tư vấn</h3>
+                <h3 className="font-headline text-3xl mb-4 text-primary">Tiêu chuẩn rà soát &amp; Cố vấn tài chính</h3>
                 <p className="font-body text-base text-secondary mb-8 leading-relaxed">
-                  Chuẩn hóa kỹ năng tư vấn chuyên nghiệp cho đội ngũ Đại lý. Chuyển đổi từ &quot;Bán hàng&quot; sang &quot;Cố vấn tài chính&quot; dựa trên các giá trị nhân văn và kỹ thuật chốt đơn thực chiến.
+                  Chuyển đổi vai trò từ người bán sản phẩm đơn thuần sang Chuyên gia phân tích quyền lợi trung lập. Xây dựng quy trình rà soát minh bạch giúp khách hàng tự tin mở lòng và chủ động đóng phí duy trì.
                 </p>
               </div>
               <div>
@@ -285,7 +285,7 @@ export default function HomePage() {
             {featuredPosts.map((post) => (
               <Link
                 key={post.id}
-                href={`/blog?id=${post.id}`}
+                href={`/blog?post=${post.id}`}
                 className="space-y-4 cursor-pointer group bg-zen-white p-4 border border-surface-container rounded hover:border-heritage-maroon transition-soft shadow-sm"
               >
                 <div className="aspect-[4/3] overflow-hidden bg-surface-container-high rounded-sm">
@@ -319,16 +319,16 @@ export default function HomePage() {
         </div>
         <div className="max-w-container-max mx-auto px-margin-desktop relative z-10 text-center">
           <h2 className="font-headline text-4xl md:text-5xl mb-6 max-w-3xl mx-auto">
-            Sẵn sàng để tái định nghĩa tiêu chuẩn hiệu suất?
+            Sẵn sàng tháo gỡ điểm nghẽn vận hành cho đội ngũ của bạn?
           </h2>
           <p className="font-body text-base md:text-lg mb-10 opacity-80 max-w-xl mx-auto leading-relaxed">
-            Đặt lịch hẹn 30 phút tư vấn miễn phí cùng chuyên gia giải pháp của MAI Institute.
+            Đặt lịch 30 phút tham vấn cùng chuyên gia MAI Institute để rà soát thực trạng và lắng nghe giải pháp may đo riêng cho văn phòng.
           </p>
           <button
             onClick={() => setIsModalOpen(true)}
             className="bg-zen-white text-heritage-maroon px-10 py-5 font-label text-sm font-bold uppercase tracking-widest hover:bg-paper-grey transition-all active:scale-95 shadow-lg rounded-sm"
           >
-            Đặt lịch tư vấn ngay
+            Đặt lịch tham vấn giải pháp
           </button>
         </div>
       </section>

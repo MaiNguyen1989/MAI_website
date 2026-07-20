@@ -42,13 +42,13 @@ export default function AboutPage() {
       <section className="py-16 md:py-24 border-b border-surface-container">
         <div className="max-w-container-max mx-auto px-margin-desktop text-center">
           <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-[0.2em] mb-4 block">
-            Mindful Action for Executives
+            VỀ MAI INSTITUTE
           </span>
           <h1 className="font-display text-4xl md:text-6xl text-primary mb-6 leading-tight max-w-4xl mx-auto">
-            Kiến tạo Thế hệ Lãnh đạo Bảo hiểm Tỉnh thức &amp; Hệ thống
+            Tái Định Nghĩa Chuẩn Mực Làm Nghề Cho Cộng Đồng Bảo Hiểm Nhân Thọ
           </h1>
           <p className="font-body text-base md:text-lg text-secondary max-w-2xl mx-auto leading-relaxed">
-            MAI Institute đồng hành cùng các nhà quản lý kinh doanh Bảo hiểm Nhân thọ thế hệ mới bứt phá giới hạn hiệu suất bằng sự kết hợp duy nhất giữa tư duy Tỉnh thức và Quản trị dựa trên dữ liệu.
+            MAI Institute là học viện huấn luyện chuyên sâu được thành lập với sứ mệnh giúp Tư vấn viên làm nghề bằng sự thấu hiểu – tử tế và đồng hành cùng Nhà quản lý kiến tạo đội ngũ tự chủ, vận hành bền vững.
           </p>
           <div className="w-24 h-1 bg-heritage-maroon mx-auto mt-8 rounded-full"></div>
         </div>
@@ -62,14 +62,14 @@ export default function AboutPage() {
             {/* Cột trái: Tiêu đề và Quote */}
             <div className="lg:col-span-5 space-y-6">
               <span className="font-label text-xs font-bold text-heritage-maroon uppercase tracking-widest block">
-                Triết lý Đào tạo
+                NỀN TẢNG TRIẾT LÝ
               </span>
               <h2 className="font-headline text-3xl md:text-4xl text-primary leading-tight">
-                Hành động Tỉnh thức<br />
-                <span className="italic text-heritage-maroon">(Mindful Action)</span>
+                Thấu Hiểu Từ Tâm —<br />
+                <span className="italic text-heritage-maroon">Minh Bạch Trong Hệ Thống</span>
               </h2>
               <div className="border-l-2 border-heritage-maroon pl-6 py-2 italic text-secondary font-headline text-lg md:text-xl leading-relaxed">
-                &quot;Huấn luyện không phải là làm đầy kiến thức, mà là đồng hành để người quản lý nhìn nhận, tự chuyển hóa nội lực và dẫn dắt bằng sự thấu hiểu.&quot;
+                &quot;Huấn luyện không phải là làm đầy kiến thức, mà là chuyển giao giải pháp hệ thống để người làm nghề BHNT làm việc bằng sự điềm đạm, tử tế và thấu hiểu.&quot;
               </div>
             </div>
 
@@ -81,9 +81,9 @@ export default function AboutPage() {
                 <div className="w-12 h-12 bg-heritage-maroon/5 text-heritage-maroon rounded-lg flex items-center justify-center">
                   <span className="material-symbols-outlined text-2xl">self_improvement</span>
                 </div>
-                <h3 className="font-headline text-xl font-bold text-primary">Sự Tỉnh thức (Mindfulness)</h3>
+                <h3 className="font-headline text-xl font-bold text-primary">Thấu hiểu &amp; Sự Tỉnh thức</h3>
                 <p className="font-body text-sm text-secondary leading-relaxed">
-                  Lắng nghe sâu sắc, thấu hiểu tâm lý hành vi và ứng dụng tư duy tỉnh thức để phát triển nội lực vững vàng. Định vị người làm nghề bảo hiểm thành chuyên gia tài chính tử tế, lấy khách hàng làm trọng tâm.
+                  Lắng nghe thấu cảm tâm lý hành vi khách hàng và đại lý. Định vị người làm nghề BHNT thành Chuyên gia cố vấn tài chính trung lập, lấy sự tử tế làm kim chỉ nam.
                 </p>
               </div>
 
@@ -92,9 +92,9 @@ export default function AboutPage() {
                 <div className="w-12 h-12 bg-heritage-maroon/5 text-heritage-maroon rounded-lg flex items-center justify-center">
                   <span className="material-symbols-outlined text-2xl">insights</span>
                 </div>
-                <h3 className="font-headline text-xl font-bold text-primary">Hệ thống &amp; Dữ liệu</h3>
+                <h3 className="font-headline text-xl font-bold text-primary">Tư duy Hệ thống &amp; Minh bạch</h3>
                 <p className="font-body text-sm text-secondary leading-relaxed">
-                  Đơn giản hóa quản trị bằng công nghệ và tự động hóa AI. Xây dựng các mô hình định tư vấn, bộ tiêu chuẩn thẩm định quyền lợi và quy trình hệ thống tối giản để tối ưu hiệu suất thực tế.
+                  Đóng gói quy trình tư vấn và quản trị thành các bộ công cụ trực quan, dễ ứng dụng vào thực tế công việc. Loại bỏ quản lý cảm tính bằng dữ liệu rà soát minh bạch.
                 </p>
               </div>
 
@@ -264,7 +264,7 @@ export default function AboutPage() {
                         Hành trình từ năm 2017 của anh gắn liền với việc đơn giản hóa những khái niệm tài chính phức tạp thành các mô hình thực tế và bộ trò chơi giáo dục tài chính trực quan.
                       </p>
                       <p>
-                        Với kinh nghiệm huấn luyện hàng ngàn đại lý bảo hiểm và thực hành hoạch định tài chính sâu sắc, anh Nhật không chỉ chuyển giao công cụ, mà sẽ cùng bạn kiến tạo một thế hệ tư vấn viên bảo hiểm nhân thọ chuyên nghiệp, làm việc bằng tư duy hệ thống và sự minh bạch tuyệt đối.
+                        Tiên phong đóng gói bộ tiêu chuẩn An tâm Tài chính, mô hình Pentagon và bộ công cụ thẩm định quyền lợi bảo hiểm nhân thọ, anh Minh Nhật giúp Tư vấn viên tự tin làm việc với khách hàng với tư thế của một Chuyên gia phân tích tài chính trung lập và minh bạch.
                       </p>
                     </div>
                   )}
@@ -375,7 +375,7 @@ export default function AboutPage() {
                         Sở hữu bằng Thạc sĩ Tài chính tại Pháp cùng hơn 11 năm kinh nghiệm trong quản trị chuỗi cung ứng, tài chính doanh nghiệp và nghiên cứu tâm lý học hành vi chuyên sâu. Chị Mai mang đến tư duy hệ thống tối giản kết hợp cùng sự thấu hiểu về hành trình phát triển tâm trí của con người.
                       </p>
                       <p>
-                        Với niềm đam mê trong việc ứng dụng Trí tuệ Nhân tạo (AI) vào quản trị giáo dục, chị là người xây dựng nền móng công nghệ, thiết kế các giải pháp back-office thông minh. Từ đó kiến tạo nên các giải pháp hỗ trợ vượt trội cho quá trình đào tạo và phát triển con người.
+                        Sở hữu tư duy hệ thống tinh gọn và tâm lý học hành vi, chị Quỳnh Mai đảm bảo mọi chương trình huấn luyện của MAI Institute đều được đóng gói chuẩn hóa, dễ dàng tích hợp công cụ dữ liệu và ứng dụng thực tế cho các đội ngũ kinh doanh BHNT.
                       </p>
                     </div>
                   )}
@@ -431,7 +431,7 @@ export default function AboutPage() {
         </div>
         <div className="relative z-10 space-y-6">
           <h2 className="font-headline text-3xl md:text-5xl max-w-3xl mx-auto">
-            Sẵn sàng bứt phá hiệu suất hệ thống đại lý của bạn?
+            Sẵn sàng tháo gỡ điểm nghẽn vận hành cho đội ngũ của bạn?
           </h2>
           <p className="font-body text-sm md:text-base opacity-80 max-w-xl mx-auto leading-relaxed">
             Đặt lịch hẹn 30 phút thảo luận cùng đội ngũ chuyên gia của MAI Institute để nhận diện các giải pháp chuyển đổi phù hợp nhất.

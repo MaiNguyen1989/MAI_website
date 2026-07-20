@@ -1,0 +1,271 @@
+================================================================================
+BẢNG KẾ HOẠCH CHUYỂN ĐỔI GIỌNG VĂN WEBSITE MAI INSTITUTE (ALL TABS)
+Dựa trên Voice Profile v1.0 — MAI Institute (D:\MAI_website\voice-profile.md)
+================================================================================
+
+▸ BẢN BẢN ĐỊNH HƯỚNG CHUNG:
+- Giọng văn mới: "Chuyên nghiệp, minh bạch, điềm đạm nhưng cực kỳ thực chiến; không hô hào cảm xúc rỗng, nói thẳng vào điểm nghẽn thực địa của ngành BHNT bằng ngôn từ thấu hiểu và hệ thống giải pháp đóng gói trực quan."
+- Loại bỏ hoàn toàn các cụm từ hô khẩu hiệu năng lượng rỗng ("bứt phá giới hạn", "siêu nhân độc hành", "chốt sales thực chiến", "bứt phá hiệu suất...").
+- Sử dụng các cụm từ kim chỉ nam: "Thấu hiểu và tử tế", "Cố vấn tài chính trung lập", "Tư duy hệ thống & sự minh bạch", "Chuyển hóa từ gốc — Quản trị thảnh thơi", "Rà soát quyền lợi minh bạch", "Giải phóng sức lao động của nhà quản lý", "Đường ống nhân sự kế thừa".
+
+--------------------------------------------------------------------------------
+1. TRANG CHỦ (HOME PAGE - /)
+--------------------------------------------------------------------------------
+
+[Mục 1.1: Hero Section]
+• CÂU VĂN CŨ:
+  - Subtitle: "The Mindful Leadership Philosophy"
+  - Headline: "Dẫn dắt bằng Tầm nhìn. Quản trị bằng Dữ liệu."
+  - Description: "Học viện tối ưu hóa hiệu suất toàn diện dành riêng cho Nhà lãnh đạo Bảo hiểm Nhân thọ thế hệ mới. Ứng dụng Zen vào thực thi chiến lược."
+  - CTA Primary: "Bắt đầu chẩn đoán ngay (Free 5-Min Audit)"
+  - CTA Secondary: "Xem lộ trình đào tạo"
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Subtitle: "MINDFUL LEADERSHIP & SYSTEMIC ADVISORY"
+  - Headline: "Tái Định Nghĩa Chuẩn Mực Làm Nghề.<br />Kiến Tạo Hệ Thống Quản Trị Tự Vận Hành."
+  - Description: "MAI Institute đồng hành cùng Tư vấn viên và Nhà quản lý Bảo hiểm Nhân thọ chuyển hóa từ mô hình bán hàng ngắn hạn sang Chuyên gia cố vấn tài chính trung lập và xây dựng hệ thống nhân sự kế thừa bền vững."
+  - CTA Primary: "Chẩn đoán hệ điều hành (5 Phút Rà Soát)"
+  - CTA Secondary: "Khám phá lộ trình chuyển hóa"
+
+• LÝ DO ĐIỀU CHỈNH:
+  Cụm "tối ưu hóa hiệu suất toàn diện" và "Ứng dụng Zen vào thực thi" khá chung chung và mang tính hô hào. Giọng văn mới định vị rõ nét sự chuyển hóa vai trò người làm nghề BHNT và xây dựng hệ thống tự vận hành minh bạch.
+
+---
+
+[Mục 1.2: Công cụ Chẩn đoán (Interactive Diagnostic Section)]
+• CÂU VĂN CŨ:
+  - Tagline: "Interactive Diagnostic"
+  - Headline: "Định vị Năng lực & Hệ điều hành Quản trị của Bạn"
+  - Description: "Khung chẩn đoán chuyên sâu thiết kế riêng cho ngành BHNT. Giúp Tư vấn viên xác định mức độ tự chủ nghề nghiệp (G1 - G4) và giúp Nhà quản lý đo lường toàn diện hệ điều hành qua 4 trục LPIS cốt lõi, phát hiện nhanh các điểm nghẽn vận hành thực tế."
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Tagline: "RÀ SOÁT VẤN ĐỀ THỰC TẾ"
+  - Headline: "Nhận Diện Điểm Nghẽn Vận Hành & Tự Chủ Nghề Nghiệp"
+  - Description: "Khung chẩn đoán độc lập giúp Tư vấn viên xác định chính xác cấp độ tự chủ (G1 - G4) và giúp Nhà quản lý rà soát toàn diện 4 trục hệ điều hành LPIS — phát hiện rào cản gốc rễ đang khiến đội ngũ kiệt sức hoặc gãy rụng."
+
+• LÝ DO ĐIỀU CHỈNH:
+  Chuyển sang giọng văn nói thẳng vào "điểm nghẽn thực địa" và "rào cản gốc rễ", giúp người đọc đồng cảm và muốn làm trắc nghiệm rà soát ngay.
+
+---
+
+[Mục 1.3: Lộ trình & Giải pháp (Solutions Architecture)]
+• CÂU VĂN CŨ:
+  - Section Header: "Our Architecture" | "Lộ trình bứt phá. Kết quả thực thi."
+  - Card 1 (Quản lý): "Dành cho lãnh đạo và quản lý" | "Phát triển năng lực quản lý" | "Giải pháp dành riêng cho Lãnh đạo và Quản lý cấp cao ngành Bảo hiểm nhân thọ. Tập trung vào nghệ thuật lãnh đạo qua khai vấn kết hợp cùng hệ thống quản trị tự động."
+  - Card 2 (Đại lý): "Dành cho đại lý" | "Phát triển chuyên môn tư vấn" | "Chuẩn hóa kỹ năng tư vấn chuyên nghiệp cho đội ngũ Đại lý. Chuyển đổi từ 'Bán hàng' sang 'Cố vấn tài chính' dựa trên các giá trị nhân văn và kỹ thuật chốt đơn thực chiến."
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Section Header: "HỆ THỐNG GIẢI PHÁP ĐÓNG GÓI" | "Lộ trình chuẩn hóa & Chuyển hóa từ gốc"
+  - Card 1 (Quản lý): "DÀNH CHO NHÀ QUẢN LÝ KINH DOANH" | "Quản trị thảnh thơi & Khai vấn lãnh đạo" | "Chuyển giao năng lực khai vấn. Giúp nhà quản lý thoát khỏi cái bẫy sự vụ, kích hoạt động lực tự thân của đội ngũ và kiến tạo văn hóa kế thừa."
+  - Card 2 (Đại lý): "DÀNH CHO TƯ VẤN VIÊN BHNT" | "Tiêu chuẩn rà soát & Cố vấn tài chính" | "Chuyển đổi vai trò từ người bán sản phẩm đơn thuần sang Chuyên gia phân tích quyền lợi trung lập. Xây dựng quy trình rà soát minh bạch giúp khách hàng tự tin mở lòng và chủ động đóng phí duy trì."
+
+• LÝ DO ĐIỀU CHỈNH:
+  Bỏ cụm "kỹ thuật chốt đơn thực chiến" (nằm trong danh sách CẤM DÙNG của Voice Profile). Thay bằng "Tiêu chuẩn rà soát minh bạch" và "Cố vấn tài chính trung lập".
+
+---
+
+[Mục 1.4: CTA Banner (Trang chủ)]
+• CÂU VĂN CŨ:
+  - Headline: "Sẵn sàng để tái định nghĩa tiêu chuẩn hiệu suất?"
+  - Subtitle: "Đặt lịch hẹn 30 phút tư vấn miễn phí cùng chuyên gia giải pháp của MAI Institute."
+  - Button: "Đặt lịch tư vấn ngay"
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Headline: "Sẵn sàng tháo gỡ điểm nghẽn vận hành cho đội ngũ của bạn?"
+  - Subtitle: "Đặt lịch 30 phút tham vấn cùng chuyên gia MAI Institute để rà soát thực trạng và lắng nghe giải pháp may đo riêng cho văn phòng."
+  - Button: "Đặt lịch tham vấn giải pháp"
+
+• LÝ DO ĐIỀU CHỈNH:
+  Tránh câu hỏi hô hào năng lượng rỗng "tái định nghĩa tiêu chuẩn hiệu suất". Đổi sang lời mời tham vấn văn minh, tập trung tháo gỡ điểm nghẽn.
+
+
+--------------------------------------------------------------------------------
+2. TRANG VỀ CHÚNG TÔI (ABOUT PAGE - /about)
+--------------------------------------------------------------------------------
+
+[Mục 2.1: Hero Section Trang About]
+• CÂU VĂN CŨ:
+  - Subtitle: "Mindful Action for Executives"
+  - Headline: "Kiến tạo Thế hệ Lãnh đạo Bảo hiểm Tỉnh thức & Hệ thống"
+  - Description: "MAI Institute đồng hành cùng các nhà quản lý kinh doanh Bảo hiểm Nhân thọ thế hệ mới bứt phá giới hạn hiệu suất bằng sự kết hợp duy nhất giữa tư duy Tỉnh thức và Quản trị dựa trên dữ liệu."
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Subtitle: "VỀ MAI INSTITUTE"
+  - Headline: "Tái Định Nghĩa Chuẩn Mực Làm Nghề Cho Cộng Đồng Bảo Hiểm Nhân Thọ"
+  - Description: "MAI Institute là học viện huấn luyện chuyên sâu được thành lập với sứ mệnh giúp Tư vấn viên làm nghề bằng sự thấu hiểu – tử tế và đồng hành cùng Nhà quản lý kiến tạo đội ngũ tự chủ, vận hành bền vững."
+
+• LÝ DO ĐIỀU CHỈNH:
+  Trích dẫn chuẩn từ Tuyên bố sứ mệnh mẫu trong Voice Profile (Ví dụ 3). Loại bỏ cụm hô hào "bứt phá giới hạn hiệu suất".
+
+---
+
+[Mục 2.2: Triết lý Đào tạo (Philosophy Section)]
+• CÂU VĂN CŨ:
+  - Subtitle: "Triết lý Đào tạo"
+  - Headline: "Hành động Tỉnh thức (Mindful Action)"
+  - Quote: "Huấn luyện không phải là làm đầy kiến thức, mà là đồng hành để người quản lý nhìn nhận, tự chuyển hóa nội lực và dẫn dắt bằng sự thấu hiểu."
+  - Pillar 1 (Mindfulness): "Sự Tỉnh thức (Mindfulness) - Lắng nghe sâu sắc, thấu hiểu tâm lý hành vi và ứng dụng tư duy tỉnh thức để phát triển nội lực vững vàng. Định vị người làm nghề bảo hiểm thành chuyên gia tài chính tử tế, lấy khách hàng làm trọng tâm."
+  - Pillar 2 (System & Data): "Hệ thống & Dữ liệu - Đơn giản hóa quản trị bằng công nghệ và tự động hóa AI. Xây dựng các mô hình định tư vấn, bộ tiêu chuẩn thẩm định quyền lợi và quy trình hệ thống tối giản để tối ưu hiệu suất thực tế."
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Subtitle: "NỀN TẢNG TRIẾT LÝ"
+  - Headline: "Thấu Hiểu Từ Tâm — Minh Bạch Trong Hệ Thống"
+  - Quote: "Huấn luyện không phải là làm đầy kiến thức, mà là chuyển giao giải pháp hệ thống để người làm nghề BHNT làm việc bằng sự điềm đạm, tử tế và thấu hiểu."
+  - Pillar 1 (Thấu hiểu & Tử tế): "Thấu hiểu & Sự Tỉnh thức — Lắng nghe thấu cảm tâm lý hành vi khách hàng và đại lý. Định vị người làm nghề BHNT thành Chuyên gia cố vấn tài chính trung lập, lấy sự tử tế làm kim chỉ nam."
+  - Pillar 2 (Tư duy Hệ thống & Dữ liệu): "Tư duy Hệ thống & Minh bạch — Đóng gói quy trình tư vấn và quản trị thành các bộ công cụ trực quan, dễ ứng dụng vào thực tế công việc. Loại bỏ quản lý cảm tính bằng dữ liệu rà soát minh bạch."
+
+• LÝ DO ĐIỀU CHỈNH:
+  Gắn kết trực tiếp các cụm từ kim chỉ nam của thương hiệu: "Thấu hiểu và tử tế", "Tư duy hệ thống & sự minh bạch", "Quản trị thảnh thơi".
+
+---
+
+[Mục 2.3: Giới thiệu Ban Sáng Lập (Founders Profiles)]
+• CÂU VĂN CŨ & MỚI ĐỀ XUẤT CHO CHUYÊN GIA HỒNG HẠNH:
+  - Cũ: "Đối với cô, huấn luyện không phải là làm đầy kiến thức, mà là đồng hành để cấp quản lý chuyển hóa tư duy lãnh đạo đối tác, giúp đội ngũ tư vấn định vị bản thân thành những chuyên gia tài chính có chuyên môn, làm nghề bằng sự thấu hiểu và tử tế."
+  - Mới: "Đối với cô, huấn luyện không phải là làm đầy kiến thức, mà là đồng hành để cấp quản lý chuyển hóa tư duy lãnh đạo đối tác, giúp đội ngũ tư vấn định vị bản thân thành những chuyên gia tài chính có chuyên môn, làm nghề bằng sự thấu hiểu và tử tế."
+
+• CÂU VĂN CŨ & MỚI ĐỀ XUẤT CHO CHUYÊN GIA MINH NHẬT:
+  - Cũ: "...anh Nhật không chỉ chuyển giao công cụ, mà sẽ cùng bạn kiến tạo một thế hệ tư vấn viên bảo hiểm nhân thọ chuyên nghiệp, làm việc bằng tư duy hệ thống và sự minh bạch tuyệt đối."
+  - Mới: "Tiên phong đóng gói bộ tiêu chuẩn An tâm Tài chính, mô hình Pentagon và bộ công cụ thẩm định quyền lợi bảo hiểm nhân thọ, anh Minh Nhật giúp Tư vấn viên tự tin làm việc với khách hàng với tư thế của một Chuyên gia phân tích tài chính trung lập và minh bạch."
+
+• CÂU VĂN CŨ & MỚI ĐỀ XUẤT CHO CHUYÊN GIA QUỲNH MAI:
+  - Cũ: "...chị là người xây dựng nền móng công nghệ, thiết kế các giải pháp back-office thông minh. Từ đó kiến tạo nên các giải pháp hỗ trợ vượt trội cho quá trình đào tạo và phát triển con người."
+  - Mới: "Sở hữu tư duy hệ thống tinh gọn và tâm lý học hành vi, chị Quỳnh Mai đảm bảo mọi chương trình huấn luyện của MAI Institute đều được đóng gói chuẩn hóa, dễ dàng tích hợp công cụ dữ liệu và ứng dụng thực tế cho các đội ngũ kinh doanh BHNT."
+
+
+--------------------------------------------------------------------------------
+3. TRANG GIẢI PHÁP & CHƯƠNG TRÌNH (SOLUTIONS PAGE - /solutions)
+--------------------------------------------------------------------------------
+
+[Mục 3.1: Header & Thẻ tổng quan Dịch vụ]
+• CÂU VĂN CŨ:
+  - Subtitle: "Career Orientation & Programs"
+  - Main Title: "Học Viện Hành Động Tỉnh Thức"
+  - Subtitle Desc: "Lộ trình chuyển đổi hiệu suất và chuẩn hóa quy trình thấu cảm, thiết kế riêng cho ngành Bảo hiểm Nhân thọ tại Việt Nam."
+  - Tab 1 Card (LIBA): "...Chuyển đổi vai trò từ người bán hàng sang Chuyên gia cố vấn tài chính đáng tin cậy."
+  - Tab 2 Card (Coaching): "...Dịch chuyển từ quản lý áp đặt sang tư duy khai vấn đồng hành, giải phóng sức lao động và kiến tạo đội ngũ tự vận hành."
+  - Tab 3 Card (Workshop): "...kiến tạo sự tin tưởng và gắn kết tự nhiên cùng khách hàng."
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Subtitle: "CHƯƠNG TRÌNH ĐÀO TẠO & HỆ THỐNG GIẢI PHÁP"
+  - Main Title: "Giải Pháp Đóng Gói Trực Quan Cho Ngành BHNT"
+  - Subtitle Desc: "Được thiết kế dựa trên trải nghiệm thực địa 20+ năm và tri thức quản trị quốc tế, giải quyết triệt để các điểm nghẽn vận hành của Tư vấn viên và Nhà quản lý."
+  - Tab 1 Card (LIBA): "LIBA — Chuẩn Hóa Năng Lực Cố Vấn | Chuyển đổi từ bán sản phẩm sang Chuyên gia phân tích quyền lợi và hoạch định tài chính trung lập dựa trên quy trình rà soát minh bạch."
+  - Tab 2 Card (Coaching): "Mindful Leadership Coaching — Quản Trị bằng Đồng Hành | Chuyển giao quy trình khai vấn, giải phóng nhà quản lý khỏi sự vụ và kích hoạt tính tự chủ của đại lý."
+  - Tab 3 Card (Workshop): "Dịch Vụ Workshop Khách Hàng — Trao Giá Trị Thực Chất | Đồng hành tổ chức các buổi chia sẻ tri thức tài chính trung lập, tạo dựng lòng tin và gắn kết tự nhiên với khách hàng."
+
+---
+
+[Mục 3.2: Chi tiết Khóa học LIBA (Đại lý)]
+• CÂU VĂN CŨ:
+  - Intro: "...Trong môi trường thị trường hiện nay... những phương pháp kinh doanh dựa trên sự nể nang hay quảng bá đơn thuần đã không còn mang lại sự bền vững..."
+  - Manager Note: "LIBA là giải pháp hệ thống hóa năng lực cho đội ngũ. Chúng tôi giúp bạn chuẩn hóa quy trình làm việc, biến kiến thức bảo hiểm khô khan thành các công cụ tư vấn trực quan..."
+  - Card ROI Đại lý: "Tăng hiệu suất khai thác thực tế (ROI) - Nhờ quy trình đặt câu hỏi chuẩn hóa và thiết kế giải pháp cân bằng, đại lý dễ dàng gia tăng kích thước hợp đồng (Ticket Size) và nhận lời giới thiệu..."
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Intro: "Phần lớn Tư vấn viên BHNT dừng bước không phải vì thiếu kiên trì, mà vì họ bị đẩy ra thị trường với tâm thế đi 'bán sản phẩm' thay vì 'cố vấn giải pháp'. LIBA (Life Insurance Benefits Analyst) trao cho bạn bộ tiêu chuẩn rà soát quyền lợi minh bạch — để bạn tự tin làm nghề bằng sự thấu hiểu và tử tế."
+  - Manager Note: "Giải pháp giải phóng sức lao động quản lý: LIBA đóng gói sẵn bộ công cụ tư vấn trực quan và quy trình review hợp đồng chuẩn hóa, giúp văn phòng của bạn đào tạo đại lý mới nhanh chóng, sao chép dễ dàng và giữ vững chỉ số duy trì hợp đồng."
+  - Card Kết quả Đại lý: "Chủ động làm nghề & Nhận giới thiệu tự nhiên — Khi làm việc bằng tư thế của nhà cố vấn trung lập, đại lý không còn lo cạn tệp người quen. Khách hàng tự nguyện giới thiệu (Referrals) và chủ động duy trì hợp đồng dài hạn."
+
+---
+
+[Mục 3.3: Chi tiết Khóa học Coaching (Quản lý)]
+• CÂU VĂN CŨ:
+  - Intro: "...dẫn đến cái bẫy 'siêu nhân độc hành' – bận rộn 10-12 tiếng mỗi ngày để xử lý sự vụ, làm thay và 'sạc pin cảm xúc' cho cấp dưới nhưng hệ thống vẫn gãy rụng."
+  - Section Outcome: "Quản trị thảnh thơi, hệ thống tự vận hành..."
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Intro: "Bạn thăng tiến bằng năng lực cá nhân xuất sắc, nhưng lại đang kiệt sức vì phải đóng vai 'bảo mẫu cảm xúc' và 'đi dập lửa' từng ca sự vụ cho đội ngũ tuyến dưới? Mindful Leadership Coaching giúp bạn thoát khỏi vòng xoáy đó bằng quy trình khai vấn chuẩn mực."
+  - Section Outcome: "Quản trị thảnh thơi & Đường ống kế thừa — Giải phóng 70% thời gian sự vụ của quản lý, chuyển giao năng lực dẫn dắt cho đội ngũ UM/BM cấp dưới, kiến tạo hệ thống tự vận hành bền vững."
+
+---
+
+[Mục 3.4: Dịch vụ Workshop Khách hàng]
+• CÂU VĂN CŨ:
+  - Title: "Trao Gửi Tri Thức - Đồng Hành Bền Vững"
+  - Desc: "Giải pháp phối hợp toàn diện giúp nhà tư vấn và quản lý gia tăng mức độ gắn kết, củng cố uy tín chuyên môn và phát triển thị trường bền vững..."
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Title: "Đồng Hành Workshop — Kiến Tạo Lòng Tin Bằng Tri Thức Trung Lập"
+  - Desc: "MAI Institute cùng bạn thiết kế và vận hành các buổi Talkshow/Workshop giáo dục tài chính minh bạch cho khách hàng. Không ép chốt đơn tại chỗ, không hô hào chiêu trò — trao đúng giá trị để khách hàng tự mở lòng."
+
+
+--------------------------------------------------------------------------------
+4. TRANG CÔNG CỤ CHẨN ĐOÁN (DIAGNOSE PAGE - /diagnose)
+--------------------------------------------------------------------------------
+
+[Mục 4.1: Intro & Lựa chọn đối tượng]
+• CÂU VĂN CŨ:
+  - Title: "Định vị Năng lực & Khung Chẩn đoán Hệ Điều Hành Quản Trị"
+  - Role Leader: "Dành cho Nhà Quản Lý Kinh Doanh (UM, SM, GA, AD)" | "Chẩn đoán 4 trục LPIS (Lãnh đạo, Quy trình, Tự chủ, Hệ thống). Phát hiện điểm nghẽn vận hành và kiệt sức của bộ máy."
+  - Role Agent: "Dành cho Tư vấn viên BHNT" | "Đánh giá mức độ tự chủ nghề nghiệp (G1 - G4). Nhận diện điểm mù trong quy trình tư vấn và tìm đường hướng phát triển bền vững."
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Title: "Rà Soát Điểm Nghẽn Thực Địa — Khung Đánh Giá Độc Lập"
+  - Role Leader: "DÀNH CHO NHÀ QUẢN LÝ KINH DOANH" | "Rà soát 4 trục LPIS để phát hiện chính xác lý do vì sao đội ngũ gãy rụng, đại lý mất lửa và bạn đang phải gánh vất vả một mình."
+  - Role Agent: "DÀNH CHO TƯ VẤN VIÊN BHNT" | "Định vị cấp độ tự chủ nghề nghiệp (G1 - G4), nhận diện lý do cạn tệp khách hàng hoặc bế tắc khi bị phản đối, định hướng lộ trình cố vấn tài chính."
+
+---
+
+[Mục 4.2: Đề xuất giải pháp sau chẩn đoán (Proposals)]
+• CÂU VĂN CŨ:
+  - Solution Name Leader: "Executive LPIS Suite" | "Chương trình Khai phóng & Phân quyền Lãnh đạo"
+  - Action advice: "Bạn đang là nút thắt cổ chai của đội nhóm, hãy liệt kê các việc bạn đang ôm đồm..."
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Solution Name Leader: "Lộ trình Chuyển hóa Quản trị LPIS"
+  - Action advice: "Điểm nghẽn gốc rễ nằm ở sự ôm đồm sự vụ. Hãy rà soát các hạng mục có thể bàn giao quyền tự quyết cho các Trưởng nhóm cấp dưới, chuyển từ kiểm soát sang khai vấn đồng hành."
+
+
+--------------------------------------------------------------------------------
+5. TRANG TẦM NHÌN & TƯ DUY (BLOG PAGE - /blog)
+--------------------------------------------------------------------------------
+
+[Mục 5.1: Header Blog]
+• CÂU VĂN CŨ:
+  - Subtitle: "Thought Leadership"
+  - Headline: "Tầm Nhìn & Tư Duy Quản Trị"
+  - Description: "Nơi chia sẻ góc nhìn sâu sắc về Mindful Leadership và Data-driven trong ngành Bảo hiểm."
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Subtitle: "GÓC CHUYÊN MÔN & TRẢI NGHIỆM THỰC ĐỊA"
+  - Headline: "Góc Nhìn Điềm Đạm — Tri Thức Thực Chiến"
+  - Description: "Bóc tách bản chất các điểm nghẽn trong ngành Bảo hiểm Nhân thọ qua góc nhìn thấu hiểu, tư duy hệ thống và những câu chuyện thực tế tại văn phòng BHNT."
+
+
+--------------------------------------------------------------------------------
+6. SHARED COMPONENTS (NAVBAR, FOOTER, BOOKING MODAL)
+--------------------------------------------------------------------------------
+
+[Mục 6.1: Navbar (/src/components/shared/Navbar.tsx)]
+• CÂU VĂN CŨ:
+  - Button Nav: "Tư vấn Giải pháp"
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Button Nav: "Đặt Lịch Tham Vấn"
+
+---
+
+[Mục 6.2: Footer (/src/components/shared/Footer.tsx)]
+• CÂU VĂN CŨ:
+  - Description: "Học viện đào tạo & Cung cấp công cụ quản trị tiên phong dành riêng cho các nhà lãnh đạo kinh doanh Bảo hiểm Nhân thọ thế hệ mới tại Việt Nam."
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Description: "MAI Institute — Học viện chuyển giao các giải pháp hệ thống đóng gói, giúp Tư vấn viên làm nghề bằng sự thấu hiểu – tử tế và hỗ trợ Nhà quản lý kiến tạo đội ngũ tự chủ, quản trị thảnh thơi."
+
+---
+
+[Mục 6.3: Booking Modal (/src/components/shared/BookingModal.tsx)]
+• CÂU VĂN CŨ:
+  - Title: "Đăng Ký Tư Vấn Chiến Lược"
+  - Subtitle: "Để lại thông tin để nhận buổi tham vấn 1:1 miễn phí cùng chuyên gia giải pháp của MAI Institute."
+  - Button Submit: "Xác nhận đăng ký tư vấn"
+
+• CÂU VĂN MỚI ĐỀ XUẤT:
+  - Title: "Đặt Lịch Tham Vấn Giải Pháp"
+  - Subtitle: "Vui lòng để lại thông tin. Đội ngũ chuyên gia MAI Institute sẽ chủ động liên hệ để lắng nghe nhu cầu và rà soát điểm nghẽn cùng bạn."
+  - Button Submit: "Gửi thông tin tham vấn"
+
+================================================================================
+KẾT THÚC BẢN KẾ HOẠCH CHUYỂN ĐỔI GIỌNG VĂN (FILE .TXT)
+================================================================================
