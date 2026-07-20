@@ -36,8 +36,8 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-4 cursor-pointer">
             <img
               alt="MAI Institute Logo"
-              className="h-10 w-10 object-contain"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ9lDDOktfXYovL94tHBrnqXMCK4igx_lTHn325gf1yG1IWLZN-zPHOovHqKgwfiuNBr4HTm-L1O_WhP53ypmNZ37oqnn252tewc5gU2BSEzintj93qZmieuKUWOFwZvx4qynf3EblbM-9M8_87GAy0Ci85iHLaJSKanRB_RDlI5WNxMXmMyAmy2wyfZ_y7O5igVT6Vc0YndNSqJxQgsG64VNoLqcLIqWqjbxuCCy93KsJIEmFkjuau8vMaqw6bASVb__GmYmLbr0"
+              className="h-10 w-auto object-contain"
+              src="/images/MAI_Logo.png"
             />
             <span className="font-headline text-3xl text-heritage-maroon font-bold tracking-tight">MAI Institute</span>
           </Link>

@@ -50,6 +50,7 @@ export default function DiagnosePage() {
     company: '',
     role: ''
   });
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
 
   const [proposal, setProposal] = useState({
     solutionName: '',
@@ -191,7 +192,7 @@ export default function DiagnosePage() {
         advice = "Chương trình Khai phóng & Phân quyền Lãnh đạo";
         details = "Chương trình coaching giúp giải phóng sức lao động, nâng cao kỹ năng đào tạo và ủy quyền để đội nhóm tự vận hành.";
         actions = [
-          "Bạn đang là nút thắt cổ chai của đội nhóm, hãy liệt kê các việc bạn đang ôm đồm.",
+          "Điểm nghẽn gốc rễ nằm ở sự ôm đồm sự vụ. Hãy rà soát các hạng mục có thể bàn giao quyền tự quyết cho các Trưởng nhóm cấp dưới, chuyển từ kiểm soát sang khai vấn đồng hành.",
           "Chọn ra đúng 3 việc bạn đang duyệt hàng ngày và thiết lập hạn mức rõ ràng.",
           "Bàn giao quyền quyết định và chịu trách nhiệm hoàn toàn cho trưởng nhóm cấp dưới."
         ];
@@ -488,6 +489,10 @@ export default function DiagnosePage() {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!agreeToTerms) {
+      alert("Bạn phải đồng ý với Chính sách bảo mật và Điều khoản sử dụng để tiếp tục.");
+      return;
+    }
     setStep(3); // Chuyển sang làm trắc nghiệm
   };
 
@@ -529,7 +534,7 @@ export default function DiagnosePage() {
                 </span>
                 <h3 className="font-headline text-xl font-bold text-primary mt-4">Nhà Quản Lý (Leader)</h3>
                 <p className="font-body text-xs text-secondary mt-2 leading-relaxed">
-                  Giám đốc Vùng, Agency Leader, Trưởng nhóm kinh doanh cần đánh giá hệ điều hành quản trị đội ngũ.
+                  Rà soát 4 trục LPIS để phát hiện chính xác lý do vì sao đội ngũ gãy rụng, đại lý mất lửa và bạn đang phải gánh vất vả một mình.
                 </p>
               </div>
               <div
@@ -541,7 +546,7 @@ export default function DiagnosePage() {
                 </span>
                 <h3 className="font-headline text-xl font-bold text-primary mt-4">Tư Vấn Viên (Agent)</h3>
                 <p className="font-body text-xs text-secondary mt-2 leading-relaxed">
-                  Đại lý, Cố vấn Tài chính cần đánh giá sự tự chủ trong nghề nghiệp và phễu khách hàng.
+                  Định vị cấp độ tự chủ nghề nghiệp (G1 - G4), nhận diện lý do cạn tệp khách hàng hoặc bế tắc khi bị phản đối, định hướng lộ trình cố vấn tài chính.
                 </p>
               </div>
             </div>
@@ -628,6 +633,21 @@ export default function DiagnosePage() {
                 />
               </div>
 
+              {/* Checkbox Consent (Tuân thủ Luật 91/2025/QH15) */}
+              <div className="flex items-start gap-3 my-4 p-3 bg-surface-container/20 rounded border border-surface-container/40">
+                <input
+                  id="consent-checkbox"
+                  type="checkbox"
+                  required
+                  checked={agreeToTerms}
+                  onChange={(e) => setAgreeToTerms(e.target.checked)}
+                  className="mt-1 h-4 w-4 rounded border-gray-300 text-heritage-maroon focus:ring-heritage-maroon accent-heritage-maroon"
+                />
+                <label htmlFor="consent-checkbox" className="font-body text-[11px] text-secondary leading-relaxed cursor-pointer selection:bg-transparent">
+                  Tôi đồng ý cho phép MAI Institute thu nhập và xử lý thông tin cá nhân (họ tên, SĐT, email) để phục vụ cho việc tính điểm chẩn đoán và liên hệ tư vấn lộ trình học tập, phù hợp theo <Link href="/privacy" target="_blank" className="text-heritage-maroon hover:underline font-semibold">Chính sách bảo mật</Link> và <Link href="/terms" target="_blank" className="text-heritage-maroon hover:underline font-semibold">Điều khoản sử dụng</Link>.
+                </label>
+              </div>
+
               <div className="flex gap-4 pt-4 border-t border-surface-container/60">
                 <button
                   type="button"
@@ -638,7 +658,12 @@ export default function DiagnosePage() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-heritage-maroon text-zen-white py-3.5 font-label text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all rounded-sm shadow active:scale-[0.98]"
+                  disabled={!agreeToTerms}
+                  className={`flex-1 py-3.5 font-label text-xs font-bold uppercase tracking-widest transition-all rounded-sm shadow ${
+                    agreeToTerms 
+                      ? 'bg-heritage-maroon text-zen-white hover:bg-primary-container active:scale-[0.98]' 
+                      : 'bg-surface-container text-white/40 cursor-not-allowed'
+                  }`}
                 >
                   Bắt đầu làm trắc nghiệm chẩn đoán
                 </button>

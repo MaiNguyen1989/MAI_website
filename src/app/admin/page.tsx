@@ -315,7 +315,7 @@ export default function AdminPage() {
   // Stats calculation
   const totalLeads = leads?.length || 0;
   const totalPosts = posts?.length || 0;
-  
+
   const getRoleRatio = () => {
     if (!leads || leads.length === 0) return '0 / 0';
     const leaderCount = leads.filter(l => l.role.includes('Quản lý') || l.role.includes('leader') || l.role.includes('Executive')).length;
@@ -403,8 +403,8 @@ export default function AdminPage() {
           <div className="p-6 border-b border-white/10 flex items-center gap-3">
             <img
               alt="MAI Logo"
-              className="h-8 w-8 object-contain bg-zen-white rounded-full p-1"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ9lDDOktfXYovL94tHBrnqXMCK4igx_lTHn325gf1yG1IWLZN-zPHOovHqKgwfiuNBr4HTm-L1O_WhP53ypmNZ37oqnn252tewc5gU2BSEzintj93qZmieuKUWOFwZvx4qynf3EblbM-9M8_87GAy0Ci85iHLaJSKanRB_RDlI5WNxMXmMyAmy2wyfZ_y7O5igVT6Vc0YndNSqJxQgsG64VNoLqcLIqWqjbxuCCy93KsJIEmFkjuau8vMaqw6bASVb__GmYmLbr0"
+              className="h-8 w-auto object-contain bg-zen-white rounded p-1"
+              src="/images/MAI_Logo.png"
             />
             <span className="font-headline text-xl font-bold tracking-tight">MAI CMS</span>
           </div>
@@ -413,36 +413,32 @@ export default function AdminPage() {
           <nav className="px-4 space-y-1">
             <button
               onClick={() => setActiveTab('overview')}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all ${
-                activeTab === 'overview' ? 'bg-white/10 text-zen-white' : 'text-white/60 hover:text-zen-white hover:bg-white/5'
-              }`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all ${activeTab === 'overview' ? 'bg-white/10 text-zen-white' : 'text-white/60 hover:text-zen-white hover:bg-white/5'
+                }`}
             >
               <span className="material-symbols-outlined text-[20px]">dashboard</span>
               Tổng quan
             </button>
             <button
               onClick={() => setActiveTab('leads')}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all ${
-                activeTab === 'leads' ? 'bg-white/10 text-zen-white' : 'text-white/60 hover:text-zen-white hover:bg-white/5'
-              }`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all ${activeTab === 'leads' ? 'bg-white/10 text-zen-white' : 'text-white/60 hover:text-zen-white hover:bg-white/5'
+                }`}
             >
               <span className="material-symbols-outlined text-[20px]">people</span>
               Quản lý Leads
             </button>
             <button
               onClick={() => setActiveTab('posts')}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all ${
-                activeTab === 'posts' ? 'bg-white/10 text-zen-white' : 'text-white/60 hover:text-zen-white hover:bg-white/5'
-              }`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all ${activeTab === 'posts' ? 'bg-white/10 text-zen-white' : 'text-white/60 hover:text-zen-white hover:bg-white/5'
+                }`}
             >
               <span className="material-symbols-outlined text-[20px]">post_add</span>
               Đăng bài &amp; Podcast
             </button>
             <button
               onClick={() => setActiveTab('quiz')}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all ${
-                activeTab === 'quiz' ? 'bg-white/10 text-zen-white' : 'text-white/60 hover:text-zen-white hover:bg-white/5'
-              }`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded text-left font-label text-xs font-semibold uppercase tracking-wider transition-all ${activeTab === 'quiz' ? 'bg-white/10 text-zen-white' : 'text-white/60 hover:text-zen-white hover:bg-white/5'
+                }`}
             >
               <span className="material-symbols-outlined text-[20px]">settings_accessibility</span>
               Cấu hình Quiz
