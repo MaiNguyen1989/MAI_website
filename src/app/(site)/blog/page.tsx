@@ -18,7 +18,7 @@ export default function BlogPage() {
       try {
         const { data, error } = await supabase
           .from('posts')
-          .select('*')
+          .select('id, title, category, type, summary, content, image, created_at')
           .order('created_at', { ascending: false });
         
         if (error) throw error;

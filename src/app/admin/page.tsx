@@ -47,10 +47,10 @@ export default function AdminPage() {
       if (isLocked) return; // Đợi cho đến khi xác thực đăng nhập thành công mới gọi DB với quyền Admin
 
       try {
-        // Fetch posts
+        // Fetch posts với danh sách cột rõ ràng
         const { data: postsData, error: postsError } = await supabase
           .from('posts')
-          .select('*')
+          .select('id, title, category, type, summary, content, image, created_at')
           .order('created_at', { ascending: false });
         if (postsError) throw postsError;
         if (postsData && postsData.length > 0) {
@@ -59,10 +59,10 @@ export default function AdminPage() {
           setPosts(initialPosts);
         }
 
-        // Fetch leads với quyền Authenticated
+        // Fetch leads với danh sách cột rõ ràng
         const { data: leadsData, error: leadsError } = await supabase
           .from('leads')
-          .select('*')
+          .select('id, name, phone, email, company, role, scores, date, created_at')
           .order('created_at', { ascending: false });
         if (leadsError) throw leadsError;
         if (leadsData && leadsData.length > 0) {
@@ -174,8 +174,81 @@ export default function AdminPage() {
         setLeads(leads.filter(l => l.id !== id));
       } catch (err) {
         console.error('Lỗi khi xóa lead:', err);
-        alert('Không thể xóa lead trên Supabase: ' + (err as Error).message);
       }
+    }
+  };
+
+  const [selectedLeadModal, setSelectedLeadModal] = useState<Lead | null>(null);
+
+  // Helper cho luồng đăng ký của Lead
+  const getLeadFlow = (lead: Lead) => {
+    const scores = lead?.scores || {};
+    const isQuiz =
+      lead?.source === 'quiz' ||
+      scores.source === 'quiz' ||
+      scores.selectedRole !== undefined ||
+      scores.focusStage !== undefined ||
+      scores.maturityLevel !== undefined ||
+      scores.l !== undefined;
+
+    if (isQuiz) {
+      return {
+        isQuiz: true,
+        label: 'Làm bài test',
+        badgeClass: 'bg-purple-100 text-purple-800 border-purple-200'
+      };
+    }
+    return {
+      isQuiz: false,
+      label: 'Tư vấn giải pháp',
+      badgeClass: 'bg-blue-100 text-blue-800 border-blue-200'
+    };
+  };
+
+  // Helper cho thông tin tóm tắt kết quả
+  const getLeadTestSummary = (lead: Lead) => {
+    const flow = getLeadFlow(lead);
+    const scores = lead?.scores || {};
+
+    if (!flow.isQuiz) {
+      return {
+        roleType: 'consultation',
+        group: '-',
+        groupName: lead.role || scores.programSource || 'Đặt lịch tham vấn',
+        summaryText: `Tư vấn: ${lead.role || scores.programSource || 'Đặt lịch tham vấn'}`
+      };
+    }
+
+    const isLeader =
+      scores.selectedRole === 'leader' ||
+      scores.l !== undefined ||
+      scores.maturityLevel !== undefined ||
+      (lead.role && (lead.role.includes('Quản lý') || lead.role.includes('Trưởng nhóm') || lead.role.includes('Giám đốc')));
+
+    if (isLeader) {
+      const level = scores.maturityLevel || 'L2';
+      const levelName = scores.maturityLevelName || `Self/Team Leader (${level})`;
+      const l = scores.l !== undefined ? scores.l : '-';
+      const p = scores.p !== undefined ? scores.p : '-';
+      const i = scores.i !== undefined ? scores.i : '-';
+      const s = scores.s !== undefined ? scores.s : '-';
+
+      return {
+        roleType: 'leader',
+        group: level,
+        groupName: levelName,
+        lpis: { l, p, i, s },
+        summaryText: `Quản lý: ${level} | LPIS (L:${l} P:${p} I:${i} S:${s})`
+      };
+    } else {
+      const stage = scores.focusStage || 'G2';
+      const stageName = scores.focusStageName || `Giai đoạn ${stage}`;
+      return {
+        roleType: 'agent',
+        group: stage,
+        groupName: stageName,
+        summaryText: `TVV: ${stageName}`
+      };
     }
   };
 
@@ -186,10 +259,36 @@ export default function AdminPage() {
     }
 
     let csvContent = '\uFEFF'; // UTF-8 BOM for Excel
-    csvContent += 'Họ và tên,Số điện thoại,Email,Công ty,Vai trò,Điểm Tỉnh thức,Điểm Hành động,Điểm Công nghệ,Thời gian\n';
+    csvContent += 'Họ và tên,Số điện thoại,Email,Công ty,Vai trò / Chức danh,Luồng đăng ký,Group/Level trắc nghiệm,Chỉ số LPIS (L/P/I/S),Các câu trả lời ở group khác,Thời gian\n';
 
     leads.forEach(l => {
-      csvContent += `"${l.name}","${l.phone}","${l.email}","${l.company}","${l.role}","${l.scores.mindful}","${l.scores.action}","${l.scores.tech}","${l.date}"\n`;
+      const flow = getLeadFlow(l);
+      const summary = getLeadTestSummary(l);
+
+      let groupText = '-';
+      let lpisText = '-';
+      let otherAnswersText = '-';
+
+      if (flow.isQuiz) {
+        if (summary.roleType === 'leader') {
+          groupText = summary.groupName || summary.group || '-';
+          lpisText = `L:${summary.lpis?.l} | P:${summary.lpis?.p} | I:${summary.lpis?.i} | S:${summary.lpis?.s}`;
+        } else {
+          groupText = summary.groupName || summary.group || '-';
+        }
+
+        const otherAns = l.scores?.otherGroupAnswers || [];
+        if (otherAns.length > 0) {
+          otherAnswersText = otherAns
+            .map((a: any) => `[Group ${a.stage}]: ${a.selectedLabel}. ${a.selectedText}`)
+            .join('; ');
+        }
+      } else {
+        groupText = `Tư vấn: ${l.role || l.scores?.programSource || '-'}`;
+      }
+
+      const cleanOtherAns = otherAnswersText.replace(/"/g, '""');
+      csvContent += `"${l.name}","${l.phone}","${l.email}","${l.company}","${l.role}","${flow.label}","${groupText}","${lpisText}","${cleanOtherAns}","${l.date}"\n`;
     });
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -547,32 +646,52 @@ export default function AdminPage() {
                       <tr className="bg-paper-grey/60 border-b border-surface-container text-xs font-label font-bold uppercase tracking-wider text-secondary">
                         <th className="p-4">Họ và tên</th>
                         <th className="p-4">Số điện thoại</th>
-                        <th className="p-4">Email</th>
-                        <th className="p-4">Công ty</th>
-                        <th className="p-4 text-center">Điểm (M/A/T)</th>
+                        <th className="p-4">Email / Công ty</th>
+                        <th className="p-4">Luồng đăng ký</th>
+                        <th className="p-4">Kết quả / LPIS</th>
                         <th className="p-4">Thời gian</th>
+                        <th className="p-4 text-center">Chi tiết</th>
                       </tr>
                     </thead>
                     <tbody>
                       {leads.length === 0 ? (
                         <tr>
-                          <td colSpan={6} className="text-center p-6 text-secondary">
+                          <td colSpan={7} className="text-center p-6 text-secondary">
                             Chưa có dữ liệu khách hàng đăng ký.
                           </td>
                         </tr>
                       ) : (
-                        leads.slice(0, 3).map((l) => (
-                          <tr key={l.id} className="border-b border-surface-container hover:bg-background/25">
-                            <td className="p-4 font-semibold text-primary">{l.name}</td>
-                            <td className="p-4">{l.phone}</td>
-                            <td className="p-4 text-xs">{l.email}</td>
-                            <td className="p-4 text-xs">{l.company}</td>
-                            <td className="p-4 text-center text-xs font-semibold text-heritage-maroon">
-                              {l.scores.mindful}/{l.scores.action}/{l.scores.tech}
-                            </td>
-                            <td className="p-4 text-xs">{l.date}</td>
-                          </tr>
-                        ))
+                        leads.slice(0, 5).map((l) => {
+                          const flow = getLeadFlow(l);
+                          const summary = getLeadTestSummary(l);
+                          return (
+                            <tr key={l.id} className="border-b border-surface-container hover:bg-background/25">
+                              <td className="p-4 font-semibold text-primary">{l.name}</td>
+                              <td className="p-4">{l.phone}</td>
+                              <td className="p-4 text-xs">
+                                <div>{l.email}</div>
+                                <div className="text-secondary text-[11px]">{l.company}</div>
+                              </td>
+                              <td className="p-4 text-xs">
+                                <span className={`inline-block px-2.5 py-1 rounded-full text-[11px] font-label font-bold border ${flow.badgeClass}`}>
+                                  {flow.label}
+                                </span>
+                              </td>
+                              <td className="p-4 text-xs font-semibold text-heritage-maroon">
+                                {summary.summaryText}
+                              </td>
+                              <td className="p-4 text-xs">{l.date}</td>
+                              <td className="p-4 text-center">
+                                <button
+                                  onClick={() => setSelectedLeadModal(l)}
+                                  className="inline-flex items-center gap-1 text-heritage-maroon hover:text-primary font-label text-xs font-bold uppercase tracking-wider bg-heritage-maroon/5 hover:bg-heritage-maroon/10 px-2.5 py-1.5 rounded transition-all"
+                                >
+                                  <span className="material-symbols-outlined text-[16px]">visibility</span> Xem
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })
                       )}
                     </tbody>
                   </table>
@@ -600,10 +719,9 @@ export default function AdminPage() {
                     <tr className="bg-paper-grey/60 border-b border-surface-container text-xs font-label font-bold uppercase tracking-wider text-secondary">
                       <th className="p-4">Họ và tên</th>
                       <th className="p-4">Số điện thoại</th>
-                      <th className="p-4">Email</th>
-                      <th className="p-4">Công ty</th>
-                      <th className="p-4">Vai trò</th>
-                      <th className="p-4 text-center">Điểm (M/A/T)</th>
+                      <th className="p-4">Email / Công ty</th>
+                      <th className="p-4">Luồng đăng ký</th>
+                      <th className="p-4">Kết quả / Group / LPIS</th>
                       <th className="p-4">Thời gian</th>
                       <th className="p-4 text-center">Hành động</th>
                     </tr>
@@ -611,32 +729,51 @@ export default function AdminPage() {
                   <tbody>
                     {leads.length === 0 ? (
                       <tr>
-                        <td colSpan={8} className="text-center p-6 text-secondary">
+                        <td colSpan={7} className="text-center p-6 text-secondary">
                           Chưa có thông tin khách hàng đăng ký trắc nghiệm.
                         </td>
                       </tr>
                     ) : (
-                      leads.map((l) => (
-                        <tr key={l.id} className="border-b border-surface-container hover:bg-background/20">
-                          <td className="p-4 font-semibold text-primary">{l.name}</td>
-                          <td className="p-4">{l.phone}</td>
-                          <td className="p-4 text-xs">{l.email}</td>
-                          <td className="p-4 text-xs">{l.company}</td>
-                          <td className="p-4 text-xs font-bold">{l.role}</td>
-                          <td className="p-4 text-center text-xs font-semibold text-heritage-maroon">
-                            {l.scores.mindful}/{l.scores.action}/{l.scores.tech}
-                          </td>
-                          <td className="p-4 text-xs">{l.date}</td>
-                          <td className="p-4 text-center">
-                            <button
-                              onClick={() => handleDeleteLead(l.id)}
-                              className="text-red-700 hover:text-red-950 font-semibold text-xs uppercase tracking-wider"
-                            >
-                              Xóa
-                            </button>
-                          </td>
-                        </tr>
-                      ))
+                      leads.map((l) => {
+                        const flow = getLeadFlow(l);
+                        const summary = getLeadTestSummary(l);
+                        return (
+                          <tr key={l.id} className="border-b border-surface-container hover:bg-background/20">
+                            <td className="p-4 font-semibold text-primary">{l.name}</td>
+                            <td className="p-4">{l.phone}</td>
+                            <td className="p-4 text-xs">
+                              <div>{l.email}</div>
+                              <div className="text-secondary text-[11px]">{l.company}</div>
+                            </td>
+                            <td className="p-4 text-xs">
+                              <span className={`inline-block px-2.5 py-1 rounded-full text-[11px] font-label font-bold border ${flow.badgeClass}`}>
+                                {flow.label}
+                              </span>
+                            </td>
+                            <td className="p-4 text-xs font-semibold text-heritage-maroon">
+                              {summary.summaryText}
+                            </td>
+                            <td className="p-4 text-xs">{l.date}</td>
+                            <td className="p-4 text-center">
+                              <div className="flex justify-center items-center gap-2">
+                                <button
+                                  onClick={() => setSelectedLeadModal(l)}
+                                  className="inline-flex items-center gap-1 text-heritage-maroon hover:text-primary font-label text-xs font-bold uppercase tracking-wider bg-heritage-maroon/5 hover:bg-heritage-maroon/10 px-2.5 py-1.5 rounded transition-all"
+                                >
+                                  <span className="material-symbols-outlined text-[16px]">visibility</span> Xem
+                                </button>
+                                <button
+                                  onClick={() => handleDeleteLead(l.id)}
+                                  className="text-red-700 hover:text-red-950 font-semibold text-xs uppercase tracking-wider p-1"
+                                  title="Xóa Lead"
+                                >
+                                  Xóa
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })
                     )}
                   </tbody>
                 </table>
@@ -875,6 +1012,340 @@ export default function AdminPage() {
           )}
         </div>
       </main>
+
+      {/* MODAL CHI TIẾT LEAD */}
+      {selectedLeadModal && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-zen-white max-w-[850px] w-full max-h-[90vh] overflow-y-auto rounded-lg shadow-2xl border border-surface-container p-6 md:p-8 relative space-y-6">
+            {/* Header Modal */}
+            <div className="flex justify-between items-start border-b border-surface-container/60 pb-4">
+              <div>
+                <span className="font-label text-[10px] font-bold uppercase tracking-widest text-heritage-maroon block mb-1">
+                  Chi tiết thông tin &amp; kết quả Lead
+                </span>
+                <h2 className="font-display text-2xl font-bold text-primary">
+                  {selectedLeadModal.name}
+                </h2>
+                <p className="text-xs text-secondary font-body mt-0.5">
+                  Mã Lead: <code className="bg-surface-container/30 px-1.5 py-0.5 rounded text-[11px] font-mono">{selectedLeadModal.id}</code> | Ngày tạo: {selectedLeadModal.date}
+                </p>
+              </div>
+              <button
+                onClick={() => setSelectedLeadModal(null)}
+                className="p-1 rounded-full text-secondary hover:text-primary hover:bg-surface-container/30 transition-colors"
+              >
+                <span className="material-symbols-outlined text-[24px]">close</span>
+              </button>
+            </div>
+
+            {/* Thông tin cá nhân & Luồng */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-background/30 p-4 rounded-lg border border-surface-container/60">
+              <div className="space-y-2 text-xs font-body">
+                <div>
+                  <span className="text-secondary font-semibold font-label block text-[10px] uppercase">Họ và tên:</span>
+                  <span className="text-primary font-bold text-sm">{selectedLeadModal.name}</span>
+                </div>
+                <div>
+                  <span className="text-secondary font-semibold font-label block text-[10px] uppercase">Số điện thoại / Zalo:</span>
+                  <a href={`tel:${selectedLeadModal.phone}`} className="text-heritage-maroon font-semibold hover:underline">
+                    {selectedLeadModal.phone}
+                  </a>
+                </div>
+                <div>
+                  <span className="text-secondary font-semibold font-label block text-[10px] uppercase">Email:</span>
+                  <span className="text-primary">{selectedLeadModal.email}</span>
+                </div>
+              </div>
+
+              <div className="space-y-2 text-xs font-body">
+                <div>
+                  <span className="text-secondary font-semibold font-label block text-[10px] uppercase">Công ty / Tổ chức:</span>
+                  <span className="text-primary font-semibold">{selectedLeadModal.company}</span>
+                </div>
+                <div>
+                  <span className="text-secondary font-semibold font-label block text-[10px] uppercase">Chức danh / Vai trò:</span>
+                  <span className="text-primary font-bold">{selectedLeadModal.role}</span>
+                </div>
+                <div>
+                  <span className="text-secondary font-semibold font-label block text-[10px] uppercase mb-1">Luồng đến từ:</span>
+                  {(() => {
+                    const flow = getLeadFlow(selectedLeadModal);
+                    return (
+                      <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-label font-bold border ${flow.badgeClass}`}>
+                        <span className="material-symbols-outlined text-[14px]">
+                          {flow.isQuiz ? 'quiz' : 'event_available'}
+                        </span>
+                        {flow.label}
+                      </span>
+                    );
+                  })()}
+                </div>
+              </div>
+            </div>
+
+            {/* Chi tiết nội dung theo luồng */}
+            {(() => {
+              const flow = getLeadFlow(selectedLeadModal);
+              const scores = selectedLeadModal.scores || {};
+              const summary = getLeadTestSummary(selectedLeadModal);
+
+              if (!flow.isQuiz) {
+                return (
+                  <div className="bg-blue-50/60 border border-blue-200 rounded-lg p-5 space-y-3">
+                    <h4 className="font-headline text-base font-bold text-blue-900 flex items-center gap-2">
+                      <span className="material-symbols-outlined text-blue-700">support_agent</span>
+                      Đăng Ký Tư Vấn Giải Pháp Trực Tiếp
+                    </h4>
+                    <p className="text-xs text-blue-800 leading-relaxed font-body">
+                      Lead này đến từ luồng nhấn nút <strong>Tư vấn giải pháp / Đặt lịch tham vấn</strong> trực tiếp từ giao diện website.
+                    </p>
+                    <div className="p-3 bg-zen-white rounded border border-blue-200/60 text-xs space-y-1">
+                      <span className="font-label font-bold text-secondary text-[10px] uppercase block">Yêu cầu / Chương trình quan tâm:</span>
+                      <span className="font-bold text-primary text-sm">{selectedLeadModal.role || scores.programSource || 'Tư vấn giải pháp tổng thể'}</span>
+                    </div>
+                  </div>
+                );
+              }
+
+              // Trường hợp làm Bài test chẩn đoán
+              const isLeader = summary.roleType === 'leader';
+              const groupDist = scores.groupDistribution || {};
+              const answers = scores.answers || [];
+              const otherGroupAns = scores.otherGroupAnswers || (
+                answers.filter((a: any) => a.stage !== summary.group)
+              );
+
+              return (
+                <div className="space-y-6">
+                  {/* Header bài test */}
+                  <div className="flex items-center justify-between border-b border-surface-container/60 pb-3">
+                    <h3 className="font-headline text-lg font-bold text-primary flex items-center gap-2">
+                      <span className="material-symbols-outlined text-heritage-maroon">analytics</span>
+                      Kết Quả Bài Test Chẩn Đoán ({isLeader ? 'Nhà Quản Lý - Leader' : 'Tư Vấn Viên - Agent'})
+                    </h3>
+                    <span className="font-label text-xs font-bold bg-heritage-maroon/10 text-heritage-maroon px-3 py-1 rounded-full uppercase">
+                      {isLeader ? `Cấp độ: ${summary.groupName}` : `Vùng trọng tâm: ${summary.groupName}`}
+                    </span>
+                  </div>
+
+                  {isLeader ? (
+                    // DÀNH CHO QUẢN LÝ
+                    <div className="space-y-6">
+                      {/* Chỉ số LPIS 4 Trục */}
+                      <div className="bg-zen-white border border-surface-container rounded-lg p-5 space-y-3 shadow-sm">
+                        <h4 className="font-label text-xs font-bold uppercase tracking-wider text-heritage-maroon flex items-center gap-1.5">
+                          <span className="material-symbols-outlined text-[18px]">radar</span>
+                          Chỉ Số LPIS (4 Trục Năng Lực Quản Trị)
+                        </h4>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                          <div className="p-3 bg-red-50/50 border border-red-200/60 rounded text-center">
+                            <span className="font-label text-[10px] font-bold text-red-700 uppercase block">L - Lãnh đạo</span>
+                            <span className="font-display text-2xl font-bold text-primary">{summary.lpis?.l}</span>
+                            <span className="text-[10px] text-secondary block">/ 10 điểm</span>
+                          </div>
+                          <div className="p-3 bg-blue-50/50 border border-blue-200/60 rounded text-center">
+                            <span className="font-label text-[10px] font-bold text-blue-700 uppercase block">P - Hiệu suất</span>
+                            <span className="font-display text-2xl font-bold text-primary">{summary.lpis?.p}</span>
+                            <span className="text-[10px] text-secondary block">/ 10 điểm</span>
+                          </div>
+                          <div className="p-3 bg-green-50/50 border border-green-200/60 rounded text-center">
+                            <span className="font-label text-[10px] font-bold text-green-700 uppercase block">I - Độc lập</span>
+                            <span className="font-display text-2xl font-bold text-primary">{summary.lpis?.i}</span>
+                            <span className="text-[10px] text-secondary block">/ 10 điểm</span>
+                          </div>
+                          <div className="p-3 bg-amber-50/50 border border-amber-200/60 rounded text-center">
+                            <span className="font-label text-[10px] font-bold text-amber-700 uppercase block">S - Hệ thống</span>
+                            <span className="font-display text-2xl font-bold text-primary">{summary.lpis?.s}</span>
+                            <span className="text-[10px] text-secondary block">/ 10 điểm</span>
+                          </div>
+                        </div>
+
+                        {scores.systemShape && (
+                          <div className="mt-2 p-3 bg-surface-container/20 rounded border border-surface-container/40 text-xs">
+                            <span className="font-bold text-primary font-label uppercase block mb-1">
+                              Hình thái vận hành: {scores.systemShape}
+                            </span>
+                            {scores.systemShapeDesc && (
+                              <p className="text-secondary text-[11px] leading-relaxed">{scores.systemShapeDesc}</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Phân bổ theo các Group L1 - L5 */}
+                      <div className="bg-zen-white border border-surface-container rounded-lg p-5 space-y-3 shadow-sm">
+                        <h4 className="font-label text-xs font-bold uppercase tracking-wider text-primary">
+                          Phân bổ đáp án theo các Group (L1 - L5):
+                        </h4>
+                        <div className="grid grid-cols-5 gap-2 text-center text-xs">
+                          {['L1', 'L2', 'L3', 'L4', 'L5'].map(lvl => {
+                            const count = groupDist[lvl] !== undefined ? groupDist[lvl] : answers.filter((a: any) => a.stage === lvl).length;
+                            const isMain = summary.group === lvl;
+                            return (
+                              <div key={lvl} className={`p-2.5 rounded border ${isMain ? 'bg-heritage-maroon text-zen-white border-heritage-maroon font-bold' : 'bg-background/20 border-surface-container/60 text-secondary'}`}>
+                                <span className="block font-label text-[10px] uppercase">{lvl}</span>
+                                <span className="text-lg font-bold">{count}</span>
+                                <span className="text-[9px] block opacity-80">câu</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Các câu trả lời ở Group KHÁC Group chính */}
+                      <div className="bg-amber-50/50 border border-amber-200 rounded-lg p-5 space-y-3">
+                        <div className="flex items-center justify-between border-b border-amber-200/60 pb-2">
+                          <h4 className="font-headline text-sm font-bold text-amber-900 flex items-center gap-1.5">
+                            <span className="material-symbols-outlined text-[18px] text-amber-700">warning</span>
+                            Các Câu Trả Lời Thuộc Group KHÁC Cấp Độ Chính ({summary.group}):
+                          </h4>
+                          <span className="font-label text-[11px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">
+                            {otherGroupAns.length} câu
+                          </span>
+                        </div>
+
+                        {otherGroupAns.length === 0 ? (
+                          <p className="text-xs text-secondary italic">Tất cả câu trả lời của Quản lý đều tập trung đồng nhất ở Cấp độ chính ({summary.group}).</p>
+                        ) : (
+                          <div className="space-y-2.5 max-h-[250px] overflow-y-auto pr-1">
+                            {otherGroupAns.map((ans: any, idx: number) => (
+                              <div key={idx} className="p-3 bg-zen-white rounded border border-amber-200/80 text-xs space-y-1 shadow-2xs">
+                                <div className="flex justify-between items-start">
+                                  <span className="font-bold text-primary">Câu: {ans.questionText}</span>
+                                  <span className="font-label text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded border border-amber-300 shrink-0">
+                                    Group: {ans.stage || 'Khác'} {ans.axis ? `(Trục ${ans.axis})` : ''}
+                                  </span>
+                                </div>
+                                <p className="text-secondary text-[11px]">
+                                  <strong className="text-heritage-maroon">Lựa chọn:</strong> [{ans.selectedLabel}] {ans.selectedText}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Danh sách đầy đủ 10 câu trả lời */}
+                      {answers.length > 0 && (
+                        <div className="bg-zen-white border border-surface-container rounded-lg p-5 space-y-3 shadow-sm">
+                          <h4 className="font-label text-xs font-bold uppercase tracking-wider text-primary border-b border-surface-container/60 pb-2">
+                            Chi tiết trọn vẹn 10 câu trả lời của Quản lý:
+                          </h4>
+                          <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
+                            {answers.map((ans: any, idx: number) => (
+                              <div key={idx} className="p-3 bg-background/20 rounded border border-surface-container/40 text-xs space-y-1">
+                                <div className="flex justify-between items-start">
+                                  <span className="font-semibold text-primary">Câu {idx + 1}: {ans.questionText}</span>
+                                  <span className="font-label text-[10px] font-bold bg-surface-container/40 text-secondary px-2 py-0.5 rounded shrink-0">
+                                    Group: {ans.stage} {ans.axis ? `| Trục ${ans.axis}` : ''}
+                                  </span>
+                                </div>
+                                <p className="text-secondary text-[11px] pl-2 border-l-2 border-heritage-maroon/40">
+                                  <strong>Lựa chọn [{ans.selectedLabel}]:</strong> {ans.selectedText}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    // DÀNH CHO TƯ VẤN VIÊN (TVV)
+                    <div className="space-y-6">
+                      {/* Phân bổ các Group G1 - G4 */}
+                      <div className="bg-zen-white border border-surface-container rounded-lg p-5 space-y-3 shadow-sm">
+                        <h4 className="font-label text-xs font-bold uppercase tracking-wider text-primary">
+                          Phân bổ lựa chọn theo 4 Giai đoạn phát triển (G1 - G4):
+                        </h4>
+                        <div className="grid grid-cols-4 gap-2 text-center text-xs">
+                          {['G1', 'G2', 'G3', 'G4'].map(stg => {
+                            const count = groupDist[stg] !== undefined ? groupDist[stg] : answers.filter((a: any) => a.stage === stg).length;
+                            const isMain = summary.group === stg;
+                            return (
+                              <div key={stg} className={`p-3 rounded border ${isMain ? 'bg-heritage-maroon text-zen-white border-heritage-maroon font-bold' : 'bg-background/20 border-surface-container/60 text-secondary'}`}>
+                                <span className="block font-label text-[10px] uppercase">{stg}</span>
+                                <span className="text-xl font-bold">{count}</span>
+                                <span className="text-[9px] block opacity-80">câu</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Các câu trả lời ở Group KHÁC Group chính */}
+                      <div className="bg-amber-50/50 border border-amber-200 rounded-lg p-5 space-y-3">
+                        <div className="flex items-center justify-between border-b border-amber-200/60 pb-2">
+                          <h4 className="font-headline text-sm font-bold text-amber-900 flex items-center gap-1.5">
+                            <span className="material-symbols-outlined text-[18px] text-amber-700">warning</span>
+                            Các Câu Trả Lời Thuộc Group KHÁC Vùng Trọng Tâm ({summary.group}):
+                          </h4>
+                          <span className="font-label text-[11px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">
+                            {otherGroupAns.length} câu
+                          </span>
+                        </div>
+
+                        {otherGroupAns.length === 0 ? (
+                          <p className="text-xs text-secondary italic">Tất cả câu trả lời của TVV đều tập trung đồng nhất ở Group chính ({summary.group}).</p>
+                        ) : (
+                          <div className="space-y-2.5 max-h-[250px] overflow-y-auto pr-1">
+                            {otherGroupAns.map((ans: any, idx: number) => (
+                              <div key={idx} className="p-3 bg-zen-white rounded border border-amber-200/80 text-xs space-y-1 shadow-2xs">
+                                <div className="flex justify-between items-start">
+                                  <span className="font-bold text-primary">Câu: {ans.questionText}</span>
+                                  <span className="font-label text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded border border-amber-300 shrink-0">
+                                    Group: {ans.stage || 'Khác'}
+                                  </span>
+                                </div>
+                                <p className="text-secondary text-[11px]">
+                                  <strong className="text-heritage-maroon">Lựa chọn:</strong> [{ans.selectedLabel}] {ans.selectedText}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Danh sách đầy đủ 10 câu trả lời */}
+                      {answers.length > 0 && (
+                        <div className="bg-zen-white border border-surface-container rounded-lg p-5 space-y-3 shadow-sm">
+                          <h4 className="font-label text-xs font-bold uppercase tracking-wider text-primary border-b border-surface-container/60 pb-2">
+                            Chi tiết trọn vẹn 10 câu trả lời của TVV:
+                          </h4>
+                          <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
+                            {answers.map((ans: any, idx: number) => (
+                              <div key={idx} className="p-3 bg-background/20 rounded border border-surface-container/40 text-xs space-y-1">
+                                <div className="flex justify-between items-start">
+                                  <span className="font-semibold text-primary">Câu {idx + 1}: {ans.questionText}</span>
+                                  <span className="font-label text-[10px] font-bold bg-surface-container/40 text-secondary px-2 py-0.5 rounded shrink-0">
+                                    Group: {ans.stage}
+                                  </span>
+                                </div>
+                                <p className="text-secondary text-[11px] pl-2 border-l-2 border-heritage-maroon/40">
+                                  <strong>Lựa chọn [{ans.selectedLabel}]:</strong> {ans.selectedText}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Footer Modal */}
+            <div className="pt-4 border-t border-surface-container/60 flex justify-end gap-3">
+              <button
+                onClick={() => setSelectedLeadModal(null)}
+                className="px-6 py-2.5 bg-surface-container/40 hover:bg-surface-container text-primary font-label text-xs font-bold uppercase tracking-wider rounded transition-colors"
+              >
+                Đóng lại
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

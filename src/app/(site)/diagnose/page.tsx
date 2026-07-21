@@ -114,6 +114,23 @@ export default function DiagnosePage() {
     const date = new Date().toISOString().slice(0, 16).replace('T', ' ');
     const leadId = 'l-' + Date.now();
 
+    // Đính kèm thêm kết quả phân tích sâu vào trường scores để lưu trữ DB
+    const scoresPayload = {
+      ...rawScores,
+      source: 'quiz' as const,
+      selectedRole: roleType,
+      focusStage: tvvRes ? tvvRes.focusStage : undefined,
+      focusStageName: tvvRes ? tvvRes.focusStageName : undefined,
+      maturityLevel: ldrRes ? ldrRes.maturityLevel : undefined,
+      maturityLevelName: ldrRes ? ldrRes.maturityLevelName : undefined,
+      systemShape: ldrRes ? ldrRes.systemShape : undefined,
+      systemShapeDesc: ldrRes ? ldrRes.systemShapeDesc : undefined,
+      conflictDetected: ldrRes ? (ldrRes.conflictText !== "") : undefined,
+      groupDistribution: tvvRes ? tvvRes.counts : (ldrRes ? ldrRes.counts : undefined),
+      answers: tvvRes ? tvvRes.answers : (ldrRes ? ldrRes.answers : undefined),
+      otherGroupAnswers: tvvRes ? tvvRes.otherGroupAnswers : (ldrRes ? ldrRes.otherGroupAnswers : undefined)
+    };
+
     const newLead: Lead = {
       id: leadId,
       name: formData.name,
@@ -121,20 +138,9 @@ export default function DiagnosePage() {
       email: formData.email,
       company: formData.company,
       role: formData.role || (roleType === 'leader' ? 'Trưởng nhóm' : 'TVV'),
-      scores: rawScores,
-      date
-    };
-
-    // Đính kèm thêm kết quả phân tích sâu vào trường scores để lưu trữ DB
-    const scoresPayload = {
-      ...rawScores,
-      selectedRole: roleType,
-      focusStage: tvvRes ? tvvRes.focusStage : undefined,
-      focusStageName: tvvRes ? tvvRes.focusStageName : undefined,
-      maturityLevel: ldrRes ? ldrRes.maturityLevel : undefined,
-      maturityLevelName: ldrRes ? ldrRes.maturityLevelName : undefined,
-      systemShape: ldrRes ? ldrRes.systemShape : undefined,
-      conflictDetected: ldrRes ? (ldrRes.conflictText !== "") : undefined
+      scores: scoresPayload,
+      date,
+      source: 'quiz'
     };
 
     try {
@@ -333,12 +339,28 @@ export default function DiagnosePage() {
       const scores: LeadScores = { mindful: g3, action: g2, tech: g4 };
       setComputedScores(scores);
       
+      const allAnswers = quizQuestions.map((q, idx) => {
+        const opt = q.options[userAnswers[idx]];
+        return {
+          questionId: q.id,
+          questionText: q.text,
+          selectedLabel: opt.label,
+          selectedText: opt.text,
+          stage: opt.stage || 'G1',
+          weight: opt.weight
+        };
+      });
+      const otherGroupAnswers = allAnswers.filter(a => a.stage !== focusStage);
+
       const tvvRes = {
         distribution: { g1, g2, g3, g4 },
+        counts,
         focusStage,
         focusStageName: stageNames[focusStage],
         description: stageDescs[focusStage],
-        blindSpots
+        blindSpots,
+        answers: allAnswers,
+        otherGroupAnswers
       };
       setTvvResult(tvvRes);
       setLeaderResult(null);
@@ -454,8 +476,23 @@ export default function DiagnosePage() {
       const scores: LeadScores = { l: lScore, p: pScore, i: iScore, s: sScore };
       setComputedScores(scores);
 
+      const allAnswers = quizQuestions.map((q, idx) => {
+        const opt = q.options[userAnswers[idx]];
+        return {
+          questionId: q.id,
+          questionText: q.text,
+          selectedLabel: opt.label,
+          selectedText: opt.text,
+          stage: opt.stage || 'L1',
+          weight: opt.weight,
+          axis: q.axis
+        };
+      });
+      const otherGroupAnswers = allAnswers.filter(a => a.stage !== focusLevel);
+
       const ldrRes = {
         scores: { l: lScore, p: pScore, i: iScore, s: sScore },
+        counts,
         maturityLevel: focusLevel,
         maturityLevelName: levelNames[focusLevel],
         description: levelDescs[focusLevel],
@@ -463,7 +500,9 @@ export default function DiagnosePage() {
         transitionLevels: transitionLevels.map(lvl => levelNames[lvl as keyof typeof levelNames]),
         conflictText,
         systemShape,
-        systemShapeDesc
+        systemShapeDesc,
+        answers: allAnswers,
+        otherGroupAnswers
       };
       setLeaderResult(ldrRes);
       setTvvResult(null);

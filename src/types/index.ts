@@ -27,6 +27,16 @@ export interface Post {
   image: string;
 }
 
+export interface UserAnswerDetail {
+  questionId: string;
+  questionText: string;
+  selectedLabel: string;
+  selectedText: string;
+  stage: string;
+  weight?: number;
+  axis?: string;
+}
+
 export interface LeadScores {
   mindful?: number | string;
   action?: number | string;
@@ -35,6 +45,19 @@ export interface LeadScores {
   p?: number | string;
   i?: number | string;
   s?: number | string;
+  source?: 'quiz' | 'consultation';
+  programSource?: string;
+  selectedRole?: 'leader' | 'agent';
+  focusStage?: string;
+  focusStageName?: string;
+  maturityLevel?: string;
+  maturityLevelName?: string;
+  systemShape?: string;
+  systemShapeDesc?: string;
+  conflictDetected?: boolean;
+  groupDistribution?: { [key: string]: number };
+  answers?: UserAnswerDetail[];
+  otherGroupAnswers?: UserAnswerDetail[];
 }
 
 export interface Lead {
@@ -46,4 +69,7 @@ export interface Lead {
   role: string;
   scores: LeadScores;
   date: string;
+  source?: 'quiz' | 'consultation';
+  programSource?: string;
 }
+
