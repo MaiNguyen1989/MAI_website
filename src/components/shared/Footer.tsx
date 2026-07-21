@@ -26,6 +26,7 @@ export default function Footer() {
           <ul className="space-y-2 font-body text-sm text-secondary">
             <li><Link className="hover:text-heritage-maroon transition-colors" href="/solutions">Giải pháp Đào tạo</Link></li>
             <li><Link className="hover:text-heritage-maroon transition-colors" href="/diagnose">Bài trắc nghiệm Chẩn đoán</Link></li>
+            <li><Link className="hover:text-heritage-maroon transition-colors" href="/about">Đội ngũ &amp; Về chúng tôi</Link></li>
             <li><Link className="hover:text-heritage-maroon transition-colors" href="/blog">Kho tài liệu &amp; Podcast</Link></li>
           </ul>
         </div>
