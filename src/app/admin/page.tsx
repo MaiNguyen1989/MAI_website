@@ -41,9 +41,11 @@ export default function AdminPage() {
   // Date and time display
   const [currentTime, setCurrentTime] = useState('');
 
-  // Load data from Supabase
+  // Load data from Supabase khi trang được mở khóa / đăng nhập thành công
   useEffect(() => {
     async function loadData() {
+      if (isLocked) return; // Đợi cho đến khi xác thực đăng nhập thành công mới gọi DB với quyền Admin
+
       try {
         // Fetch posts
         const { data: postsData, error: postsError } = await supabase
@@ -57,7 +59,7 @@ export default function AdminPage() {
           setPosts(initialPosts);
         }
 
-        // Fetch leads
+        // Fetch leads với quyền Authenticated
         const { data: leadsData, error: leadsError } = await supabase
           .from('leads')
           .select('*')
@@ -66,21 +68,21 @@ export default function AdminPage() {
         if (leadsData && leadsData.length > 0) {
           setLeads(leadsData as Lead[]);
         } else {
-          setLeads(initialLeads);
+          setLeads([]);
         }
 
         // Vì câu hỏi trắc nghiệm mới được lưu tĩnh ở frontend, ta sử dụng trực tiếp initialQuestions
         setQuestions(initialQuestions);
       } catch (err) {
         console.error('Lỗi khi load dữ liệu CMS từ Supabase:', err);
-        // Fallback về mock data nếu Supabase chưa cấu hình
+        // Fallback về mock data nếu Supabase gặp lỗi
         setPosts(initialPosts);
         setLeads(initialLeads);
         setQuestions(initialQuestions);
       }
     }
     loadData();
-  }, []);
+  }, [isLocked]);
 
   // Post form states
   const [isPostFormOpen, setIsPostFormOpen] = useState(false);
