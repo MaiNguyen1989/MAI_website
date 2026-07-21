@@ -6,6 +6,8 @@ import { Lead } from '@/types';
 import { initialLeads } from '@/lib/mockData';
 import Link from 'next/link';
 
+import { supabase } from '@/lib/supabase';
+
 interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -34,11 +36,15 @@ export default function BookingModal({ isOpen, onClose, programSource }: Booking
     if (isSubmitting) return;
 
     setIsSubmitting(true);
-    
-    // Giả lập gọi API gửi dữ liệu lên server (1.0s)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     const date = new Date().toISOString().slice(0, 16).replace('T', ' ');
+
+    const scoresPayload = {
+      mindful: '-',
+      action: '-',
+      tech: '-',
+      source: 'consultation' as const,
+      programSource: programSource
+    };
 
     const newLead: Lead = {
       id: 'l-' + Date.now(),
@@ -47,9 +53,29 @@ export default function BookingModal({ isOpen, onClose, programSource }: Booking
       email: formData.email,
       company: formData.company,
       role: programSource,
-      scores: { mindful: '-', action: '-', tech: '-' },
-      date
+      scores: scoresPayload,
+      date,
+      source: 'consultation',
+      programSource: programSource
     };
+
+    try {
+      const { error } = await supabase
+        .from('leads')
+        .insert({
+          id: newLead.id,
+          name: newLead.name,
+          phone: newLead.phone,
+          email: newLead.email,
+          company: newLead.company,
+          role: newLead.role,
+          scores: scoresPayload,
+          date: newLead.date
+        });
+      if (error) console.warn('Lỗi ghi Supabase (dùng LocalStorage dự phòng):', error);
+    } catch (err) {
+      console.warn('Lỗi kết nối Supabase:', err);
+    }
 
     setLeads([newLead, ...leads]);
     setIsSubmitting(false);
