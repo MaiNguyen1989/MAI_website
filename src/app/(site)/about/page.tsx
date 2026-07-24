@@ -131,7 +131,7 @@ export default function AboutPage() {
                   <img
                     alt="Nguyễn Thị Hồng Hạnh"
                     className="w-full h-full object-cover transition-soft group-hover:scale-[1.02]"
-                    src="/images/hong-hanh.png"
+                    src="/images/hong-hanh-new.jpg"
                   />
                 </div>
               </div>
